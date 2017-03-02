@@ -13,7 +13,7 @@ public class DBConnection {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@localhost:1521:xe", "system", "password1");
+					"jdbc:oracle:thin:@localhost:1521:xe", "system", "password12");
 		
 		} catch (SQLException e) {
 
