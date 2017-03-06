@@ -18,6 +18,9 @@
         <action path="/helloWorld" type="com.vaannila.action.HelloWorldAction" name="helloWorldForm">
         	<forward name="success" path="/helloWorld.jsp" />
         </action>
+        <action name="home" path="/jsp/home.jsp">
+      	</action>
+       
     </action-mappings>
-
+ 
 </struts-config>
