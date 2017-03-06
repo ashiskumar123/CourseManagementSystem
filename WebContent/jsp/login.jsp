@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login - Course Management System</title>
 
-<jsp:include page="common-header.jsp" />
+<jsp:include page="common-include.jsp" />
 
 </head>
 <body>
