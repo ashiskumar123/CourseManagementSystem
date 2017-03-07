@@ -14,7 +14,7 @@ import com.ncsu.cms.db.dao.DAO;
 import com.ncsu.cms.db.impl.DAOImpl;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class LoginAction extends ActionSupport{
+public class AuthenticationAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	
 	private String jsonString;
