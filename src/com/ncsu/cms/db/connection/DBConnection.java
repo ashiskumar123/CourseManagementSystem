@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	public Connection getConnection(){
+	public static Connection getConnection(){
 		Connection connection = null;
 		
 		try {
@@ -13,7 +13,7 @@ public class DBConnection {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@localhost:1521:xe", "system", "password12");
+					"jdbc:oracle:thin:@localhost:1521:xe", "ashis", "root");
 		
 		} catch (SQLException e) {
 
