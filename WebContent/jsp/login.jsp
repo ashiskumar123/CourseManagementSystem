@@ -4,10 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home - Course Management System</title>
+<title>Login - Course Management System</title>
 
 <jsp:include page="common-include.jsp" />
 <link rel="stylesheet" type="text/css" href="css/login.css"/>
+
+<script type="text/javascript" src="js/login-main.js"></script>
 
 </head>
 <body>
@@ -21,11 +23,11 @@
 			<form class="form-horizontal" method="post" action="#">
 	
 				<div class="form-group">
-					<label for="username" class="cols-sm-2 control-label">Username</label>
+					<label for="userName" class="cols-sm-2 control-label">Username</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+							<input type="text" class="form-control" name="userName" id="userName"  placeholder="Enter your Username"/>
 						</div>
 					</div>
 				</div>
@@ -41,7 +43,7 @@
 				</div>
 	
 				<div class="form-group ">
-					<button type="button" class="btn btn-danger btn-lg btn-block login-button">Login</button>
+					<button id="btnLogin" type="button" class="btn btn-danger btn-lg btn-block login-button">Login</button>
 				</div>
 			</form>
 		</div>

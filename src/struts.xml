@@ -5,6 +5,10 @@
 <struts>
 	<constant name="struts.devMode" value="true" />
 	<package name="default"  namespace="/" extends="struts-default">
+		<action name="AJAXValidateLogin" class="com.ncsu.cms.controller.LoginAction">
+		    <param name="actionName">ACTION_VALIDATE_LOGIN</param>
+		    <result name="success">/jsp/AJAXResult.jsp</result>
+		</action>
 		<action name="home" class="com.ncsu.cms.controller.HomeAction">
         	<result name="success">/jsp/home.jsp</result>
 		</action>

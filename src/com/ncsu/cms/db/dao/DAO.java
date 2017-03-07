@@ -1,5 +1,8 @@
 package com.ncsu.cms.db.dao;
 
-public interface DAO {
+import com.ncsu.cms.bean.ErrorBean;
+import com.ncsu.cms.bean.LoginBean;
 
+public interface DAO {
+	public ErrorBean validateLogin(LoginBean loginData);
 }
