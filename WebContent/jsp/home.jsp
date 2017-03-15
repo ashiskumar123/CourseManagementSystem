@@ -10,13 +10,10 @@
 
 </head>
 <body>
-	<div class="header">
-		NCSU Course Management Portal
-	</div>
+	<jsp:include page="common-header.jsp" />
+	<jsp:include page="common-menu.jsp" />
 	<div class="maincontent">
 	</div>
-	<div class="footer navbar navbar-fixed-bottom">
-		Copyright 2017 NCSU. Towards submission of DBMS Project 1
-	</div>
+	<jsp:include page="common-footer.jsp" />
 </body>
 </html>

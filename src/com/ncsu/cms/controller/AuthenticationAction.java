@@ -41,7 +41,9 @@ public class AuthenticationAction extends ActionSupport{
 
 			Gson gson = new GsonBuilder().create();
 			LoginBean loginData = gson.fromJson(jsonString, LoginBean.class);
+			
 			errorData = cmsDB.validateLogin(loginData);
+			
 			returnData.put("loginResult", errorData);
 		}
 		else if(actionName.equals("ACTION_LOGOUT"))
