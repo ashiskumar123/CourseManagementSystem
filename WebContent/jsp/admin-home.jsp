@@ -13,6 +13,7 @@
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
 	<div class="maincontent">
+	ADMIN-HOME
 	</div>
 	<jsp:include page="common-footer.jsp" />
 </body>

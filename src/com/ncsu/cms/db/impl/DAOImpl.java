@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.LoginBean;
+import com.ncsu.cms.bean.LoginResultBean;
 import com.ncsu.cms.db.connection.DBConnection;
 import com.ncsu.cms.db.dao.DAO;
 import com.ncsu.cms.utils.HashUtil;
@@ -16,9 +17,9 @@ public class DAOImpl implements DAO{
 	static {
         conn = DBConnection.getConnection();
     }
-	public ErrorBean validateLogin(LoginBean loginData){
+	public LoginResultBean validateLogin(LoginBean loginData){
 		
-		ErrorBean validationResult = null;
+		LoginResultBean validationResult = new LoginResultBean();
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_VALIDATE_LOGIN);
@@ -29,12 +30,15 @@ public class DAOImpl implements DAO{
 			ResultSet rs = pstmt.executeQuery();
 
 			if(rs.next())
-				validationResult = new ErrorBean();
+			{
+				validationResult.setErrorData(new ErrorBean());
+				validationResult.setRole(rs.getString(1));
+			}
 			else
-				validationResult = new ErrorBean(ErrorBean.ERROR,"-1");
+				validationResult.setErrorData(new ErrorBean(ErrorBean.ERROR,"-1"));
 
 		} catch (SQLException e) {
-			validationResult = new ErrorBean(ErrorBean.ERROR,"-1");
+			validationResult.setErrorData(new ErrorBean(ErrorBean.ERROR,"-1"));
 			e.printStackTrace();
 		}
 		

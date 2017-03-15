@@ -6,24 +6,34 @@ public class HomeAction extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String name;
+	private String actionName;
+	private String userRole;
 	
 	public String execute() throws Exception {
-		/*if ("SECRET".equals(name))
-		{
-			return SUCCESS;
-		}else{
-			return ERROR;  
-		}*/
+
+		if(actionName.equals("ACTION_HOME_REDIRECT")){
+			if(userRole.equals("1"))
+				return "studenthome";
+			else if(userRole.equals("2"))
+				return "adminhome";
+		}
 		
 		return SUCCESS;
 	}
 
-	public String getName() {
-		return name;
+	public String getActionName() {
+		return actionName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setActionName(String actionName) {
+		this.actionName = actionName;
+	}
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 }

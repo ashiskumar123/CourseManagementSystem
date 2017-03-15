@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.LoginBean;
+import com.ncsu.cms.bean.LoginResultBean;
 import com.ncsu.cms.db.dao.DAO;
 import com.ncsu.cms.db.impl.DAOImpl;
 import com.opensymphony.xwork2.ActionSupport;
@@ -42,9 +43,9 @@ public class AuthenticationAction extends ActionSupport{
 			Gson gson = new GsonBuilder().create();
 			LoginBean loginData = gson.fromJson(jsonString, LoginBean.class);
 			
-			errorData = cmsDB.validateLogin(loginData);
+			LoginResultBean loginResult = cmsDB.validateLogin(loginData);
 			
-			returnData.put("loginResult", errorData);
+			returnData.put("loginResult", loginResult);
 		}
 		else if(actionName.equals("ACTION_LOGOUT"))
 		{

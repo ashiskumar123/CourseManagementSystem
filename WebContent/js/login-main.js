@@ -19,8 +19,12 @@ function validateUser(){
 		
 		loginResult = resultData.loginResult;
 		
-		if(loginResult.errorCode=="0"){
-			window.location.href = "home"
+		if(loginResult.errorData.errorCode=="0"){
+			postNavigate("home",{"userRole" : loginResult.role});
+		}
+		else
+		{
+			//Handle Error
 		}
 	});
 }
