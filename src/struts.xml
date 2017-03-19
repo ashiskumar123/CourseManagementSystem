@@ -13,6 +13,16 @@
 		    <param name="actionName">ACTION_HOME_REDIRECT</param>
         	<result name="studenthome">/jsp/student-home.jsp</result>
         	<result name="adminhome">/jsp/admin-home.jsp</result>
+        </action>
+        <action name="editStudent" class="com.ncsu.cms.controller.StudentManagementAction">
+		    <param name="actionName">ACTION_GET_STUDENT_DETAILS</param>
+		    <result name="success">/jsp/edit-student.jsp</result>
+		</action>
+        <action name="updateStudent" class="com.ncsu.cms.controller.StudentManagementAction">
+		    <param name="actionName">ACTION_UPDATE_STUDENT_DETAILS</param>
+		    <result name="success">/jsp/edit-student.jsp</result>
 		</action>
 	</package>
+	
+
 </struts>

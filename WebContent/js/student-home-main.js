@@ -1,19 +1,19 @@
 	$(document).ready(function() {
-		$("#firstname").val("Prashant");
-		$("#lastname").val("Tanksali");
+		/*$("label[for='fname']").text("Prashant");
+		$("label[for='lname']").text("Tanksali");
 		$("#username").val("prtanksa");
 		$("#password").val("prt_NC94");
 
-		$("#phone").val("919-527-3556");
+		$("label[for='phno']").text("919-527-3556");
 
-		$("#addr1").val("2516 Avent Ferry Rd");
+		$("label[for='stad1']").text("2516 Avent Ferry Rd");
 
-		$("#addr2").val("Apt 204");
-		$("#level").val("UG");
-		$("#residency").val("India");
-		$("#gpa").val("4.0");
+		$("label[for='stad2']").text("Apt 204");
+		$("label[for='level']").text("UG");
+		$("label[for='residency']").text("India");
+		$("label[for='gpa']").text("4.0");*/
 	});
-	function editButton(){
+	/*function editButton(){
 		document.getElementById("firstname").removeAttribute("disabled");
 		document.getElementById("lastname").removeAttribute("disabled");
 		document.getElementById("username").removeAttribute("disabled");
@@ -56,4 +56,4 @@
   document.getElementById("addr2").value = "";
   document.getElementById("phone").value = "";
  
-   }
+   }*/
