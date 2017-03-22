@@ -23,75 +23,65 @@
 		    <div>
 		      <h2>Student Information</h2>
 		    </div>
-		  <form>
-	        <div class="row inter-row" id="sinfo">
+		  <form id="frmEditStudent" method="post" action="updateStudent">
+	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
 		         <label>Firstname: </label>
-		         <input type ="text" name = "firstname" id ="firstname" class="form-control" placeholder="Enter Firstname" disabled ></input>
-			   </div>   
-		        <div class="col-xs-6">
+		         <input type ="text" name = "firstName" id ="firstName" class="form-control" value=<s:property value="%{studentDetails.firstName}"/> placeholder="Enter Firstname" ></input>
+			   </div>   		        
+	        </div>
+	        
+	        <div class="row inter-row" >
+	        	<div class="col-xs-6">
 		         <label>Lastname: </label>
-		         <input type ="text" name="lastname" id ="lastname"class="form-control" placeholder="Enter Lastname" value ="Hi" disabled="disabled"></input>
+		         <input type ="text" name="lastName" id ="lastName"class="form-control" value = <s:property value="%{studentDetails.lastName}"/>  placeholder="Enter Lastname" ></input>
 		       </div>
+	        
 	        </div>
 	        
 	        <div class="row inter-row">
-	          <div class="col-xs-4">
+	          <div class="col-xs-6">
+	            <label>Email: </label>
+	            <input type ="text" name="email" id="email" class="form-control" value=<s:property value="%{studentDetails.email}"/> placeholder="Enter User id" ></input>
+	          </div>
+	        </div>
+	        
+	        <div class="row inter-row">
+	          <div class="col-xs-6">
 	            <label>User id</label>
-	            <input type ="text" name="username" id="username"class="form-control" placeholder="Enter User id" ></input>
+	            <input type ="text" name="userName" id="userName" class="form-control" value=<s:property value="%{studentDetails.studentId}"/> placeholder="Enter User id" ></input>
 	          </div>
 	        </div>
 	        
-	        <div class="row inter-row" id ="pwd">
-	           <div class="col-xs-4">
+	        <div class="row inter-row" >
+	           <div class="col-xs-6">
 	             <label>Password: </label>
-	             <input type="password" id="password" class="form-control" ></input>
+	             <input type="password" id="password" class="form-control" placeholder="Enter Password"></input>
 	          </div>
 	        </div>
 	        
-	        <div class="row inter-row"id="phno">
-	           <div class="col-xs-4">
+	        <div class="row inter-row">
+	           <div class="col-xs-6">
 	             <label>Phone Number: </label>
-	             <input type="text" id="phone" class="form-control"  placeholder ="(___)-(___)-(____)"></input>
+	             <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" value=<s:property value="%{studentDetails.phoneNumber}"/> placeholder ="Enter Phone Number"></input>
 	          </div>
 	         
 	        </div>
 	        
-	        <div class="row inter-row"id="adr1">
-	          <div class="col-xs-12">
-	           <label>Street Address Line 1: </label>
-	           <input type="text" id="addr1" class="form-control"  placeholder ="Enter Address"></input>
+	        <div class="row inter-row">
+	          <div class="col-xs-6">
+	           <label>Street Address: </label>
+	           <input type="text" id="address" name="address" class="form-control"  value= <s:property value="%{studentDetails.address}"/> placeholder ="Enter Address"></input>
 	          </div>
 	        </div>
+
 	        
-	        <div class="row inter-row"id="adr2">
-	          <div class="col-xs-12">           
-	             <label>Street Address Line 2: </label>
-	             <input type="text" id="addr2" class="form-control" disabled="disabled" placeholder ="Enter Address"></input>
-	          </div>
-	        </div>
-	        
-			<div class="row inter-row" id="noedit">
-			  <div>
-	           <div class="col-xs-4">
-	             <label>Level Classification: </label>
-	             <input type="text" id="level" class="form-control" disabled="disabled" ></input>
-	          </div>         
-	        </div>
-	          <div class="col-xs-4">
-	             <label>Residency Classification: </label>
-	             <input type="text" id="residency" class="form-control" disabled="disabled" ></input>
-	          </div>
-	          <div class="col-xs-4">
-	             <label>GPA: </label>
-	             <input type="text" id="gpa" class="form-control" disabled="disabled" ></input>
-	        
-	          </div>         
-	        </div>
 	        
 	        <div class="row inter-row" id="btndiv">
-	          <button type ="button"class="btn btn-default" id ="edit" onclick="editButton()">Edit</button>
+	          <input type ="submit" class="btn btn-default" id ="save" value ="Save" />
+	          <input type = "reset" class="btn btn-default" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
+	        
 	      </form>
 	    </div>
     </div>

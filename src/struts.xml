@@ -15,12 +15,20 @@
         	<result name="adminhome">/jsp/admin-home.jsp</result>
         </action>
         <action name="editStudent" class="com.ncsu.cms.controller.StudentManagementAction">
-		    <param name="actionName">ACTION_GET_STUDENT_DETAILS</param>
+		    <param name="actionName">ACTION_EDIT_STUDENT_DETAILS</param>
 		    <result name="success">/jsp/edit-student.jsp</result>
 		</action>
         <action name="updateStudent" class="com.ncsu.cms.controller.StudentManagementAction">
 		    <param name="actionName">ACTION_UPDATE_STUDENT_DETAILS</param>
-		    <result name="success">/jsp/edit-student.jsp</result>
+		    <result name="success">/jsp/update-student.jsp</result>
+		</action>
+		<action name="register" class="com.ncsu.cms.controller.StudentManagementAction">
+		    <param name="actionName">ACTION_REGISTER_COURSE</param>
+		    <result name="success">/jsp/register-course.jsp</result>
+		</action>
+		<action name="viewBill" class="com.ncsu.cms.controller.StudentManagementAction">
+		    <param name="actionName">ACTION_VIEW_BILL</param>
+		    <result name="success">/jsp/view-bill.jsp</result>
 		</action>
 	</package>
 	

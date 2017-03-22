@@ -1,5 +1,5 @@
-	$(document).ready(function() {
-		/*$("label[for='fname']").text("Prashant");
+/*	$(document).ready(function() {
+		$("label[for='fname']").text("Prashant");
 		$("label[for='lname']").text("Tanksali");
 		$("#username").val("prtanksa");
 		$("#password").val("prt_NC94");
@@ -11,8 +11,8 @@
 		$("label[for='stad2']").text("Apt 204");
 		$("label[for='level']").text("UG");
 		$("label[for='residency']").text("India");
-		$("label[for='gpa']").text("4.0");*/
-	});
+		$("label[for='gpa']").text("4.0");
+	}); */
 	/*function editButton(){
 		document.getElementById("firstname").removeAttribute("disabled");
 		document.getElementById("lastname").removeAttribute("disabled");

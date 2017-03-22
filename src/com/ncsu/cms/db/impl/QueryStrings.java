@@ -12,4 +12,40 @@ public class QueryStrings {
 														" WHERE"+
 														"	DEPARTMENT_ID = DEPT_ID AND"+
 														"	USER_ID=?";
+	public static final String SELECT_STUDENT_CURRENT_COURSE_LIST = "SELECT "+
+																	"   D.DEPARTMENT_NAME, C.COURSE_ID, C.COURSE_NAME,O.OFFERING_ID, L.ROOM_NO, L.BUILDING"+
+																	" FROM"+
+																	"   DEPARTMENT D, COURSE C, COURSE_OFFERING O, ENROLLED_IN E, STUDENT S, LOCATION L"+
+																	" WHERE"+
+																	"   E.USER_ID=? AND S.USER_ID = E.USER_ID AND"+
+																	"   E.OFFERING_ID = O.OFFERING_ID AND"+
+																	"   L.LOCATION_ID = O.LOCATION_ID AND"+
+																	"   O.COURSE_ID = C.COURSE_ID AND"+
+																	"   C.DEPARTMENT_ID = D.DEPARTMENT_ID";	
+	
+	public static final String SELECT_COURSE_SCHEDULE = "SELECT "+ 
+														"	Sch.FROM_TIME, Sch.TO_TIME, Sch.DAY "+
+														" FROM "+
+														"	OFFERING_SCHEDULE Sch,COURSE_OFFERING O "+
+														" WHERE "+
+														"	O.OFFERING_ID =? AND O.OFFERING_ID = Sch.OFFERING_ID "; 
+	
+	public static final String SELECT_OFFERING_LOCATION =   "SELECT "+ 
+															"	Loc.ROOM_NO, Loc.BUILDING "+
+															" FROM "+
+															"	LOCATION Loc,COURSE_OFFERING O "+
+															" WHERE "+
+															"	O.OFFERING_ID =? AND O.LOCATION_ID = Loc.LOCATION_ID";
+
+	public static final String SELECT_COURSE_FACULTY =   "SELECT "+ 
+														 "	Fac.FIRST_NAME, Fac.LAST_NAME "+
+														 " FROM "+
+														 "	FACULTY Fac, FACULTY_LIST Flist, COURSE_OFFERING O "+
+														 " WHERE "+
+														 "	O.OFFERING_ID =? AND Flist.OFFERING_ID = O.OFFERING_ID AND Flist.FACULTY_ID = Fac.FACULTY_ID ";
+	
+	public static final String UPDATE_STUDENT_DETAILS = "UPDATE STUDENT Stu "+
+														"SET Stu.FIRSTNAME=?, Stu.LASTNAME=?, Stu.EMAIL=?, "+ 
+														" Stu.PHONE_NUMBER=?, Stu.ADDRESS=? "+
+														"WHERE Stu.USER_ID =? ";
 }
