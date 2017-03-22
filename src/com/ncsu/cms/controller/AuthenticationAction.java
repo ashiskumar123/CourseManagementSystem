@@ -33,7 +33,7 @@ public class AuthenticationAction extends ActionSupport{
 		DAO cmsDB = new DAOImpl();
 		request = ServletActionContext.getRequest();
 		session = request.getSession();
-		
+
 		//actionName = (String) request.getAttribute("actionName");
 		
 		if(actionName.equals("ACTION_VALIDATE_LOGIN"))
@@ -46,6 +46,12 @@ public class AuthenticationAction extends ActionSupport{
 			LoginResultBean loginResult = cmsDB.validateLogin(loginData);
 			
 			returnData.put("loginResult", loginResult);
+			
+			if(loginResult.getErrorData().getErrorCode().equals("0")){
+				session.getServletContext().setAttribute("loginStatus", "SUCCESS");
+				session.getServletContext().setAttribute("userId", loginResult.getUserId());
+				session.getServletContext().setAttribute("userRole", loginResult.getRole());
+			}
 		}
 		else if(actionName.equals("ACTION_LOGOUT"))
 		{

@@ -2,6 +2,8 @@ package com.ncsu.cms.controller;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.FacultyBean;
@@ -26,22 +28,22 @@ public class HomeAction extends ActionSupport{
 	LocationBean location;
 	List<ScheduleBean> schedule;
 	public String execute() throws Exception {
-
+		
+		String loginStatus = (String) ServletActionContext.getServletContext().getAttribute("loginStatus");
+		String requestMethod = ServletActionContext.getRequest().getMethod();
+		
+		if(!requestMethod.equals("POST") ||  loginStatus==null || loginStatus.equals(""))
+		{
+			ServletActionContext.getResponse().sendRedirect("/CourseManagementSystem");
+		}	
+			
 		DAO cmsDB = new DAOImpl();
 		if(actionName.equals("ACTION_HOME_REDIRECT")){
 			if(userRole.equals("1")){
 				//Load Home Student Details from DB
-				
-				studentDetails = cmsDB.getStudentDetails(6);
-				currentCoursesList = cmsDB.getCurrentCourses(6);
-				facultyList = cmsDB.getCourseFaculty(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
-				location = cmsDB.getCourseLocation(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
-				schedule = cmsDB.getCurrentSchedule(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
-				Iterator<FacultyBean> it = facultyList.iterator(); 
-				while(it.hasNext())
-					System.out.println(it.next().getFirstName());
-				System.out.println(location.getBuilding()+" "+location.getRoomNo());
-				System.out.println(schedule);
+				String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+				studentDetails = cmsDB.getStudentDetails(Integer.parseInt(studentId));
+				currentCoursesList = cmsDB.getCurrentCourses(Integer.parseInt(studentId));
 				return "studenthome";
 			}				
 			else if(userRole.equals("2")){
