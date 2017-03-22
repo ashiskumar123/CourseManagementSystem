@@ -211,6 +211,15 @@
                 <th>Title</th>
                 <th>Grade</th>
               </tr>
+              
+              	<s:iterator value="completedCoursesList">
+              		<tr>
+              			<td><s:property value="departmentName"/></td>
+              			<td><s:property value="courseId"/></td>
+              			<td><s:property value="courseName"/></td>
+              			<td><s:property value="grade"/></td>
+              		</tr>
+				</s:iterator>
            </table>
 		 </div>
 	  </div>	 

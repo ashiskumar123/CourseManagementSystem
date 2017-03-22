@@ -2,6 +2,7 @@ package com.ncsu.cms.controller;
 import java.util.Iterator;
 import java.util.List;
 
+import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.FacultyBean;
@@ -22,7 +23,8 @@ public class HomeAction extends ActionSupport{
 	private StudentBean studentDetails;
 	private List<CurrentCourseBean> currentCoursesList;
 	private List<FacultyBean> facultyList;
-
+    private List<CompletedCoursesBean> completedCoursesList;
+	
 	LocationBean location;
 	List<ScheduleBean> schedule;
 	public String execute() throws Exception {
@@ -34,14 +36,16 @@ public class HomeAction extends ActionSupport{
 				
 				studentDetails = cmsDB.getStudentDetails(6);
 				currentCoursesList = cmsDB.getCurrentCourses(6);
-				facultyList = cmsDB.getCourseFaculty(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
+				/*facultyList = cmsDB.getCourseFaculty(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
 				location = cmsDB.getCourseLocation(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
 				schedule = cmsDB.getCurrentSchedule(Integer.parseInt(currentCoursesList.get(0).getOfferingId()));
 				Iterator<FacultyBean> it = facultyList.iterator(); 
 				while(it.hasNext())
 					System.out.println(it.next().getFirstName());
 				System.out.println(location.getBuilding()+" "+location.getRoomNo());
-				System.out.println(schedule);
+				System.out.println(schedule);*/
+				this.completedCoursesList = cmsDB.getCompletedCourses(6);
+				
 				return "studenthome";
 			}				
 			else if(userRole.equals("2")){
@@ -107,6 +111,14 @@ public class HomeAction extends ActionSupport{
 
 	public void setSchedule(List<ScheduleBean> schedule) {
 		this.schedule = schedule;
+	}
+
+	public List<CompletedCoursesBean> getCompletedCoursesList() {
+		return completedCoursesList;
+	}
+
+	public void setCompletedCoursesList(List<CompletedCoursesBean> completedCoursesList) {
+		this.completedCoursesList = completedCoursesList;
 	}
 
 	
