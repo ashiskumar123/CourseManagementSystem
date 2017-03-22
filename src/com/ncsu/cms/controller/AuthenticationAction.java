@@ -38,7 +38,7 @@ public class AuthenticationAction extends ActionSupport{
 		
 		if(actionName.equals("ACTION_VALIDATE_LOGIN"))
 		{
-			//System.out.println("jsonString="+jsonString);
+			//System.out.println("jsonString="+jsonString );
 
 			Gson gson = new GsonBuilder().create();
 			LoginBean loginData = gson.fromJson(jsonString, LoginBean.class);
