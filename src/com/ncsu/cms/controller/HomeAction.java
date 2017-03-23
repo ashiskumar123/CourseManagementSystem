@@ -23,8 +23,7 @@ public class HomeAction extends ActionSupport{
 	private List<FacultyBean> facultyList;
     private List<CompletedCoursesBean> completedCoursesList;
 	
-	LocationBean location;
-	List<ScheduleBean> schedule;
+	
 	public String execute() throws Exception {
 		
 		String loginStatus = (String) ServletActionContext.getServletContext().getAttribute("loginStatus");
@@ -40,8 +39,11 @@ public class HomeAction extends ActionSupport{
 			if(userRole.equals("1")){
 				//Load Home Student Details from DB
 				String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+				
 				studentDetails = cmsDB.getStudentDetails(Integer.parseInt(studentId));
 				currentCoursesList = cmsDB.getCurrentCourses(Integer.parseInt(studentId));
+				completedCoursesList = cmsDB.getCompletedCourses(Integer.parseInt(studentId));
+				
 				return "studenthome";
 			}				
 			else if(userRole.equals("2")){
@@ -93,21 +95,7 @@ public class HomeAction extends ActionSupport{
 		this.facultyList = facultyList;
 	}
 
-	public LocationBean getLocation() {
-		return location;
-	}
-
-	public void setLocation(LocationBean location) {
-		this.location = location;
-	}
-
-	public List<ScheduleBean> getSchedule() {
-		return schedule;
-	}
-
-	public void setSchedule(List<ScheduleBean> schedule) {
-		this.schedule = schedule;
-	}
+	
 
 	public List<CompletedCoursesBean> getCompletedCoursesList() {
 		return completedCoursesList;
