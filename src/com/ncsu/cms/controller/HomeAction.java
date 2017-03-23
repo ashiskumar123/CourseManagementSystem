@@ -1,14 +1,7 @@
 package com.ncsu.cms.controller;
-import java.util.Iterator;
 import java.util.List;
-
-<<<<<<< HEAD
 import org.apache.struts2.ServletActionContext;
-
-=======
 import com.ncsu.cms.bean.CompletedCoursesBean;
->>>>>>> branch 'master' of https://github.com/ashissahoo/CourseManagementSystem.git
-import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
