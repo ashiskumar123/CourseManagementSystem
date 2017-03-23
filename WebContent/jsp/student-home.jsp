@@ -149,21 +149,24 @@
 		   <h2>Current Courses</h2>
 		 </div>
 		 <div style="margin-top: 20px">
-		   <table style="width:70%;">
+		   <table class="table" style="width:70%;">
 		      <col width="5">
 		      <col width="20">
 		      <col width="20">
 		      <col width="60">
 		      <col width="60">
 		      <col width="60">
-		      <tr>
-                <th>Department</th>
-                <th>Course ID</th>
-                <th>Course Name</th>
-                <th>Schedule</th>            
-                <th>Location</th>
-                <th>List of Faculty</th>
-              </tr>
+		      <thead class="thead-default">
+			      <tr>
+	                <th>Department</th>
+	                <th>Course ID</th>
+	                <th>Course Name</th>
+	                <th>Schedule</th>            
+	                <th>Location</th>
+	                <th>List of Faculty</th>
+	              </tr>
+              </thead>
+              <tbody>
               <s:iterator value="currentCoursesList">
               		<tr>
               			<td><s:property value="departmentName"/></td>
@@ -189,6 +192,7 @@
               			</td>
                     </tr>
               </s:iterator>
+              </tbody>
            </table>
 		 </div>
 	  </div>	 

@@ -24,7 +24,7 @@ public class QueryStrings {
 																	"   C.DEPARTMENT_ID = D.DEPARTMENT_ID";	
 	
 	public static final String SELECT_COURSE_SCHEDULE = "SELECT "+ 
-														"	Sch.FROM_TIME, Sch.TO_TIME, Sch.DAY "+
+														"	TO_CHAR(Sch.FROM_TIME, 'HH:MI AM'), TO_CHAR(Sch.TO_TIME, 'HH:MI AM'), TO_CHAR(NEXT_DAY(TO_DATE('01-JAN-1999'), Sch.DAY), 'Day')"+
 														" FROM "+
 														"	OFFERING_SCHEDULE Sch,COURSE_OFFERING O "+
 														" WHERE "+
