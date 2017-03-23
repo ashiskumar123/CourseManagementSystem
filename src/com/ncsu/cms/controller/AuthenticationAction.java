@@ -20,7 +20,7 @@ public class AuthenticationAction extends ActionSupport{
 	
 	private String jsonString;
 	private HashMap<String, Object> returnData;
-	private HttpSession session;
+	private HttpSession session ;
 	private HttpServletRequest request;
 	private String actionName;
 	private ErrorBean errorData;

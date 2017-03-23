@@ -17,7 +17,7 @@ public class QueryStrings {
 																	" FROM"+
 																	"   DEPARTMENT D, COURSE C, COURSE_OFFERING O, ENROLLED_IN E, STUDENT S, LOCATION L"+
 																	" WHERE"+
-																	"   E.USER_ID=? AND S.USER_ID = E.USER_ID AND"+
+																	"   E.USER_ID=? AND E.ENROLLMENT_STATUS='ENR' AND S.USER_ID = E.USER_ID AND"+
 																	"   E.OFFERING_ID = O.OFFERING_ID AND"+
 																	"   L.LOCATION_ID = O.LOCATION_ID AND"+
 																	"   O.COURSE_ID = C.COURSE_ID AND"+
@@ -48,4 +48,12 @@ public class QueryStrings {
 														"SET Stu.FIRSTNAME=?, Stu.LASTNAME=?, Stu.EMAIL=?, "+ 
 														" Stu.PHONE_NUMBER=?, Stu.ADDRESS=? "+
 														"WHERE Stu.USER_ID =? ";
+
+	public static final String SELECT_STUDENT_COMPLETED_COURSE_LIST =   "SELECT "+
+																		" Dept.DEPARTMENT_NAME, C.COURSE_ID,C.COURSE_NAME, En.GRADE "+
+																		"FROM "+
+																		" DEPARTMENT Dept, COURSE C, COURSE_OFFERING O, ENROLLED_IN En, STUDENT S "+
+																		"WHERE "+
+																		" En.USER_ID=? AND En.ENROLLMENT_STATUS='COMP' AND En.USER_ID=S.USER_ID AND En.OFFERING_ID = O.OFFERING_ID AND O.COURSE_ID = C.COURSE_ID "+
+																		" AND C.DEPARTMENT_ID =Dept.DEPARTMENT_ID";
 }

@@ -2,6 +2,7 @@ package com.ncsu.cms.db.dao;
 
 import java.util.List;
 
+import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
@@ -25,4 +26,5 @@ public interface DAO {
 	
 	public void updateStudentDetails(String firstName, String lastName, String email, long phNo, String addr, int userid);
 	
+	public List<CompletedCoursesBean> getCompletedCourses(int studentId);
 }

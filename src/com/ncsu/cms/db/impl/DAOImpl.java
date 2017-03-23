@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.ErrorBean;
@@ -235,6 +236,37 @@ public class DAOImpl implements DAO{
 		}
 	}
 	
+	public List<CompletedCoursesBean> getCompletedCourses(int studentId){
+		List<CompletedCoursesBean> courseList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_STUDENT_COMPLETED_COURSE_LIST);
+
+			pstmt.setInt(1, studentId);
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			courseList = new ArrayList<CompletedCoursesBean>();
+			
+			while(rs.next())
+			{
+				CompletedCoursesBean course  = new CompletedCoursesBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4)
+						);
+				courseList.add(course);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseList;
+		
+	}
+	
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -245,6 +277,7 @@ public class DAOImpl implements DAO{
 		//System.out.println(new DAOImpl().getCurrentSchedule(1).get(0).getToTime()); 
 		//System.out.println(new DAOImpl().getCourseLocation(3).getRoomNo());
 		//System.out.println(new DAOImpl().getCourseFaculty(3).get(2).getFacultyFirstName());
-		new DAOImpl().updateStudentDetails("TankiBuoy", "Tanksali", "prtanki@ncsu.edu",120,"2516 Avent Ferry Rd",6);
+		//new DAOImpl().updateStudentDetails("TankiBuoy", "Tanksali", "prtanki@ncsu.edu",120,"2516 Avent Ferry Rd",6);
+		System.out.println(new DAOImpl().getCompletedCourses(6).get(0).getGrade());
 	}
 }
