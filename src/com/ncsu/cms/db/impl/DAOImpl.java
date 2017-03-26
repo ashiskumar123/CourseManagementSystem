@@ -222,7 +222,6 @@ public class DAOImpl implements DAO{
 		pstmt.setString(5, addr);
 		pstmt.setInt(6, userid);
 		
-		System.out.println(pstmt.toString());
 		
 		int statusCode = pstmt.executeUpdate();
 		
@@ -230,6 +229,22 @@ public class DAOImpl implements DAO{
 		
 		System.out.println("ByeBro");
 		System.out.println(statusCode);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateUserPassword(int studentId,String password){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_USER_PASSWORD);
+			pstmt.setString(1, password);
+			pstmt.setInt(2, studentId);
+			
+			int statusCode = pstmt.executeUpdate();
+			conn.commit();
+			System.out.println(statusCode);
+			
 		}
 		catch(SQLException e){
 			e.printStackTrace();
@@ -278,6 +293,7 @@ public class DAOImpl implements DAO{
 		//System.out.println(new DAOImpl().getCourseLocation(3).getRoomNo());
 		//System.out.println(new DAOImpl().getCourseFaculty(3).get(2).getFacultyFirstName());
 		//new DAOImpl().updateStudentDetails("TankiBuoy", "Tanksali", "prtanki@ncsu.edu",120,"2516 Avent Ferry Rd",6);
-		System.out.println(new DAOImpl().getCompletedCourses(6).get(0).getGrade());
+		//System.out.println(new DAOImpl().getCompletedCourses(6).get(0).getGrade());
+		new DAOImpl().updateUserPassword(9, "hermoinie");
 	}
 }

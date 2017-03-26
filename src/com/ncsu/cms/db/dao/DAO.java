@@ -27,4 +27,6 @@ public interface DAO {
 	public void updateStudentDetails(String firstName, String lastName, String email, long phNo, String addr, int userid);
 	
 	public List<CompletedCoursesBean> getCompletedCourses(int studentId);
+	
+	public void updateUserPassword(int studentId,String password);
 }

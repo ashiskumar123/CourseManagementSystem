@@ -56,4 +56,14 @@ public class QueryStrings {
 																		"WHERE "+
 																		" En.USER_ID=? AND En.ENROLLMENT_STATUS='COMP' AND En.USER_ID=S.USER_ID AND En.OFFERING_ID = O.OFFERING_ID AND O.COURSE_ID = C.COURSE_ID "+
 																		" AND C.DEPARTMENT_ID =Dept.DEPARTMENT_ID";
+	
+	public static final String UPDATE_USER_PASSWORD = "UPDATE USERS U "+
+			  										  "	SET U.PASSWORD=? "+
+			  										  "WHERE "+ 
+			  										  " U.USER_ID=?";
+	
+	public static final String SELECT_ADMIN_DETAILS= "SELECT "+
+													 " USER_ID, FIRSTNAME, LASTNAME, SSN "+
+													 " FROM ADMIN "+
+													 "WHERE USER_ID=? ";
 }

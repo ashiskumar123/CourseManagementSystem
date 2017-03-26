@@ -234,10 +234,10 @@
     <div class="container" style="margin-top: 15px" >
     	<div class="row">
 	    	<form id="frmRegister" method="get" action="register">    		
-		    	<div class="col-xs-5"><input type ="submit" class="btn btn-default form-control" id ="btnReg" value ="Register for Courses" /></div>	    		   		
+		    	<div class="col-xs-5"><input type ="submit" class="btn btn-primary form-control" id ="btnReg" value ="Register for Courses" /></div>	    		   		
 	    	</form>
 	    	<form id="frmBillr" method="get" action="viewBill">    		
-		    	<div class="col-xs-5"><input type ="submit" class="btn btn-default form-control" id ="btnBill" value ="View Bill" /></div>	    		   		
+		    	<div class="col-xs-5"><input type ="submit" class="btn btn-primary form-control" id ="btnBill" value ="View Bill" /></div>	    		   		
 	    	</form>
     	</div>
     </div>

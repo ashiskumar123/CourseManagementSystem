@@ -8,6 +8,8 @@
 <title>Edit Student - Course Management System</title>
 <jsp:include page="common-include.jsp" />
 <script type="text/javascript" src="js/student-home-main.js"></script>
+
+
 <style>
     .inter-row{
     margin-top : 15px;
@@ -46,19 +48,7 @@
 	          </div>
 	        </div>
 	        
-	        <div class="row inter-row">
-	          <div class="col-xs-6">
-	            <label>User id</label>
-	            <input type ="text" name="userName" id="userName" class="form-control" value=<s:property value="%{studentDetails.studentId}"/> placeholder="Enter User id" ></input>
-	          </div>
-	        </div>
 	        
-	        <div class="row inter-row" >
-	           <div class="col-xs-6">
-	             <label>Password: </label>
-	             <input type="password" id="password" class="form-control" placeholder="Enter Password"></input>
-	          </div>
-	        </div>
 	        
 	        <div class="row inter-row">
 	           <div class="col-xs-6">
@@ -79,10 +69,15 @@
 	        
 	        <div class="row inter-row" id="btndiv">
 	          <input type ="submit" class="btn btn-default" id ="save" value ="Save" />
-	          <input type = "reset" class="btn btn-default" style= "margin-left: 10px" id="cancel" value="Cancel" />
+	          <input type = "reset" class="btn btn-default" style= "margin-left: 10px" id="cancel" value="Reset" />
 	        </div>
 	        
 	      </form>
+	      <div style="margin-top: 10px">
+	      
+	      <form id="frmResetPwd" method="get" action="resetPwd">    		
+		    	<input type ="submit" class="btn btn-default" id ="btnResetPwd" value ="Reset Password" />    		   		
+	      </form></div>
 	    </div>
     </div>
 	<jsp:include page="common-footer.jsp" />

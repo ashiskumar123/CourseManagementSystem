@@ -49,6 +49,7 @@ public class HomeAction extends ActionSupport{
 			else if(userRole.equals("2")){
 				//Load Home Admin Details from DB
 				
+				
 				return "adminhome";
 			}
 		}
