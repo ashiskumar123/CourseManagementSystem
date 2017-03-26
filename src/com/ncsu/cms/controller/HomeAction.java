@@ -28,6 +28,7 @@ public class HomeAction extends ActionSupport{
 		
 		String loginStatus = (String) ServletActionContext.getServletContext().getAttribute("loginStatus");
 		String requestMethod = ServletActionContext.getRequest().getMethod();
+		userRole = (String) ServletActionContext.getServletContext().getAttribute("userRole");
 		
 		if(!requestMethod.equals("POST") ||  loginStatus==null || loginStatus.equals(""))
 		{

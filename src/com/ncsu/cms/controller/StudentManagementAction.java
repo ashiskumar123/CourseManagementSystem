@@ -1,6 +1,7 @@
 package com.ncsu.cms.controller;
 import org.apache.struts2.ServletActionContext;
 
+import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.StudentBean;
 import com.ncsu.cms.db.dao.DAO;
 import com.ncsu.cms.db.impl.DAOImpl;
@@ -26,6 +27,10 @@ public class StudentManagementAction extends ActionSupport{
 	private String saveMessage;
 	private String editError;
 	private String resetSuccess;
+	private BillBean bill;
+	private String payAmount;
+	private String payError;
+	private String paySuccess;
 	
 
 	public String execute() throws Exception {
@@ -52,8 +57,28 @@ public class StudentManagementAction extends ActionSupport{
 			
 		}
 		else if(actionName.equals("ACTION_VIEW_BILL")){
+			String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+			int stId = Integer.parseInt(studentId);
+			this.bill = cmsDB.getBill(stId);
 			
 		} 
+		else if(actionName.equals("ACTION_PAY_BILL")){
+			String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+			int stId = Integer.parseInt(studentId);
+			this.bill = cmsDB.getBill(stId);
+			if(payAmount.isEmpty())
+				this.setPayError("Please enter a value for Pay Amount");
+			else if(Integer.parseInt(payAmount)>= 0){
+
+				int currAmt = Integer.parseInt(bill.getBillAmount());
+				int updatedAmount = currAmt - Integer.parseInt(payAmount);
+				cmsDB.updateBillAmount(stId,updatedAmount);
+				this.setPaySuccess("Payment Made successfully");
+			}
+			else{
+					this.setPayError("Please Enter a positive value for pay amount");
+				}
+		}
 		else if(actionName.equals("ACTION_RESET_PASSWORD")){
 			
 		}
@@ -190,5 +215,37 @@ public class StudentManagementAction extends ActionSupport{
 
 	public void setResetSuccess(String resetSuccess) {
 		this.resetSuccess = resetSuccess;
+	}
+
+	public BillBean getBill() {
+		return bill;
+	}
+
+	public void setBill(BillBean bill) {
+		this.bill = bill;
+	}
+
+	public String getPayAmount() {
+		return payAmount;
+	}
+
+	public void setPayAmount(String payAmount) {
+		this.payAmount = payAmount;
+	}
+
+	public String getPayError() {
+		return payError;
+	}
+
+	public void setPayError(String payError) {
+		this.payError = payError;
+	}
+
+	public String getPaySuccess() {
+		return paySuccess;
+	}
+
+	public void setPaySuccess(String paySuccess) {
+		this.paySuccess = paySuccess;
 	}
 }

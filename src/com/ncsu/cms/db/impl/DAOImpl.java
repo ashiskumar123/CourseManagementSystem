@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
@@ -251,6 +252,22 @@ public class DAOImpl implements DAO{
 		}
 	}
 	
+	public void updateBillAmount(int studentId,int amount){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_BILL_AMOUNT);
+			pstmt.setInt(1, amount);
+			pstmt.setInt(2, studentId);
+			
+			int statusCode = pstmt.executeUpdate();
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public List<CompletedCoursesBean> getCompletedCourses(int studentId){
 		List<CompletedCoursesBean> courseList = null;
 		
@@ -282,6 +299,32 @@ public class DAOImpl implements DAO{
 		
 	}
 	
+	public BillBean getBill(int studentId){
+        BillBean bill = null;
+		
+		try {
+			
+				PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_BILL_AMOUNT);
+	
+				pstmt.setInt(1, studentId);
+				
+				ResultSet rs = pstmt.executeQuery();
+	
+				if(rs.next())
+				{
+					bill = new BillBean(
+							rs.getString(1)
+				     );
+				}
+		}
+		
+			catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return bill;
+		
+	}
+	
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -294,6 +337,8 @@ public class DAOImpl implements DAO{
 		//System.out.println(new DAOImpl().getCourseFaculty(3).get(2).getFacultyFirstName());
 		//new DAOImpl().updateStudentDetails("TankiBuoy", "Tanksali", "prtanki@ncsu.edu",120,"2516 Avent Ferry Rd",6);
 		//System.out.println(new DAOImpl().getCompletedCourses(6).get(0).getGrade());
-		new DAOImpl().updateUserPassword(9, "hermoinie");
+		//new DAOImpl().updateUserPassword(9, "hermoinie");
+		//System.out.println(new DAOImpl().getBill(6).getBillAmount());
+		new DAOImpl().updateBillAmount(6,900);
 	}
 }

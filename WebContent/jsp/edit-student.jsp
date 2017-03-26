@@ -23,14 +23,24 @@
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
 	<div class="container">
-		<a href="jsp/student-home.jsp">Go Back</a>
+		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
 	</div>
 	<div id ="student info" class="container">
 		<div class ="maincontent">
+		    
 		    <div>
 		      <h2>Student Information</h2>
 		    </div>
+		    <div style="margin-top: 10px; color:green;font-family:'Lilita One', cursive; font-size:20px;">
+	      	<s:property value="%{saveMessage}"/>
+	      </div>
+	      
+	      <div style="margin-top: 10px">
+	      	<p style="color: red; font-family: 'New Century Schoolbook', serif; font-style: oblique; font-size:20px">
+	      	<s:property value="%{editError}"/></p>
+	      </div>
 		  <form id="frmEditStudent" method="post" action="updateStudent">
+		  
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
 		         <label>Firstname: </label>
@@ -83,14 +93,7 @@
 			    	<input type ="submit" class="btn btn-primary" id ="btnResetPwd" value ="Reset Password" />    		   		
 		      </form>
 	      </div>
-	      <div style="margin-top: 10px; color:green;font-family:'Lilita One', cursive; font-size:20px;">
-	      	<s:property value="%{saveMessage}"/>
-	      </div>
 	      
-	      <div style="margin-top: 10px">
-	      	<p style="color: red; font-family: 'New Century Schoolbook', serif; font-style: oblique; font-size:20px">
-	      	<s:property value="%{editError}"/></p>
-	      </div>
 	      
 	      
 	    </div>

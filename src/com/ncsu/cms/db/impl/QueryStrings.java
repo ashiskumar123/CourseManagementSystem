@@ -66,4 +66,18 @@ public class QueryStrings {
 													 " USER_ID, FIRSTNAME, LASTNAME, SSN "+
 													 " FROM ADMIN "+
 													 "WHERE USER_ID=? ";
+	
+	public static final String SELECT_BILL_AMOUNT =  "SELECT "+
+													 " Bill.BILL_AMOUNT "+
+													 "FROM "+
+													 " BILL_PAYS Bill "+
+													 "WHERE "+
+													 " Bill.USER_ID=? ";
+	
+	public static final String UPDATE_BILL_AMOUNT =  "UPDATE "+
+													 " BILL_PAYS Bill "+
+													 "SET "+
+													 " Bill.BILL_AMOUNT=? "+
+													 "WHERE "+
+													 " Bill.USER_ID=? ";
 }

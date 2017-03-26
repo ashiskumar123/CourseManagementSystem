@@ -19,7 +19,7 @@
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
 	<div class="container">
-		<a href="CourseManagementSystem/editStudent">Go Back</a>
+		<a href="editStudent">Go Back</a>
 	</div>
 	<div class="container">
 		<div class ="maincontent">
@@ -42,7 +42,7 @@
 	        
 	        </div>
 	        
-	        <div class="row inter-row" id="btndiv">
+	        <div class="row inter-row">
 	          <input type ="submit" class="btn btn-primary" id ="updatePwd" value ="Update" />         
 	        </div>
 	        <div class="row inter-row">

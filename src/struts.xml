@@ -38,6 +38,10 @@
 			<param name="actionName">ACTION_UPDATE_PASSWORD</param>
 			<result name="success">/jsp/reset-password.jsp</result>
 		</action>
+		<action name="payBill" class="com.ncsu.cms.controller.StudentManagementAction">
+			<param name="actionName">ACTION_PAY_BILL</param>
+			<result name="success">/jsp/view-bill.jsp</result>
+		</action>
 	</package>
 	
 
