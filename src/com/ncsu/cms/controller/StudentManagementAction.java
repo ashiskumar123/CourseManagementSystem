@@ -23,21 +23,27 @@ public class StudentManagementAction extends ActionSupport{
 	private String entPwd;
 	private String confPwd;
 	private String errorMessage;
-	
-	
-	
+	private String saveMessage;
+	private String editError;
+	private String resetSuccess;
 	
 
 	public String execute() throws Exception {
 		DAO cmsDB = new DAOImpl();
 		if(actionName.equals("ACTION_EDIT_STUDENT_DETAILS")){
-			studentDetails = cmsDB.getStudentDetails(6);
-			System.out.println(studentDetails.getFirstName());
+			String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+			studentDetails = cmsDB.getStudentDetails(Integer.parseInt(studentId));
 			
 		}
 		else if(actionName.equals("ACTION_UPDATE_STUDENT_DETAILS")){
-			System.out.println(firstName+" "+lastName+" "+email+" "+phoneNumber+" "+this.address);
-			cmsDB.updateStudentDetails(firstName, lastName, email, Long.parseLong(phoneNumber), address,6);
+			
+			String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+		    if(firstName.isEmpty()||lastName.isEmpty()||email.isEmpty()||phoneNumber.isEmpty())
+		    	this.editError ="None of the above fields should be empty";
+		    else{
+		    	cmsDB.updateStudentDetails(firstName, lastName, email, Long.parseLong(phoneNumber), address,Integer.parseInt(studentId));
+				this.saveMessage = "Student Details successfully saved";
+		    }
 			
 		}
 		else if(actionName.equals("ACTION_REGISTER_COURSE")){
@@ -54,14 +60,16 @@ public class StudentManagementAction extends ActionSupport{
 		else if(actionName.equals("ACTION_UPDATE_PASSWORD")){
 			
 			if(entPwd.isEmpty() || confPwd.isEmpty()){
-				this.setErrorMessage("The entered password and the confirmed passwords cannot be empty");}
+				this.setErrorMessage("The entered password and the confirmed password cannot be empty");}
 			
 			else if(entPwd!=null && confPwd!=null){						
 				if(!entPwd.equals(confPwd))
 					this.setErrorMessage("The newly entered password and confirmed password do not match");	
 				else{
 					String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+					System.out.println("Student Id"+studentId);
 					cmsDB.updateUserPassword(Integer.parseInt(studentId), HashUtil.generateSHA256Hash(entPwd));
+					this.setResetSuccess("Passowrd has been reset successfully");
 				}
 					
 		    }
@@ -158,5 +166,29 @@ public class StudentManagementAction extends ActionSupport{
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	public String getSaveMessage() {
+		return saveMessage;
+	}
+
+	public void setSaveMessage(String saveMessage) {
+		this.saveMessage = saveMessage;
+	}
+
+	public String getEditError() {
+		return editError;
+	}
+
+	public void setEditError(String editError) {
+		this.editError = editError;
+	}
+
+	public String getResetSuccess() {
+		return resetSuccess;
+	}
+
+	public void setResetSuccess(String resetSuccess) {
+		this.resetSuccess = resetSuccess;
 	}
 }

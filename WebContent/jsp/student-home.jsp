@@ -14,11 +14,11 @@
     .inter-row{
     	margin-top : 10px;
     }
-    table,th,td{
+    /*table,th,td{
 	    border: 1px solid black;
 	    padding-top: 5px;
 	    padding-bottom: 5px;
-	}
+	}*/
 	th{
 		text-align: center;
 	}
@@ -93,8 +93,10 @@
 	             	<label for="gpa">
 			        	<s:property value="%{studentDetails.gpa}"/>
 			        </label>
-	          </div>
-	          <div class="col-xs-3">
+	          </div>	                   
+	        </div>
+	        <div class="row inter-row">
+	        	<div class="col-xs-3">
 	             Level Classification:
 	             	<label for="email">
 			        	<s:property value="%{studentDetails.levelClassification}"/>
@@ -104,13 +106,12 @@
 	             Residency Classification:
 	             	<label for="email">
 			        	<s:property value="%{studentDetails.residencyClassification}"/>
-			        </label>
-	        
-	          </div>         
+			        </label>	        
+	          </div>
 	        </div>
 	        	        
 	        <div class="row inter-row" id="btndiv">
-	          <input type ="submit" class="btn btn-default" id ="edit" value ="Edit" />
+	          <input type ="submit" class="btn btn-primary" id ="edit" value ="Edit" />
 	        </div>
 	        
 	      </form>
@@ -168,7 +169,7 @@
               </thead>
               <tbody>
               <s:iterator value="currentCoursesList">
-              		<tr>
+              		<tr>              		    
               			<td><s:property value="departmentName"/></td>
               			<td><s:property value="courseId"/></td>
               			<td><s:property value="courseName"/></td>
@@ -194,8 +195,12 @@
               </s:iterator>
               </tbody>
            </table>
+           
 		 </div>
-	  </div>	 
+	  </div>
+	  <form id="frmRegister" method="get" action="register">    		
+		   <input type ="submit" class="btn btn-primary" id ="btnReg" value ="Register for Courses" />    		   		
+	   </form>	 
 	</div>
 	
 	<div id ="completedCourses" style="margin-top: 20px" class="container">
@@ -204,18 +209,20 @@
 		   <h2>Completed Courses</h2>
 		 </div>
 		 <div style="margin-top: 20px">
-		   <table style="width:70%;">
+		   <table class="table" style="width:70%;">
 		      <col width="5">
 		      <col width="20">
 		      <col width="60">
 		      <col width="60">
-		      <tr>
-                <th>Department</th>
-                <th>Course ID</th>
-                <th>Title</th>
-                <th>Grade</th>
-              </tr>
-              
+		      <thead class="thead-default">
+			      <tr>
+	                <th>Department</th>
+	                <th>Course ID</th>
+	                <th>Title</th>
+	                <th>Grade</th>
+	              </tr>
+              </thead>
+              <tbody>
               	<s:iterator value="completedCoursesList">
               		<tr>
               			<td><s:property value="departmentName"/></td>
@@ -224,21 +231,21 @@
               			<td><s:property value="grade"/></td>
               		</tr>
 				</s:iterator>
+			  
            </table>
 		 </div>
 	  </div>	 
+	  <form id="frmBillr" method="get" action="viewBill" style = "margin-top:15px">    		
+		  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="View Bill" />   		   		
+	  </form>
 	</div>
 	
 	
 	
     <div class="container" style="margin-top: 15px" >
     	<div class="row">
-	    	<form id="frmRegister" method="get" action="register">    		
-		    	<div class="col-xs-5"><input type ="submit" class="btn btn-primary form-control" id ="btnReg" value ="Register for Courses" /></div>	    		   		
-	    	</form>
-	    	<form id="frmBillr" method="get" action="viewBill">    		
-		    	<div class="col-xs-5"><input type ="submit" class="btn btn-primary form-control" id ="btnBill" value ="View Bill" /></div>	    		   		
-	    	</form>
+	    	
+	    	
     	</div>
     </div>
 	<jsp:include page="common-footer.jsp" />

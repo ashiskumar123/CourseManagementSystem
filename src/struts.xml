@@ -20,7 +20,7 @@
 		</action>
         <action name="updateStudent" class="com.ncsu.cms.controller.StudentManagementAction">
 		    <param name="actionName">ACTION_UPDATE_STUDENT_DETAILS</param>
-		    <result name="success">/jsp/update-student.jsp</result>
+		    <result name="success">/jsp/edit-student.jsp</result>
 		</action>
 		<action name="register" class="com.ncsu.cms.controller.StudentManagementAction">
 		    <param name="actionName">ACTION_REGISTER_COURSE</param>

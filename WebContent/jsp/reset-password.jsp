@@ -11,12 +11,16 @@
     .inter-row{
     margin-top : 15px;
     }
+    @import url('https://fonts.googleapis.com/css?family=Lilita+One');
 </style>
 </head>
 <body>
 
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
+	<div class="container">
+		<a href="CourseManagementSystem/editStudent">Go Back</a>
+	</div>
 	<div class="container">
 		<div class ="maincontent">
 		    <div>
@@ -39,10 +43,15 @@
 	        </div>
 	        
 	        <div class="row inter-row" id="btndiv">
-	          <input type ="submit" class="btn btn-default" id ="updatePwd" value ="Update" />         
+	          <input type ="submit" class="btn btn-primary" id ="updatePwd" value ="Update" />         
 	        </div>
 	        <div class="row inter-row">
-	        	<p><s:property value="%{errorMessage}"/></p>
+	        	<p style="color: red; font-family: 'New Century Schoolbook', serif; font-style: oblique; font-size:20px;">
+	        	<s:property value="%{errorMessage}"/></p>
+	        </div>
+	        
+	        <div class="row inter-row">
+	        	<p style="color:green; font-family:'Lilita One', cursive; font-size:20px;"><s:property value="%{resetSuccess}"/></p>
 	        </div>
 	        
 	      </form>

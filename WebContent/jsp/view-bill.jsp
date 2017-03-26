@@ -11,6 +11,9 @@
 
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
+	<div class="container">
+		<a href="jsp/student-home.jsp">Go Back</a>
+	</div>
 	<h2>View Bill</h2>
 	<jsp:include page="common-footer.jsp" />
 

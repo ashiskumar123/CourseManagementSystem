@@ -14,12 +14,17 @@
     .inter-row{
     margin-top : 15px;
     }
+    
+}
 </style>
 </head>
 
 <body>
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
+	<div class="container">
+		<a href="jsp/student-home.jsp">Go Back</a>
+	</div>
 	<div id ="student info" class="container">
 		<div class ="maincontent">
 		    <div>
@@ -29,14 +34,14 @@
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
 		         <label>Firstname: </label>
-		         <input type ="text" name = "firstName" id ="firstName" class="form-control" value=<s:property value="%{studentDetails.firstName}"/> placeholder="Enter Firstname" ></input>
+		         	<input type ="text" name = "firstName" id ="firstName" class="form-control" placeholder = "Enter Firstname" value=<s:property value="%{studentDetails.firstName}"/> ></input>
 			   </div>   		        
 	        </div>
 	        
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
 		         <label>Lastname: </label>
-		         <input type ="text" name="lastName" id ="lastName"class="form-control" value = <s:property value="%{studentDetails.lastName}"/>  placeholder="Enter Lastname" ></input>
+		         <input type ="text" name="lastName" id ="lastName"class="form-control" placeholder="Enter Lastname" value = <s:property value="%{studentDetails.lastName}"/> ></input>
 		       </div>
 	        
 	        </div>
@@ -44,7 +49,7 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	            <label>Email: </label>
-	            <input type ="text" name="email" id="email" class="form-control" value=<s:property value="%{studentDetails.email}"/> placeholder="Enter User id" ></input>
+	            <input type ="text" name="email" id="email" class="form-control" placeholder="Enter User id" value=<s:property value="%{studentDetails.email}"/> ></input>
 	          </div>
 	        </div>
 	        
@@ -53,7 +58,7 @@
 	        <div class="row inter-row">
 	           <div class="col-xs-6">
 	             <label>Phone Number: </label>
-	             <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" value=<s:property value="%{studentDetails.phoneNumber}"/> placeholder ="Enter Phone Number"></input>
+	             <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder ="Enter Phone Number" value=<s:property value="%{studentDetails.phoneNumber}"/> ></input>
 	          </div>
 	         
 	        </div>
@@ -61,23 +66,33 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Street Address: </label>
-	           <input type="text" id="address" name="address" class="form-control"  value= <s:property value="%{studentDetails.address}"/> placeholder ="Enter Address"></input>
+	           <input type="text" id="address" name="address" class="form-control" placeholder ="Enter Address" value= <s:property value="%{studentDetails.address}"/> ></input>
 	          </div>
 	        </div>
 
 	        
 	        
 	        <div class="row inter-row" id="btndiv">
-	          <input type ="submit" class="btn btn-default" id ="save" value ="Save" />
-	          <input type = "reset" class="btn btn-default" style= "margin-left: 10px" id="cancel" value="Reset" />
+	          <input type ="submit" class="btn btn-primary" id ="save" value ="Save" />
+	          <input type = "reset" class="btn btn-primary" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
 	        
 	      </form>
-	      <div style="margin-top: 10px">
+	      <div style="margin-top: 10px">	      
+		      <form id="frmResetPwd" method="get" action="resetPwd">    		
+			    	<input type ="submit" class="btn btn-primary" id ="btnResetPwd" value ="Reset Password" />    		   		
+		      </form>
+	      </div>
+	      <div style="margin-top: 10px; color:green;font-family:'Lilita One', cursive; font-size:20px;">
+	      	<s:property value="%{saveMessage}"/>
+	      </div>
 	      
-	      <form id="frmResetPwd" method="get" action="resetPwd">    		
-		    	<input type ="submit" class="btn btn-default" id ="btnResetPwd" value ="Reset Password" />    		   		
-	      </form></div>
+	      <div style="margin-top: 10px">
+	      	<p style="color: red; font-family: 'New Century Schoolbook', serif; font-style: oblique; font-size:20px">
+	      	<s:property value="%{editError}"/></p>
+	      </div>
+	      
+	      
 	    </div>
     </div>
 	<jsp:include page="common-footer.jsp" />
