@@ -12,7 +12,7 @@
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
 	<div class="container">
-		<a href="jsp/student-home.jsp">Go Back</a>
+		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
 	</div>
 	<h2>Register Course</h2>
 	<jsp:include page="common-footer.jsp" />

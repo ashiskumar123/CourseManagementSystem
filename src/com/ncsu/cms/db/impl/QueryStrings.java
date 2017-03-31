@@ -6,7 +6,7 @@ public class QueryStrings {
 	public static final String SELECT_STUDENT_DETAILS = "SELECT "+
 														"	USER_ID, FIRSTNAME, LASTNAME, PHONE_NUMBER, ADDRESS, EMAIL, GPA, DEPARTMENT_NAME,"+
 														"	CASE LEVEL_CLASSIFICATION WHEN 1 THEN 'UNDERGRADUATE' WHEN 2 THEN 'GRADUATE' END LEVEL_CLASSIFICATION,"+
-														"	CASE RESIDENCY_TYPE WHEN 1 THEN 'IN-STATE' WHEN 2 THEN 'OUT-STATE' WHEN 3 THEN 'INTERNATIONAL' END RESIDENCY_TYPE"+
+														"	(SELECT DESCRIPTION FROM RESIDENCY_TYPE_LOOKUP WHERE ID = RESIDENCY_TYPE) RESIDENCY_TYPE"+
 														" FROM"+
 														" 	STUDENT, DEPARTMENT"+
 														" WHERE"+
@@ -17,7 +17,7 @@ public class QueryStrings {
 																	" FROM"+
 																	"   DEPARTMENT D, COURSE C, COURSE_OFFERING O, ENROLLED_IN E, STUDENT S, LOCATION L"+
 																	" WHERE"+
-																	"   E.USER_ID=? AND E.ENROLLMENT_STATUS='ENR' AND S.USER_ID = E.USER_ID AND"+
+																	"   E.USER_ID=? AND E.ENROLLMENT_STATUS=1 AND S.USER_ID = E.USER_ID AND"+
 																	"   E.OFFERING_ID = O.OFFERING_ID AND"+
 																	"   L.LOCATION_ID = O.LOCATION_ID AND"+
 																	"   O.COURSE_ID = C.COURSE_ID AND"+
@@ -54,7 +54,7 @@ public class QueryStrings {
 																		"FROM "+
 																		" DEPARTMENT Dept, COURSE C, COURSE_OFFERING O, ENROLLED_IN En, STUDENT S "+
 																		"WHERE "+
-																		" En.USER_ID=? AND En.ENROLLMENT_STATUS='COMP' AND En.USER_ID=S.USER_ID AND En.OFFERING_ID = O.OFFERING_ID AND O.COURSE_ID = C.COURSE_ID "+
+																		" En.USER_ID=? AND En.ENROLLMENT_STATUS=3 AND En.USER_ID=S.USER_ID AND En.OFFERING_ID = O.OFFERING_ID AND O.COURSE_ID = C.COURSE_ID "+
 																		" AND C.DEPARTMENT_ID =Dept.DEPARTMENT_ID";
 	
 	public static final String UPDATE_USER_PASSWORD = "UPDATE USERS U "+
@@ -63,7 +63,7 @@ public class QueryStrings {
 			  										  " U.USER_ID=?";
 	
 	public static final String SELECT_ADMIN_DETAILS= "SELECT "+
-													 " USER_ID, FIRSTNAME, LASTNAME, SSN "+
+													 "  FIRSTNAME, LASTNAME, SSN "+
 													 " FROM ADMIN "+
 													 "WHERE USER_ID=? ";
 	
@@ -80,4 +80,37 @@ public class QueryStrings {
 													 " Bill.BILL_AMOUNT=? "+
 													 "WHERE "+
 													 " Bill.USER_ID=? ";
+	
+	public static final String UPDATE_ADMIN_DETAILS =   "UPDATE ADMIN A "+
+														" SET A.FIRSTNAME=?, A.LASTNAME=?, A.SSN = ? "+
+														"WHERE "+
+														" A.USER_ID =? ";
+	
+	public static final String GET_STUDENT_LIST =   "SELECT * "+
+													" FROM "+
+													"STUDENT ";
+	
+	public static final String ADD_STUDENT = "INSERT "+
+			 								 " INTO STUDENT "+
+			 								 "(USER_ID, FIRSTNAME, LASTNAME, EMAIL, ADDRESS, PHONE_NUMBER, DEPT_ID, GPA, RESIDENCY_TYPE, LEVEL_CLASSIFICATION) "+
+			 								 " VALUES (?,?,?,?,?,?,?,?,?,?)";
+    
+	public static final String ADD_USER = "INSERT "+
+			 								 " INTO USERS "+
+			 								 "(USER_ID, USERNAME, PASSWORD, ROLE) "+
+			 								 " VALUES (?,?,?,?)";
+	
+	
+	public static final String GET_COURSE_LIST =   "SELECT * "+
+													" FROM "+
+													"COURSE ";
+	
+	public static final String ADD_COURSE = "INSERT "+
+											" INTO COURSE "+
+											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, CREDIT_COUNT, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
+											" VALUES (?,?,?,?,?,?)";
+
+	
+	
+	
 }

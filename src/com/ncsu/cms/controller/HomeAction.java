@@ -1,6 +1,8 @@
 package com.ncsu.cms.controller;
 import java.util.List;
 import org.apache.struts2.ServletActionContext;
+
+import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.FacultyBean;
@@ -22,6 +24,7 @@ public class HomeAction extends ActionSupport{
 	private List<CurrentCourseBean> currentCoursesList;
 	private List<FacultyBean> facultyList;
     private List<CompletedCoursesBean> completedCoursesList;
+    private AdminBean adminDetails;
 	
 	
 	public String execute() throws Exception {
@@ -49,6 +52,13 @@ public class HomeAction extends ActionSupport{
 			}				
 			else if(userRole.equals("2")){
 				//Load Home Admin Details from DB
+				String adminId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+				int adminInt = Integer.parseInt(adminId);
+				System.out.println(adminId);
+				adminDetails = cmsDB.getAdminDetails(adminInt);
+				System.out.println(adminDetails.getFirstName());
+				
+				
 				
 				
 				return "adminhome";
@@ -105,6 +115,14 @@ public class HomeAction extends ActionSupport{
 
 	public void setCompletedCoursesList(List<CompletedCoursesBean> completedCoursesList) {
 		this.completedCoursesList = completedCoursesList;
+	}
+
+	public AdminBean getAdminDetails() {
+		return adminDetails;
+	}
+
+	public void setAdminDetails(AdminBean adminDetails) {
+		this.adminDetails = adminDetails;
 	}
 
 	
