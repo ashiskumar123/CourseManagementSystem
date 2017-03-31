@@ -7,9 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
+import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.ErrorBean;
@@ -19,6 +21,7 @@ import com.ncsu.cms.bean.LoginBean;
 import com.ncsu.cms.bean.LoginResultBean;
 import com.ncsu.cms.bean.ScheduleBean;
 import com.ncsu.cms.bean.StudentBean;
+import com.ncsu.cms.bean.StudentListBean;
 import com.ncsu.cms.db.connection.DBConnection;
 import com.ncsu.cms.db.dao.DAO;
 import com.ncsu.cms.utils.HashUtil;
@@ -258,8 +261,9 @@ public class DAOImpl implements DAO{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_BILL_AMOUNT);
 			pstmt.setInt(1, amount);
 			pstmt.setInt(2, studentId);
-			
+			System.out.println("Hi");
 			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
 			System.out.println(statusCode);
 			
 		}
@@ -376,6 +380,374 @@ public class DAOImpl implements DAO{
 		}
 		return offeringList;
 		
+		
+	}
+	public AdminBean getAdminDetails(int adminid){
+		
+		AdminBean admin = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_ADMIN_DETAILS);
+
+			pstmt.setInt(1, adminid);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				admin  = new AdminBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3)
+						);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return admin;
+		
+		
+	}
+	public void updateAdminDetails(int adminId, String firstName, String lastName, String ssn){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_ADMIN_DETAILS);
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, ssn);
+			pstmt.setInt(4, adminId);
+			System.out.println("Hi");
+			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	public List<StudentListBean> getStudentList(){
+		List<StudentListBean> studentList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_STUDENT_LIST);
+
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			studentList = new ArrayList<StudentListBean>();
+			
+			while(rs.next())
+			{
+				StudentListBean student  = new StudentListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6),
+							rs.getString(7),
+							rs.getString(8),
+							rs.getString(9),
+							rs.getString(10)							
+						);
+				studentList.add(student);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return studentList;
+		
+	}
+	public void insertStudent(int userId, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role) {
+		try{
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_STUDENT);
+			pstmt.setInt(1, userId);
+			pstmt.setString(2, firstName);
+			pstmt.setString(3, lastName);
+			pstmt.setString(4, email);
+			pstmt.setString(5, address);
+			pstmt.setLong(6, phoneNumber);
+			pstmt.setInt(7, deptId);
+			pstmt.setDouble(8, gpa);			
+			pstmt.setInt(9, resType);			
+			pstmt.setInt(10, levelClassification);
+			insertUser(userId,username,HashUtil.generateSHA256Hash(password), role);
+			System.out.println("Hi");
+			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public void insertUser(int userId, String userName,String password,int role){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_USER);
+			pstmt.setInt(1, userId);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, password);
+			pstmt.setInt(4, role);
+
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel ){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_COURSE);
+			pstmt.setString(1, courseId);
+			pstmt.setString(2, courseName);
+			pstmt.setInt(3, deptID);
+			pstmt.setInt(4, creditCount);
+			pstmt.setInt(5, courseType);
+			pstmt.setInt(6, classificationLevel);
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public List<CourseListBean>  getCourseList(){
+		List<CourseListBean> courseList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_COURSE_LIST);
+
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			courseList = new ArrayList<CourseListBean>();
+			
+			while(rs.next())
+			{
+				CourseListBean course  = new CourseListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6)						
+						);
+				courseList.add(course);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseList;
+		
+	}
+	public AdminBean getAdminDetails(int adminid){
+		
+		AdminBean admin = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_ADMIN_DETAILS);
+
+			pstmt.setInt(1, adminid);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				admin  = new AdminBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3)
+						);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return admin;
+		
+		
+	}
+	public void updateAdminDetails(int adminId, String firstName, String lastName, String ssn){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_ADMIN_DETAILS);
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, ssn);
+			pstmt.setInt(4, adminId);
+			System.out.println("Hi");
+			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	public List<StudentListBean> getStudentList(){
+		List<StudentListBean> studentList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_STUDENT_LIST);
+
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			studentList = new ArrayList<StudentListBean>();
+			
+			while(rs.next())
+			{
+				StudentListBean student  = new StudentListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6),
+							rs.getString(7),
+							rs.getString(8),
+							rs.getString(9),
+							rs.getString(10)							
+						);
+				studentList.add(student);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return studentList;
+		
+	}
+	public void insertStudent(int userId, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role) {
+		try{
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_STUDENT);
+			pstmt.setInt(1, userId);
+			pstmt.setString(2, firstName);
+			pstmt.setString(3, lastName);
+			pstmt.setString(4, email);
+			pstmt.setString(5, address);
+			pstmt.setLong(6, phoneNumber);
+			pstmt.setInt(7, deptId);
+			pstmt.setDouble(8, gpa);			
+			pstmt.setInt(9, resType);			
+			pstmt.setInt(10, levelClassification);
+			insertUser(userId,username,HashUtil.generateSHA256Hash(password), role);
+			System.out.println("Hi");
+			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public void insertUser(int userId, String userName,String password,int role){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_USER);
+			pstmt.setInt(1, userId);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, password);
+			pstmt.setInt(4, role);
+
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel ){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_COURSE);
+			pstmt.setString(1, courseId);
+			pstmt.setString(2, courseName);
+			pstmt.setInt(3, deptID);
+			pstmt.setInt(4, creditCount);
+			pstmt.setInt(5, courseType);
+			pstmt.setInt(6, classificationLevel);
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public List<CourseListBean>  getCourseList(){
+		List<CourseListBean> courseList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_COURSE_LIST);
+
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			courseList = new ArrayList<CourseListBean>();
+			
+			while(rs.next())
+			{
+				CourseListBean course  = new CourseListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6)						
+						);
+				courseList.add(course);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseList;
 		
 	}
 	public static void main(String[] args) {

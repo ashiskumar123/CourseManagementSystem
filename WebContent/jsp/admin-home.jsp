@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,18 +21,18 @@
 		
 	    <br/>
 	    
-	      <form id="frmAdminDetails" method="post" action = "editStudent">
+	      <form id="frmAdminDetails" method="post" action = "editAdmin">
 	        <div class="row inter-row" id="sinfo">
 		        <div class= "col-xs-3">
 			        First Name: 
 			        <label for="fname">
-			        	<s:property value="%{studentDetails.firstName}"/>
+			        	<s:property value="%{adminDetails.firstName}"/>
 			        </label>
 		        </div>
 		        <div class="col-xs-3">
 		        	Last Name: 
 			        <label for="lname">
-			        	<s:property value="%{studentDetails.lastName}"/>
+			        	<s:property value="%{adminDetails.lastName}"/>
 			        </label>
 				</div>	        
 	        </div>
@@ -39,65 +40,31 @@
 	        
 	        <div class="row inter-row" id="phno1">
 	           <div class="col-xs-3">
-	             Phone Number: 
+	             SSN: 
 			        <label for="phno">
-			        	<s:property value="%{studentDetails.phoneNumber}"/>
+			        	<s:property value="%{adminDetails.ssn}"/>
 			        </label>
 	           </div>
-	           <div class="col-xs-3">
-	             Email: 
-			        <label for="email">
-			        	<s:property value="%{studentDetails.email}"/>
-			        </label>
-	          </div>
 	          
-	        </div>
-	        
-	        <div class="row inter-row" id="adr1" >
-	          <div class="col-xs-12">
-				 Address: 
-			        <label for="address">
-			        	<s:property value="%{studentDetails.address}"/>
-			        </label>
-	          </div>
-	        </div>
-	              
-	       <div class="row inter-row">
-	           <div class="col-xs-3">
-	             Department:
-	             	<label for="dept">
-			        	<s:property value="%{studentDetails.departmentName}"/>
-			        </label>
-	          </div>
-	          <div class="col-xs-3">
-	             GPA:
-	             	<label for="gpa">
-			        	<s:property value="%{studentDetails.gpa}"/>
-			        </label>
-	          </div>
-	          <div class="col-xs-3">
-	             Level Classification:
-	             	<label for="email">
-			        	<s:property value="%{studentDetails.levelClassification}"/>
-			        </label>
-	          </div>
-	          <div class="col-xs-3">
-	             Residency Classification:
-	             	<label for="email">
-			        	<s:property value="%{studentDetails.residencyClassification}"/>
-			        </label>
-	        
-	          </div>         
 	        </div>
 	        	        
 	        <div class="row inter-row" id="btndiv">
-	          <input type ="submit" class="btn btn-default" id ="edit" value ="Edit" />
+	          <input type ="submit" class="btn btn-primary" id ="edit" value ="Edit" />
 	        </div>
 	        
 	      </form>
+	      <div style="margin-top: 10px">	      
+		      <form id="frmStudentList" method="get" action="showStudentList">    		
+			    	<input type ="submit" class="btn btn-primary" id ="btnStudentList" value ="Show Student List" />    		   		
+		      </form>
+	      </div>
+	      <div style="margin-top: 10px">	      
+		      <form id="frmCourseList" method="get" action="showCourseList">    		
+			    	<input type ="submit" class="btn btn-primary" id ="btnCourseList" value ="Show Course List" />    		   		
+		      </form>
+	      </div>
 	    </div>
 	</div>
-
 	<jsp:include page="common-footer.jsp" />
 </body>
 </html>
