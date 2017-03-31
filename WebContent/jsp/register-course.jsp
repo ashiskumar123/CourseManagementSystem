@@ -7,11 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Register Course</title>
 <jsp:include page="common-include.jsp" />
+<link rel="stylesheet" type="text/css" href="css/register-course-main.css"/>
 </head>
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<h2>Register Course</h2>
+	<h2 class="page-title">Register Course</h2>
 	<div class="container">
 		
 		<ol class="breadcrumb">
@@ -23,36 +24,35 @@
 		    <h3 class="panel-title">List of Course Offerings</h3>
 		  </div>
 		  <div class="panel-body">
-		    <table width="100%" style="border: 1px solid">
 				<s:iterator value="courseOfferingList">
-				<tr>
-					<td><s:property value="courseId"/></td>
-					<td><s:property value="courseName"/></td>
-					<td><s:property value="creditCount"/></td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<table width="100%" style="border: 1px solid">
-							<tr>
-								<td><s:property value="offeringId"/></td>
-								<td><s:property value="days"/></td>
-								<td><s:property value="fromTime"/> - <s:property value="toTime"/></td>
-								<td><s:property value="roomNo"/> <s:property value="building"/></td>
-								<td>
-									<s:iterator value="facultyList">
-										<s:property value="lastName"/>,
-										<s:property value="firstName"/>;
-									</s:iterator>
-								</td>
-								<td>
-									<input type="button" value="ENROLL" class="btn btn-primary btn-enroll" data-courseId='<s:property value="courseId"/>'/>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
+				<div class="row course-header">
+					<div class="col-md-4"><s:property value="courseId"/></div>
+					<div class="col-md-4"><s:property value="courseName"/></div>
+					<div class="col-md-4">Credits: <s:property value="creditCount"/></div>
+				</div>
+				<div class="row course-offering offering-header">
+					<div class="col-md-2">Offering Id</div>
+					<div class="col-md-2">Days</div>
+					<div class="col-md-2">Timings</div>
+					<div class="col-md-2">Location</div>
+					<div class="col-md-3">Faculty</div>
+				</div>
+				<div class="row course-offering offering-body">
+					<div class="col-md-2"><s:property value="offeringId"/></div>
+					<div class="col-md-2"><s:property value="days"/></div>
+					<div class="col-md-2"><s:property value="fromTime"/> - <s:property value="toTime"/></div>
+					<div class="col-md-2"><s:property value="roomNo"/> <s:property value="building"/></div>
+					<div class="col-md-3">
+						<s:iterator value="facultyList">
+							<s:property value="lastName"/>,
+							<s:property value="firstName"/>;
+						</s:iterator>
+					</div>
+					<div class="col-md-1">
+						<input type="button" value="ENROLL" class="btn btn-default btn-enroll" data-courseId='<s:property value="courseId"/>'/>
+					</div>
+				</div>
 				</s:iterator>
-			</table>
 		  </div>
 		</div>
 	
