@@ -198,7 +198,7 @@
            
 		 </div>
 	  </div>
-	  <form id="frmRegister" method="get" action="register">    		
+	  <form id="frmRegister" method="POST" action="registerCourse">    		
 		   <input type ="submit" class="btn btn-primary" id ="btnReg" value ="Register for Courses" />    		   		
 	   </form>	 
 	</div>

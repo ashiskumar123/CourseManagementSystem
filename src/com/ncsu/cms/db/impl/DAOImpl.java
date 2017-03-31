@@ -10,6 +10,7 @@ import java.util.List;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
+import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.FacultyBean;
@@ -259,7 +260,6 @@ public class DAOImpl implements DAO{
 			pstmt.setInt(2, studentId);
 			
 			int statusCode = pstmt.executeUpdate();
-			conn.commit();
 			System.out.println(statusCode);
 			
 		}
@@ -324,7 +324,60 @@ public class DAOImpl implements DAO{
 		return bill;
 		
 	}
-	
+	public List<CourseOfferingBean> getCourseOfferings(String departmentId){
+		List<CourseOfferingBean> offeringList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_COURSE_OFFERING_LIST);
+
+			pstmt.setString(1, departmentId==null?"%":departmentId);
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			offeringList = new ArrayList<CourseOfferingBean>();
+			
+			while(rs.next())
+			{
+				String facultyList = rs.getString(6);
+
+			    List<FacultyBean> fList = new ArrayList<FacultyBean>();
+				for(String faculty: facultyList.split(";"))
+				{	
+					String [] fName = faculty.split(",");
+				
+					fList.add(new FacultyBean(fName[0], fName[1]));
+				}
+				CourseOfferingBean course  = new CourseOfferingBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							fList,
+							rs.getString(7),
+							rs.getString(8),
+							rs.getString(9),
+							rs.getString(10),
+							rs.getString(11),
+							rs.getString(12),
+							rs.getString(13),
+							rs.getString(14),
+							rs.getString(15),
+							rs.getString(16),
+							rs.getString(17)
+						);
+				offeringList.add(course);
+				System.out.println(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return offeringList;
+		
+		
+	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -340,5 +393,6 @@ public class DAOImpl implements DAO{
 		//new DAOImpl().updateUserPassword(9, "hermoinie");
 		//System.out.println(new DAOImpl().getBill(6).getBillAmount());
 		new DAOImpl().updateBillAmount(6,900);
+		new DAOImpl().getCourseOfferings(null);
 	}
 }
