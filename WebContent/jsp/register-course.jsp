@@ -8,6 +8,7 @@
 <title>Register Course</title>
 <jsp:include page="common-include.jsp" />
 <link rel="stylesheet" type="text/css" href="css/register-course-main.css"/>
+<script type='text/javascript' src='js/register-course-main.js'></script>
 </head>
 <body>
 
@@ -49,13 +50,33 @@
 						</s:iterator>
 					</div>
 					<div class="col-md-1">
-						<input type="button" value="ENROLL" class="btn btn-default btn-enroll" data-courseId='<s:property value="courseId"/>'/>
+						<input type="button" value="ENROLL" 
+						class="btn btn-default btn-enroll"
+						data-toggle="modal"
+						data-target="#ajaxModal"
+						data-course-id='<s:property value="courseId"/>'
+						/>
 					</div>
 				</div>
 				</s:iterator>
 		  </div>
 		</div>
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
+	</div>
+	<div class="modal fade" id="ajaxModal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+		        	<button type="button" class="close" data-dismiss="modal" ><span>&times;</span></button>
+					Panel heading without title
+				</div>
+				<div class="panel-body">
+					<image src="images/wait.gif" width="50px" height="50px"/>
+					Processing Enroll Transaction...
+				</div>
+			</div>
+	    </div>
+	  </div>
 	</div>
 	<jsp:include page="common-footer.jsp" />
 

@@ -30,7 +30,6 @@
 <body>
   
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
 	<div id ="studentinfo" class="container">
 	  <div class="maincontent">
 		<div>

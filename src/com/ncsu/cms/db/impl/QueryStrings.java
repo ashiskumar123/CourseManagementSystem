@@ -80,7 +80,6 @@ public class QueryStrings {
 													 " Bill.BILL_AMOUNT=? "+
 													 "WHERE "+
 													 " Bill.USER_ID=? ";
-	
 	public static final String SELECT_COURSE_OFFERING_LIST = 	" SELECT "+
 																"   offering.COURSE_ID,"+
 																"   TO_CHAR(offering.OFFERING_ID,'000'),"+
