@@ -63,6 +63,12 @@
 			    	<input type ="submit" class="btn btn-primary" id ="btnCourseList" value ="Show Course List" />    		   		
 		      </form>
 	      </div>
+	      <div style="margin-top: 10px">	      
+		      <form id="frmCourseOfferingList" method="get" action="showCourseOfferingList">    		
+			    	<input type ="submit" class="btn btn-primary" id ="btnCourseOfferingList" value ="Show Course Offering List" />    		   		
+		      </form>
+	      </div>
+	      
 	    </div>
 	</div>
 	<jsp:include page="common-footer.jsp" />

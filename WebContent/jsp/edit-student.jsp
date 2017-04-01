@@ -41,6 +41,7 @@
 	      </div>
 		  <form id="frmEditStudent" method="post" action="updateStudent">
 		  
+
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
 		         <label>Firstname: </label>

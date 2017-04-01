@@ -80,6 +80,28 @@
 			<param name="actionName">ACTION_INSERT_COURSE</param>
 			<result name="success">/jsp/add-course.jsp</result>
 		</action>
+		<action name="showCourseOfferingList" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SHOW_COURSE_OFFERING_LIST</param>
+			<result name="success">/jsp/offering-list.jsp</result>
+		</action>
+		<action name="addCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ADD_COURSE_OFFERING</param>
+			<result name="success">/jsp/add-offering.jsp</result>
+		</action>
+		<action name="saveCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_INSERT_COURSE_OFFERING</param>
+			<result name="success">/jsp/add-offering.jsp</result>
+		</action>
+		<action name="editCurrentStudent" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_STUDENT</param>
+			<result name="success">/jsp/edit-current-student.jsp</result>
+		</action>
+		<action name="saveCurrentStudent" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_CURRENT_STUDENT</param>
+			<result name="success">/jsp/edit-current-student.jsp</result>
+		</action>
+		
+		
 		
 	</package>
 	

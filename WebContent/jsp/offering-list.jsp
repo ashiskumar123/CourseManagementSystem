@@ -25,31 +25,31 @@
 
 		      <thead class="thead-default">
 			      <tr>
+	                <th>Course Offering ID</th>
 	                <th>Course ID</th>
-	                <th>Course Name</th>
-	                <th>Department ID</th>
-	                <th>Credit Count</th>
-	                <th>Course type</th>
-	                <th>Classification Level</th>
+	                <th>Class Size</th>
+	                <th>Waitlist Size</th>
+	                <th>Semester ID</th>
+	                <th>Location ID</th>
 	              </tr>
               </thead>
               <tbody>
-              	<s:iterator value="courseList">
+              	<s:iterator value="courseOfferingList">
               		<tr>
+              			<td><s:property value="courseOfferingId"/></td>
               			<td><s:property value="courseId"/></td>
-              			<td><s:property value="courseName"/></td>
-              			<td><s:property value="deptId"/></td>
-              			<td><s:property value="creditCount"/></td>
-              			<td><s:property value="courseType"/></td>
-              			<td><s:property value="classificationLevel"/></td>
+              			<td><s:property value="classSize"/></td>
+              			<td><s:property value="waitlistSize"/></td>
+              			<td><s:property value="semesterId"/></td>
+              			<td><s:property value="locationId"/></td>
               		</tr>
 				</s:iterator>
 			  
            </table>
 		 </div>
 	  </div>	 
-	  <form id="frmBillr" method="get" action="addCourse" style = "margin-top:15px">    		
-		  <input type ="submit" class="btn btn-primary" id ="btnAddCourse" value ="Add Course" />   		   		
+	  <form id="frmBillr" method="get" action="addCourseOffering" style = "margin-top:15px">    		
+		  <input type ="submit" class="btn btn-primary" id ="btnAddCourseOffering" value ="Add Course Offering" />   		   		
 	  </form>
 	</div>
 

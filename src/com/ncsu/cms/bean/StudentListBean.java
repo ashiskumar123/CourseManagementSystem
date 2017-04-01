@@ -7,6 +7,7 @@ public class StudentListBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String userId;
+	private String userName;
 	private String phoneNumber;
 	private String firstName;
 	private String lastName;
@@ -17,10 +18,11 @@ public class StudentListBean implements Serializable {
 	private String address;
 	private String levelClassification;
 	
-	public StudentListBean(String userId, String firstName, String lastName, String email, String address, String phoneNumber, 
+	public StudentListBean(String userId, String userName, String firstName, String lastName, String email, String address, String phoneNumber, 
 			String deptId, String gpa, String residencyType, String levelClassification) {
 		super();
 		this.userId = userId;
+		this.userName = userName;
 		this.phoneNumber = phoneNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -38,6 +40,12 @@ public class StudentListBean implements Serializable {
 		this.userId = userId;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}

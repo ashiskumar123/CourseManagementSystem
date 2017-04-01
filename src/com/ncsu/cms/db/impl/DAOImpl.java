@@ -11,9 +11,15 @@ import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
+
+import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingListBean;
+
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
+
 import com.ncsu.cms.bean.CurrentCourseBean;
+import com.ncsu.cms.bean.DepartmentBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
@@ -433,15 +439,15 @@ public class DAOImpl implements DAO{
 		
 		
 	}
-	public List<StudentListBean> getStudentList(){
+	public List<StudentListBean> getStudentList(String studentId){
 		List<StudentListBean> studentList = null;
 		
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_STUDENT_LIST);
+			
+			pstmt.setString(1, studentId==null?"%":studentId);
 
-			
-			
 			ResultSet rs = pstmt.executeQuery();
 
 			studentList = new ArrayList<StudentListBean>();
@@ -458,7 +464,8 @@ public class DAOImpl implements DAO{
 							rs.getString(7),
 							rs.getString(8),
 							rs.getString(9),
-							rs.getString(10)							
+							rs.getString(10),
+							rs.getString(11)							
 						);
 				studentList.add(student);
 			}
@@ -567,6 +574,111 @@ public class DAOImpl implements DAO{
 		return courseList;
 		
 	}
+	public List<CourseOfferingListBean> getCourseOfferingList(){
+		List<CourseOfferingListBean> courseOfferingList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_COURSE_OFFERING_LIST);
+
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			courseOfferingList = new ArrayList<CourseOfferingListBean>();
+			
+			while(rs.next())
+			{
+				CourseOfferingListBean courseOffering  = new CourseOfferingListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6)						
+						);
+				courseOfferingList.add(courseOffering);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseOfferingList;
+		
+	}
+	public void insertCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_COURSE_OFFERING);
+			pstmt.setInt(1, courseOfferingId);
+			pstmt.setString(2, courseId);
+			pstmt.setInt(3, classSize);
+			pstmt.setInt(4, waitlistSize);
+			pstmt.setInt(5, semId);
+			pstmt.setInt(6, locationId);
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void editStudent(int userId,String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification) {
+		try{
+			
+		PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT);
+			//pstmt.setInt(1, userId);
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, email);
+			pstmt.setString(4, address);
+			pstmt.setLong(5, phoneNumber);
+			pstmt.setInt(6, deptId);
+			pstmt.setDouble(7, gpa);			
+			pstmt.setInt(8, resType);			
+			pstmt.setInt(9, levelClassification);
+			pstmt.setInt(10, userId);
+		//	insertUser(userId,username,HashUtil.generateSHA256Hash(password), role);
+			System.out.println("Hi");
+			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public List<DepartmentBean> getDepartmentList(){
+		List<DepartmentBean> departmentList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_DEPARTMENT_LIST);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			departmentList = new ArrayList<DepartmentBean>();
+			
+			while(rs.next())
+			{
+				DepartmentBean department  = new DepartmentBean(
+							rs.getString(1),
+							rs.getString(2)				
+						);
+				departmentList.add(department);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return departmentList;
+	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -586,5 +698,8 @@ public class DAOImpl implements DAO{
 		//System.out.println(new DAOImpl().getStudentList().get(0).getMaxCredits());
 		//new DAOImpl().insertStudent(200, "aairstName", "a", "email", "address", 2112, 1, 1, 1, 1, "aaa", "aa", 1);
 		//System.out.println(new DAOImpl().getAdminDetails(7).getFirstName());
+
+		//System.out.println(new DAOImpl().getAdminDetails(7).getFirstName());
+
 	}
 }
