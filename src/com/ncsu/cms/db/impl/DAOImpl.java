@@ -11,14 +11,15 @@ import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
-<<<<<<< HEAD
+
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
-=======
+
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
->>>>>>> cab55773785b00339b1de0d29fdf372977644102
+
 import com.ncsu.cms.bean.CurrentCourseBean;
+import com.ncsu.cms.bean.DepartmentBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
@@ -438,15 +439,15 @@ public class DAOImpl implements DAO{
 		
 		
 	}
-	public List<StudentListBean> getStudentList(){
+	public List<StudentListBean> getStudentList(String studentId){
 		List<StudentListBean> studentList = null;
 		
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_STUDENT_LIST);
+			
+			pstmt.setString(1, studentId==null?"%":studentId);
 
-			
-			
 			ResultSet rs = pstmt.executeQuery();
 
 			studentList = new ArrayList<StudentListBean>();
@@ -463,7 +464,8 @@ public class DAOImpl implements DAO{
 							rs.getString(7),
 							rs.getString(8),
 							rs.getString(9),
-							rs.getString(10)							
+							rs.getString(10),
+							rs.getString(11)							
 						);
 				studentList.add(student);
 			}
@@ -624,10 +626,10 @@ public class DAOImpl implements DAO{
 		}
 	}
 	
-	public void editStudent(String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role) {
+	public void editStudent(int userId,String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification) {
 		try{
 			
-			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT);
+		PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT);
 			//pstmt.setInt(1, userId);
 			pstmt.setString(1, firstName);
 			pstmt.setString(2, lastName);
@@ -638,6 +640,7 @@ public class DAOImpl implements DAO{
 			pstmt.setDouble(7, gpa);			
 			pstmt.setInt(8, resType);			
 			pstmt.setInt(9, levelClassification);
+			pstmt.setInt(10, userId);
 		//	insertUser(userId,username,HashUtil.generateSHA256Hash(password), role);
 			System.out.println("Hi");
 			int statusCode = pstmt.executeUpdate();
@@ -651,7 +654,31 @@ public class DAOImpl implements DAO{
 		}
 		
 	}
-	
+	public List<DepartmentBean> getDepartmentList(){
+		List<DepartmentBean> departmentList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_DEPARTMENT_LIST);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			departmentList = new ArrayList<DepartmentBean>();
+			
+			while(rs.next())
+			{
+				DepartmentBean department  = new DepartmentBean(
+							rs.getString(1),
+							rs.getString(2)				
+						);
+				departmentList.add(department);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return departmentList;
+	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -670,15 +697,9 @@ public class DAOImpl implements DAO{
 	     //new DAOImpl().updateAdminDetails(7, "Hugh \"Wolwerine\"","Jackman" , "63");
 		//System.out.println(new DAOImpl().getStudentList().get(0).getMaxCredits());
 		//new DAOImpl().insertStudent(200, "aairstName", "a", "email", "address", 2112, 1, 1, 1, 1, "aaa", "aa", 1);
-<<<<<<< HEAD
 		//System.out.println(new DAOImpl().getAdminDetails(7).getFirstName());
-		
-		
-		
-	}
-	
-=======
+
 		//System.out.println(new DAOImpl().getAdminDetails(7).getFirstName());
->>>>>>> cab55773785b00339b1de0d29fdf372977644102
+
 	}
 }

@@ -224,9 +224,19 @@ public class QueryStrings {
 														"WHERE "+
 														" A.USER_ID =? ";
 	
-	public static final String GET_STUDENT_LIST =   "SELECT * "+
-													" FROM "+
-													"STUDENT ";
+	public static final String GET_STUDENT_LIST =   " SELECT STUDENT.USER_ID,"+
+													" 	(SELECT USERNAME FROM USERS WHERE USER_ID=STUDENT.USER_ID) USERNAME,"+
+													"   STUDENT.FIRSTNAME,"+
+													"   STUDENT.LASTNAME,"+
+													"   STUDENT.EMAIL,"+
+													"   STUDENT.ADDRESS,"+
+													"   STUDENT.PHONE_NUMBER,"+
+													"   STUDENT.DEPT_ID,"+
+													"   STUDENT.GPA,"+
+													"   STUDENT.RESIDENCY_TYPE,"+
+													"   STUDENT.LEVEL_CLASSIFICATION"+
+													" FROM STUDENT"+
+													" WHERE STUDENT.USER_ID LIKE ?";
 	
 	public static final String ADD_STUDENT = "INSERT "+
 			 								 " INTO STUDENT "+
@@ -246,7 +256,7 @@ public class QueryStrings {
 	public static final String ADD_COURSE = "INSERT "+
 											" INTO COURSE "+
 											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, CREDIT_COUNT, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
-<<<<<<< HEAD
+
 											" VALUES (?,?,?,?,?,?)";
 	
 	public static final String GET_COURSE_OFFERING_LIST =   "SELECT * "+
@@ -259,12 +269,14 @@ public class QueryStrings {
 													 " VALUES (?,?,?,?,?,?)";
 	
 	public static final String EDIT_STUDENT = "UPDATE STUDENT S"+
-			 								 " SET S.USER_ID=?, S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.GPA = ?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
+			 								 " SET S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.GPA =?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
 			 								 "WHERE "+
 			 								 " S.USER_ID =? ";
 	
-			
-=======
-											" VALUES (?,?,?,?,?,?)";
->>>>>>> cab55773785b00339b1de0d29fdf372977644102
+	public static final String SELECT_DEPARTMENT_LIST = " SELECT"+
+														"  DEPARTMENT.DEPARTMENT_ID,"+
+														"  DEPARTMENT.DEPARTMENT_NAME"+
+														" FROM DEPARTMENT";
+	
+
 }

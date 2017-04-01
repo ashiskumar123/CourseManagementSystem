@@ -2,12 +2,14 @@ package com.ncsu.cms.db.dao;
 
 import java.util.List;
 
+import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
-import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
+import com.ncsu.cms.bean.DepartmentBean;
 import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
 import com.ncsu.cms.bean.LoginBean;
@@ -15,7 +17,6 @@ import com.ncsu.cms.bean.LoginResultBean;
 import com.ncsu.cms.bean.ScheduleBean;
 import com.ncsu.cms.bean.StudentBean;
 import com.ncsu.cms.bean.StudentListBean;
-import com.ncsu.cms.bean.AdminBean;
 
 public interface DAO {
 	public LoginResultBean validateLogin(LoginBean loginData);
@@ -46,7 +47,7 @@ public interface DAO {
 	
 	public AdminBean getAdminDetails(int adminid);
 	
-	public List<StudentListBean> getStudentList();
+	public List<StudentListBean> getStudentList(String studentId);
 	
 	public void insertStudent(int userId, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role);
 	
@@ -60,5 +61,7 @@ public interface DAO {
 	
 	public void insertCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId);
 	
-	public void editStudent(String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role);
+	public void editStudent(int userId, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification);
+	
+	public List<DepartmentBean> getDepartmentList();
 }

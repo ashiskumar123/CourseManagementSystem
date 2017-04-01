@@ -8,7 +8,7 @@
 <title>Edit Student - Course Management System</title>
 <jsp:include page="common-include.jsp" />
 <script type="text/javascript" src="js/student-home-main.js"></script>
-
+<script type="text/javascript" src="js/student-list-main.js"></script>
 
 <style>
     .inter-row{
@@ -40,32 +40,35 @@
 	      	<s:property value="%{editError}"/></p>
 	      </div>
 		  <form id="frmAddStudent" method="post" action="saveCurrentStudent">
-		  
-		    <div class="row inter-row" >
-		       <div class= "col-xs-6">
-		         <label>User Id: </label>
-		         	<input type ="text" name = "userId" id ="userId" class="form-control" placeholder = "Enter Firstname" ></input>
-			   </div>   		        
-	        </div>
-	        
+		    
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
 		         <label>Username: </label>
-		         	<input type ="text" name = "userName" id ="userName" class="form-control" placeholder = "Enter Username" ></input>
+		         	<input type ="text" name = "userName"
+		         	 id ="userName" class="form-control" 
+		         	 placeholder = "Enter Username"
+					 value='<s:property value="%{student.userName}"/>'/>
+		         	 
 			   </div>   		        
 	        </div>
 		    
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
 		         <label>First Name: </label>
-		         	<input type ="text" name = "firstName" id ="firstName" class="form-control" placeholder = "Enter Firstname" ></input>
+		         	<input type ="text" name = "firstName"
+		         	id ="firstName" class="form-control"
+		         	placeholder = "Enter Firstname"
+					value='<s:property value="%{student.firstName}"/>'/>
 			   </div>   		        
 	        </div>
 	        
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
 		         <label>Last Name: </label>
-		         <input type ="text" name="lastName" id ="lastName"class="form-control" placeholder="Enter Lastname" value =  ></input>
+		         <input type ="text" name="lastName" 
+		         id ="lastName"class="form-control" 
+		         placeholder="Enter Lastname" 
+		         value='<s:property value="%{student.lastName}"/>'/>
 		       </div>
 	        
 	        </div>
@@ -75,7 +78,10 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	            <label>Email: </label>
-	            <input type ="text" name="email" id="email" class="form-control" placeholder="Enter Email"  ></input>
+	            <input type ="text" name="email" 
+	            id="email" class="form-control" 
+	            placeholder="Enter Email"  
+	            value='<s:property value="%{student.email}"/>'/>
 	          </div>
 	        </div>
 	        
@@ -84,7 +90,10 @@
 	        <div class="row inter-row">
 	           <div class="col-xs-6">
 	             <label>Phone Number: </label>
-	             <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder ="Enter Phone Number"  ></input>
+	             <input type="text" name="phoneNumber" 
+	             id="phoneNumber" class="form-control" 
+	             placeholder ="Enter Phone Number"  
+	             value='<s:property value="%{student.phoneNumber}"/>'/>
 	          </div>
 	         
 	        </div>
@@ -92,24 +101,19 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Street Address: </label>
-	           <input type="text" id="address" name="address" class="form-control" placeholder ="Enter Address"  ></input>
+	           <input type="text" id="address" 
+	           name="address" class="form-control" 
+	           placeholder ="Enter Address"  
+	           value='<s:property value="%{student.address}"/>'/>
 	          </div>
 	        </div>
-
-	        
-	        <div class="row inter-row">
-	          <div class="col-xs-6">
-	           <label>Max Credits: </label>
-	           <input type="text" id="maxCredits" name="maxCredits" class="form-control" placeholder ="Enter Maximum Credit Limit" ></input>
-	          </div>
-	        </div>
-
 	        
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Department Id: </label>
-	           <input type="text" id = "deptId" name = "deptId" class="form-control" placeholder ="Enter Department ID"  ></input>
-	          </div>
+	           <s:select value="%{student.deptId}" cssClass="form-control"
+	           		list="departmentList" listKey="departmentId" listValue="departmentName"/>
+	           </div>
 	        </div>
 
 
@@ -132,15 +136,16 @@
 	        
 	        
 	        <div class="row inter-row" id="btndiv">
-	          <input type ="submit" class="btn btn-primary" id ="save" value ="Save" />
+	        <input type ="button" data-user-id='<s:property value="userId"/>' 
+           							class="btn btn-primary btn-save-student"
+									value ="Save"/>
+	        
+	        
+	          <!--  <input type ="submit" class="btn btn-primary" id ="save" value ="Save" />-->
 	          <input type = "reset" class="btn btn-primary" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
-	        
+	        <input type="hidden" name="userId" value='<s:property value="userId"/>' />
 	      </form>
-	   
-	      
-	      
-	      
 	    </div>
     </div>
 	<jsp:include page="common-footer.jsp" />
