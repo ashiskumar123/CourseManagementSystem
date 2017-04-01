@@ -55,7 +55,7 @@
 				</s:iterator>
 		  </div>
 		</div>
-	
+		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
 	</div>
 	<jsp:include page="common-footer.jsp" />
 

@@ -48,7 +48,6 @@
 			<result name="success">/jsp/register-course.jsp</result>
 		</action>
 		
-		
 		<action name="editAdmin" class="com.ncsu.cms.controller.AdminManagementAction">
 			<param name="actionName">ACTION_EDIT_ADMIN_DETAILS</param>
 			<result name="success">/jsp/edit-admin.jsp</result>

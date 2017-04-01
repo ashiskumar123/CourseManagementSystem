@@ -17,7 +17,7 @@ public class DBConnection {
 			
 			connection = DriverManager.getConnection(
 					"jdbc:oracle:thin:@orca.csc.ncsu.edu:1521/orcl.csc.ncsu.edu", "aksahoo", "200152929");
-			
+
 		} catch (SQLException e) {
 
 			System.out.println("Connection Failed!");

@@ -41,6 +41,6 @@ public class HashUtil {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(new HashUtil().generateSHA256Hash("jack"));
+		System.out.println(new HashUtil().generateSHA256Hash("hugh"));
 	}
 }

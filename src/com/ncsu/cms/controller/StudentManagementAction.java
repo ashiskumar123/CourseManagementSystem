@@ -93,7 +93,8 @@ public class StudentManagementAction extends ActionSupport{
 				else{
 					String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
 					System.out.println("Student Id"+studentId);
-					cmsDB.updateUserPassword(Integer.parseInt(studentId), HashUtil.generateSHA256Hash(entPwd));
+					int stuInt = Integer.parseInt(studentId);
+					cmsDB.updateUserPassword(stuInt, HashUtil.generateSHA256Hash(entPwd));
 					this.setResetSuccess("Passowrd has been reset successfully");
 				}
 					

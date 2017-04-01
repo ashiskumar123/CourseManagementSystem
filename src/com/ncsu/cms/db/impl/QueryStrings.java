@@ -6,7 +6,7 @@ public class QueryStrings {
 	public static final String SELECT_STUDENT_DETAILS = "SELECT "+
 														"	USER_ID, FIRSTNAME, LASTNAME, PHONE_NUMBER, ADDRESS, EMAIL, GPA, DEPARTMENT_NAME,"+
 														"	CASE LEVEL_CLASSIFICATION WHEN 1 THEN 'UNDERGRADUATE' WHEN 2 THEN 'GRADUATE' END LEVEL_CLASSIFICATION,"+
-														"	CASE RESIDENCY_TYPE WHEN 1 THEN 'IN-STATE' WHEN 2 THEN 'OUT-STATE' WHEN 3 THEN 'INTERNATIONAL' END RESIDENCY_TYPE"+
+														"	(SELECT DESCRIPTION FROM RESIDENCY_TYPE_LOOKUP WHERE ID = RESIDENCY_TYPE) RESIDENCY_TYPE"+
 														" FROM"+
 														" 	STUDENT, DEPARTMENT"+
 														" WHERE"+
@@ -63,7 +63,7 @@ public class QueryStrings {
 			  										  " U.USER_ID=?";
 	
 	public static final String SELECT_ADMIN_DETAILS= "SELECT "+
-													 " USER_ID, FIRSTNAME, LASTNAME, SSN "+
+													 "  FIRSTNAME, LASTNAME, SSN "+
 													 " FROM ADMIN "+
 													 "WHERE USER_ID=? ";
 	
@@ -218,4 +218,33 @@ public class QueryStrings {
 																" WHERE"+
 													
 																"   offering.DEPARTMENT_ID like ?";
+	
+	public static final String UPDATE_ADMIN_DETAILS =   "UPDATE ADMIN A "+
+														" SET A.FIRSTNAME=?, A.LASTNAME=?, A.SSN = ? "+
+														"WHERE "+
+														" A.USER_ID =? ";
+	
+	public static final String GET_STUDENT_LIST =   "SELECT * "+
+													" FROM "+
+													"STUDENT ";
+	
+	public static final String ADD_STUDENT = "INSERT "+
+			 								 " INTO STUDENT "+
+			 								 "(USER_ID, FIRSTNAME, LASTNAME, EMAIL, ADDRESS, PHONE_NUMBER, DEPT_ID, GPA, RESIDENCY_TYPE, LEVEL_CLASSIFICATION) "+
+			 								 " VALUES (?,?,?,?,?,?,?,?,?,?)";
+    
+	public static final String ADD_USER = "INSERT "+
+			 								 " INTO USERS "+
+			 								 "(USER_ID, USERNAME, PASSWORD, ROLE) "+
+			 								 " VALUES (?,?,?,?)";
+	
+	
+	public static final String GET_COURSE_LIST =   "SELECT * "+
+													" FROM "+
+													"COURSE ";
+	
+	public static final String ADD_COURSE = "INSERT "+
+											" INTO COURSE "+
+											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, CREDIT_COUNT, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
+											" VALUES (?,?,?,?,?,?)";
 }

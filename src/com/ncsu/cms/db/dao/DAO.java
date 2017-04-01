@@ -33,6 +33,8 @@ public interface DAO {
 	
 	public List<CompletedCoursesBean> getCompletedCourses(int studentId);
 	
+	public void updateAdminDetails(int adminId, String firstName, String lastName, String ssn);
+	
 	public void updateUserPassword(int studentId,String password);
 	
 	public BillBean getBill(int studentId);
