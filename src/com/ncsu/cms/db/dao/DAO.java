@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
+import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
@@ -40,6 +41,8 @@ public interface DAO {
 	public BillBean getBill(int studentId);
 	
 	public void updateBillAmount(int studentId, int amount);
+	
+	public List<CourseOfferingBean> getCourseOfferings(String departmentId);
 	
 	public AdminBean getAdminDetails(int adminid);
 	

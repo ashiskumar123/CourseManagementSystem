@@ -11,8 +11,13 @@ import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
+<<<<<<< HEAD
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
+=======
+import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingBean;
+>>>>>>> cab55773785b00339b1de0d29fdf372977644102
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.FacultyBean;
@@ -329,6 +334,60 @@ public class DAOImpl implements DAO{
 		return bill;
 		
 	}
+	public List<CourseOfferingBean> getCourseOfferings(String departmentId){
+		List<CourseOfferingBean> offeringList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_COURSE_OFFERING_LIST);
+
+			pstmt.setString(1, departmentId==null?"%":departmentId);
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			offeringList = new ArrayList<CourseOfferingBean>();
+			
+			while(rs.next())
+			{
+				String facultyList = rs.getString(6);
+
+			    List<FacultyBean> fList = new ArrayList<FacultyBean>();
+				for(String faculty: facultyList.split(";"))
+				{	
+					String [] fName = faculty.split(",");
+				
+					fList.add(new FacultyBean(fName[0], fName[1]));
+				}
+				CourseOfferingBean course  = new CourseOfferingBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							fList,
+							rs.getString(7),
+							rs.getString(8),
+							rs.getString(9),
+							rs.getString(10),
+							rs.getString(11),
+							rs.getString(12),
+							rs.getString(13),
+							rs.getString(14),
+							rs.getString(15),
+							rs.getString(16),
+							rs.getString(17)
+						);
+				offeringList.add(course);
+				System.out.println(rs.getString(1));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return offeringList;
+		
+		
+	}
 	public AdminBean getAdminDetails(int adminid){
 		
 		AdminBean admin = null;
@@ -611,10 +670,15 @@ public class DAOImpl implements DAO{
 	     //new DAOImpl().updateAdminDetails(7, "Hugh \"Wolwerine\"","Jackman" , "63");
 		//System.out.println(new DAOImpl().getStudentList().get(0).getMaxCredits());
 		//new DAOImpl().insertStudent(200, "aairstName", "a", "email", "address", 2112, 1, 1, 1, 1, "aaa", "aa", 1);
+<<<<<<< HEAD
 		//System.out.println(new DAOImpl().getAdminDetails(7).getFirstName());
 		
 		
 		
 	}
 	
+=======
+		//System.out.println(new DAOImpl().getAdminDetails(7).getFirstName());
+>>>>>>> cab55773785b00339b1de0d29fdf372977644102
 	}
+}

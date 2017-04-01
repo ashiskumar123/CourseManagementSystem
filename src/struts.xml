@@ -42,6 +42,12 @@
 			<param name="actionName">ACTION_PAY_BILL</param>
 			<result name="success">/jsp/view-bill.jsp</result>
 		</action>
+		
+		<action name="registerCourse" class="com.ncsu.cms.controller.CourseManagementAction">
+			<param name="actionName">ACTION_GET_OFFERING_LIST</param>
+			<result name="success">/jsp/register-course.jsp</result>
+		</action>
+		
 		<action name="editAdmin" class="com.ncsu.cms.controller.AdminManagementAction">
 			<param name="actionName">ACTION_EDIT_ADMIN_DETAILS</param>
 			<result name="success">/jsp/edit-admin.jsp</result>
