@@ -80,7 +80,8 @@ public class QueryStrings {
 													 " Bill.BILL_AMOUNT=? "+
 													 "WHERE "+
 													 " Bill.USER_ID=? ";
-	public static final String SELECT_COURSE_OFFERING_LIST = 	" select "+
+	
+	public static final String SELECT_COURSE_OFFERING_LIST = 	" SELECT "+
 																"   offering.COURSE_ID,"+
 																"   TO_CHAR(offering.OFFERING_ID,'000'),"+
 																"   offering.COURSE_NAME,"+
@@ -100,7 +101,7 @@ public class QueryStrings {
 																"   offering.LEVEL_CLASSIFICATION,"+
 																"   offering.COURSE_TYPE_LOOKUP_ID,"+
 																"   offering.COURSE_TYPE"+
-																" from"+
+																" FROM"+
 																"   (SELECT COURSE_ID,"+
 																"     COURSE_NAME,"+
 																"     CREDIT_COUNT,"+
@@ -216,7 +217,6 @@ public class QueryStrings {
 																" ON"+
 																"   offering.OFFERING_ID = enrollment.OFFERING_ID"+
 																" WHERE"+
-													
 																"   offering.DEPARTMENT_ID like ?";
 	
 	public static final String UPDATE_ADMIN_DETAILS =   "UPDATE ADMIN A "+
@@ -224,9 +224,19 @@ public class QueryStrings {
 														"WHERE "+
 														" A.USER_ID =? ";
 	
-	public static final String GET_STUDENT_LIST =   "SELECT * "+
-													" FROM "+
-													"STUDENT ";
+	public static final String GET_STUDENT_LIST =   " SELECT STUDENT.USER_ID,"+
+													" 	(SELECT USERNAME FROM USERS WHERE USER_ID=STUDENT.USER_ID) USERNAME,"+
+													"   STUDENT.FIRSTNAME,"+
+													"   STUDENT.LASTNAME,"+
+													"   STUDENT.EMAIL,"+
+													"   STUDENT.ADDRESS,"+
+													"   STUDENT.PHONE_NUMBER,"+
+													"   STUDENT.DEPT_ID,"+
+													"   STUDENT.GPA,"+
+													"   STUDENT.RESIDENCY_TYPE,"+
+													"   STUDENT.LEVEL_CLASSIFICATION"+
+													" FROM STUDENT"+
+													" WHERE STUDENT.USER_ID LIKE ?";
 	
 	public static final String ADD_STUDENT = "INSERT "+
 			 								 " INTO STUDENT "+
@@ -246,5 +256,27 @@ public class QueryStrings {
 	public static final String ADD_COURSE = "INSERT "+
 											" INTO COURSE "+
 											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, CREDIT_COUNT, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
+
 											" VALUES (?,?,?,?,?,?)";
+	
+	public static final String GET_COURSE_OFFERING_LIST =   "SELECT * "+
+															" FROM "+
+															"COURSE_OFFERING ";
+	
+	public static final String ADD_COURSE_OFFERING = "INSERT "+
+													 " INTO COURSE_OFFERING "+
+													 "(OFFERING_ID, COURSE_ID, CLASS_SIZE, WAITLIST_SIZE, SEM_ID, LOCATION_ID) "+
+													 " VALUES (?,?,?,?,?,?)";
+	
+	public static final String EDIT_STUDENT = "UPDATE STUDENT S"+
+			 								 " SET S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.GPA =?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
+			 								 "WHERE "+
+			 								 " S.USER_ID =? ";
+	
+	public static final String SELECT_DEPARTMENT_LIST = " SELECT"+
+														"  DEPARTMENT.DEPARTMENT_ID,"+
+														"  DEPARTMENT.DEPARTMENT_NAME"+
+														" FROM DEPARTMENT";
+	
+
 }
