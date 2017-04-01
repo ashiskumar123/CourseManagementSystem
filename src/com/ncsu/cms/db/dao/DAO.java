@@ -5,6 +5,7 @@ import java.util.List;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
@@ -51,4 +52,10 @@ public interface DAO {
 	public List<CourseListBean>  getCourseList();
 	
 	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel );
+	
+	public List<CourseOfferingListBean> getCourseOfferingList();
+	
+	public void insertCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId);
+	
+	public void editStudent(String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role);
 }

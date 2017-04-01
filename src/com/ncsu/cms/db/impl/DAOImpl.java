@@ -12,6 +12,7 @@ import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
 import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.FacultyBean;
@@ -512,6 +513,86 @@ public class DAOImpl implements DAO{
 		return courseList;
 		
 	}
+	public List<CourseOfferingListBean> getCourseOfferingList(){
+		List<CourseOfferingListBean> courseOfferingList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_COURSE_OFFERING_LIST);
+
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			courseOfferingList = new ArrayList<CourseOfferingListBean>();
+			
+			while(rs.next())
+			{
+				CourseOfferingListBean courseOffering  = new CourseOfferingListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6)						
+						);
+				courseOfferingList.add(courseOffering);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseOfferingList;
+		
+	}
+	public void insertCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_COURSE_OFFERING);
+			pstmt.setInt(1, courseOfferingId);
+			pstmt.setString(2, courseId);
+			pstmt.setInt(3, classSize);
+			pstmt.setInt(4, waitlistSize);
+			pstmt.setInt(5, semId);
+			pstmt.setInt(6, locationId);
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void editStudent(String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification, String username, String password, int role) {
+		try{
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT);
+			//pstmt.setInt(1, userId);
+			pstmt.setString(1, firstName);
+			pstmt.setString(2, lastName);
+			pstmt.setString(3, email);
+			pstmt.setString(4, address);
+			pstmt.setLong(5, phoneNumber);
+			pstmt.setInt(6, deptId);
+			pstmt.setDouble(7, gpa);			
+			pstmt.setInt(8, resType);			
+			pstmt.setInt(9, levelClassification);
+		//	insertUser(userId,username,HashUtil.generateSHA256Hash(password), role);
+			System.out.println("Hi");
+			int statusCode = pstmt.executeUpdate();
+			System.out.println("Bye");
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -535,4 +616,5 @@ public class DAOImpl implements DAO{
 		
 		
 	}
+	
 	}

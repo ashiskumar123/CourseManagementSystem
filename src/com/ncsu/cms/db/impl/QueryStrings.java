@@ -109,8 +109,20 @@ public class QueryStrings {
 											" INTO COURSE "+
 											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, CREDIT_COUNT, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
 											" VALUES (?,?,?,?,?,?)";
-
 	
+	public static final String GET_COURSE_OFFERING_LIST =   "SELECT * "+
+															" FROM "+
+															"COURSE_OFFERING ";
 	
+	public static final String ADD_COURSE_OFFERING = "INSERT "+
+													 " INTO COURSE_OFFERING "+
+													 "(OFFERING_ID, COURSE_ID, CLASS_SIZE, WAITLIST_SIZE, SEM_ID, LOCATION_ID) "+
+													 " VALUES (?,?,?,?,?,?)";
 	
+	public static final String EDIT_STUDENT = "UPDATE STUDENT S"+
+			 								 " SET S.USER_ID=?, S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.GPA = ?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
+			 								 "WHERE "+
+			 								 " S.USER_ID =? ";
+	
+			
 }

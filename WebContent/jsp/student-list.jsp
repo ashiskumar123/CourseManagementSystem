@@ -7,11 +7,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Student List</title>'
 <jsp:include page="common-include.jsp" />
+
+<script type='text/javascript' src='js/student-list-main.js'></script>
 </head>
+
+<script>
+	 function fetchRowDetails(){
+		 var uid = document.getElementById("tduserId").innerHTML;
+		 
+	 }
+	 </script>
+
 <body>
 
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
+	<div class="container">
+		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
+	</div>
 	<div id ="studentTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
 		 <div>
@@ -33,22 +46,28 @@
 	                <th>Residency Type</th>
 	                <th>Address</th>
 	                <th>Level Classification</th>
+	                <th>Edit Course</th>
 	              </tr>
               </thead>
               <tbody>
               	<s:iterator value="studentList">
               		<tr>
-              			<td><s:property value="userId"/></td>
-              			<td><s:property value="maxCredits"/></td>
-              			<td><s:property value="phoneNumber"/></td>
-              			<td><s:property value="firstName"/></td>
-              			<td><s:property value="lastName"/></td>
-              			<td><s:property value="deptId"/></td>
-              			<td><s:property value="gpa"/></td>
-              			<td><s:property value="email"/></td>
-              			<td><s:property value="residencyType"/></td>
-              			<td><s:property value="address"/></td>
-              			<td><s:property value="levelClassification"/></td>
+              			<td id="tduserId"><s:property value="userId"/></td>
+              			<td id="tdmaxCredits"><s:property value="maxCredits"/></td>
+              			<td id="tdphoneNumber"><s:property value="phoneNumber"/></td>
+              			<td id="tdfirstName"><s:property value="firstName"/></td>
+              			<td id="tdlastName"><s:property value="lastName"/></td>
+              			<td id="tddeptId"><s:property value="deptId"/></td>
+              			<td id="tdgpa"><s:property value="gpa"/></td>
+              			<td id="tdemail"><s:property value="email"/></td>
+              			<td id="tdresidencyType"><s:property value="residencyType"/></td>
+              			<td id="tdaddress"><s:property value="address"/></td>
+              			<td id="tdlevelClassification"><s:property value="levelClassification"/></td>
+              			<td>
+           					<input type ="button" data-user-id='<s:property value="userId"/>' 
+           							class="btn btn-primary btn-edit-student"
+									value ="Edit Student"/>
+              			</td>
               		</tr>
 				</s:iterator>
 			  

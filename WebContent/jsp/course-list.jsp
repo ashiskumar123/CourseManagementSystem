@@ -12,6 +12,9 @@
 
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
+	<div class="container">
+		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
+	</div>
 	<div id ="courseTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
 		 <div>

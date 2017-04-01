@@ -8,6 +8,7 @@ import org.apache.struts2.ServletActionContext;
 import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.StudentBean;
 import com.ncsu.cms.bean.StudentListBean;
 import com.ncsu.cms.db.dao.DAO;
@@ -46,6 +47,72 @@ public class AdminManagementAction extends ActionSupport {
 	private String creditCount;
 	private String courseType;
 	
+	private List<CourseOfferingListBean> courseOfferingList;
+	private String courseOfferingId;
+	private String classSize;
+	private String waitlistSize;
+	private String semesterId;
+	public String getCourseOfferingId() {
+		return courseOfferingId;
+	}
+
+
+
+	public void setCourseOfferingId(String courseOfferingId) {
+		this.courseOfferingId = courseOfferingId;
+	}
+
+
+
+	public String getClassSize() {
+		return classSize;
+	}
+
+
+
+	public void setClassSize(String classSize) {
+		this.classSize = classSize;
+	}
+
+
+
+	public String getWaitlistSize() {
+		return waitlistSize;
+	}
+
+
+
+	public void setWaitlistSize(String waitlistSize) {
+		this.waitlistSize = waitlistSize;
+	}
+
+
+
+	public String getSemesterId() {
+		return semesterId;
+	}
+
+
+
+	public void setSemesterId(String semesterId) {
+		this.semesterId = semesterId;
+	}
+
+
+
+	public String getLocationId() {
+		return locationId;
+	}
+
+
+
+	public void setLocationId(String locationId) {
+		this.locationId = locationId;
+	}
+
+
+
+	private String locationId;
 
 
 
@@ -141,6 +208,24 @@ public class AdminManagementAction extends ActionSupport {
 			cmsDB.insertCourse(courseId, courseName, depInt, creditInt, courseTypeInt, levelInt);
 			
 			
+		}
+		else if(actionName.equals("ACTION_SHOW_COURSE_OFFERING_LIST")){
+			courseOfferingList = cmsDB.getCourseOfferingList();
+			
+		}
+		else if(actionName.equals("ACTION_INSERT_COURSE_OFFERING")){
+			System.out.println("Hi10");
+			int coInt = Integer.parseInt(courseOfferingId);
+			int classInt = Integer.parseInt(classSize);
+			int waitlistInt = Integer.parseInt(waitlistSize);
+			int semInt = Integer.parseInt(semesterId);
+			int locInt = Integer.parseInt(locationId);
+			cmsDB.insertCourseOffering(coInt, courseId, classInt, waitlistInt, semInt, locInt);
+			
+		}
+		else if(actionName.equals("ACTION_EDIT_CURRENT_STUDENT")){
+			//cmsDB.getStudentDetails(userId);
+			System.out.println("userId************="+userId);
 		}
 		
 		return SUCCESS;		
@@ -339,6 +424,21 @@ public class AdminManagementAction extends ActionSupport {
 	public void setCourseList(List<CourseListBean> courseList) {
 		this.courseList = courseList;
 	}
+
+
+
+	public List<CourseOfferingListBean> getCourseOfferingList() {
+		return courseOfferingList;
+	}
+
+
+
+	public void setCourseOfferingList(List<CourseOfferingListBean> courseOfferingList) {
+		this.courseOfferingList = courseOfferingList;
+	}
+
+
+
 	
 
 }
