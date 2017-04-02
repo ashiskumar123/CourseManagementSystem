@@ -886,6 +886,25 @@ public class DAOImpl implements DAO{
 		}
 		return semesterList;
 	}
+	public void enrollFromRequest(String userId, String offeringId, String creditCount){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ENROLL_STUDENT);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, offeringId);
+			pstmt.setString(3, creditCount);
+
+			int statusCode = pstmt.executeUpdate();
+
+			conn.commit();
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));

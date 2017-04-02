@@ -317,7 +317,7 @@ public class QueryStrings {
 	public static final String ENROLL_STUDENT = "INSERT "+
 												" INTO ENROLLED_IN "+
 												 "(USER_ID,OFFERING_ID,GRADE,WAITLIST_NO,ENROLLMENT_STATUS,DROP_COURSE,CREDIT_COUNT) "+
-												 " VALUES (?,?,'F',0,1,'null',?)";
+												 " VALUES (?,?,'F',0,1,NULL,?)";
 
 	public static final String ADD_SEMESTER = "INSERT "+
 											  " INTO SEMESTER "+

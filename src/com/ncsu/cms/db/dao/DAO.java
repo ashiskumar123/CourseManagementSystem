@@ -81,4 +81,6 @@ public interface DAO {
 	
 	public List<SemesterBean> getSemesterList(String semesterId);
 	
+	public void enrollFromRequest(String userId, String offeringId, String creditCount);
+	
 }

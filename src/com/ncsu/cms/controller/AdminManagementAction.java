@@ -196,14 +196,17 @@ public class AdminManagementAction extends ActionSupport {
 			requestList = cmsDB.getRequestDetails();
 			Iterator<RequestBean> it = requestList.iterator();
 			RequestBean request;
-			String offeringId = null;
+			String offeringId = null,userId=null,creditCount=null;
 			while(it.hasNext()){
 				request = it.next();
 				if(request.getRequestId().equals(requestId)){
 					offeringId = request.getOfferingId();
+					userId = request.getUserId();
+					creditCount = request.getCreditCount();
 				}
 			}
-			System.out.println("Offering Id= "+offeringId);
+			System.out.println("Offering Id= "+offeringId+" User Id="+userId+"Credit Count="+creditCount);
+			cmsDB.enrollFromRequest(userId, offeringId, creditCount);
 			
 		}
 		
@@ -223,9 +226,10 @@ public class AdminManagementAction extends ActionSupport {
 				request = it.next();
 				if(request.getRequestId().equals(requestId)){
 					offeringId = request.getOfferingId();
+					
 				}
 			}
-			System.out.println("Offering Id= "+offeringId);
+			
 			
 		}
 		
