@@ -1,5 +1,6 @@
 package com.ncsu.cms.db.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.ncsu.cms.bean.AdminBean;
@@ -14,7 +15,9 @@ import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.LocationBean;
 import com.ncsu.cms.bean.LoginBean;
 import com.ncsu.cms.bean.LoginResultBean;
+import com.ncsu.cms.bean.RequestBean;
 import com.ncsu.cms.bean.ScheduleBean;
+import com.ncsu.cms.bean.SemesterBean;
 import com.ncsu.cms.bean.StudentBean;
 import com.ncsu.cms.bean.StudentListBean;
 
@@ -53,15 +56,29 @@ public interface DAO {
 	
 	public void insertUser(int userId, String userName,String password,int role);
 	
-	public List<CourseListBean>  getCourseList();
+	public List<CourseListBean>  getCourseList(String courseId);
 	
 	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel );
 	
-	public List<CourseOfferingListBean> getCourseOfferingList();
+	public List<CourseOfferingListBean> getCourseOfferingList(String courseOfferingId);
 	
 	public void insertCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId);
 	
-	public void editStudent(int userId, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification);
+	public void editCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId);
+	
+	
+	public void editStudent(int userId, String userName, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId,int resType, int levelClassification);
 	
 	public List<DepartmentBean> getDepartmentList();
+	
+	public void editCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel );
+	
+	public List<RequestBean> getRequestDetails();
+	
+	public void approveRequest(int requestId, Date date, int adminId);
+	
+	public void declineRequest(int requestId, Date date, int adminId);
+	
+	public List<SemesterBean> getSemesterList(String semesterId);
+	
 }

@@ -7,8 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Student - Course Management System</title>
 <jsp:include page="common-include.jsp" />
-<script type="text/javascript" src="js/student-home-main.js"></script>
-<script type="text/javascript" src="js/student-list-main.js"></script>
+<script type="text/javascript" src="js/edit-current-student-main.js"></script>
 
 <style>
     .inter-row{
@@ -111,7 +110,8 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Department Id: </label>
-	           <s:select value="%{student.deptId}" cssClass="form-control"
+	           
+	           <s:select value="%{student.deptId}" cssClass="form-control" id="selectDeptId" 
 	           		list="departmentList" listKey="departmentId" listValue="departmentName"/>
 	           </div>
 	        </div>
@@ -132,19 +132,14 @@
 	           <input type="text" id="levelClassification" name="levelClassification" class="form-control" placeholder ="Enter Level Classification"></input>
 	          </div>
 	        </div>
-
-	        
-	        
 	        <div class="row inter-row" id="btndiv">
-	        <input type ="button" data-user-id='<s:property value="userId"/>' 
-           							class="btn btn-primary btn-save-student"
-									value ="Save"/>
-	        
-	        
-	          <!--  <input type ="submit" class="btn btn-primary" id ="save" value ="Save" />-->
+	          <input type ="submit" class="btn btn-primary" id ="save" value ="Update" />
 	          <input type = "reset" class="btn btn-primary" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
 	        <input type="hidden" name="userId" value='<s:property value="userId"/>' />
+	        <input type="hidden" name="deptId" id="deptId" value='<s:property value="%{student.deptId}"/>' />
+	        <input type="hidden" name="resType" id="resType" value='<s:property value="%{student.resType}"/>' />
+	        <input type="hidden" name="levelClassification" id="levelClassification" value='<s:property value="%{student.levelClassification}"/>' />
 	      </form>
 	    </div>
     </div>

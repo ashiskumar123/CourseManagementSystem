@@ -11,12 +11,7 @@
 <script type='text/javascript' src='js/student-list-main.js'></script>
 </head>
 
-<script>
-	 function fetchRowDetails(){
-		 var uid = document.getElementById("tduserId").innerHTML;
-		 
-	 }
-	 </script>
+
 
 <body>
 
@@ -46,7 +41,7 @@
 	                <th>Residency Type</th>
 	                <th>Address</th>
 	                <th>Level Classification</th>
-	                <th>Edit Course</th>
+	                <th>Edit Student</th>
 	              </tr>
               </thead>
               <tbody>

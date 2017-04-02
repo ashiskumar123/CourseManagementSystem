@@ -7,12 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Course List</title>'
 <jsp:include page="common-include.jsp" />
+<script type='text/javascript' src='js/course-list-main.js'></script>
 </head>
 <body>
 
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
-	<div class="container">
+		<div class="container">
 		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
 	</div>
 	<div id ="courseTable" style="margin-top: 20px" class="container">
@@ -31,6 +32,7 @@
 	                <th>Credit Count</th>
 	                <th>Course type</th>
 	                <th>Classification Level</th>
+	                <th>Edit Course</th>
 	              </tr>
               </thead>
               <tbody>
@@ -42,6 +44,11 @@
               			<td><s:property value="creditCount"/></td>
               			<td><s:property value="courseType"/></td>
               			<td><s:property value="classificationLevel"/></td>
+              			<td>
+           					<input type ="button" data-course-id='<s:property value="courseId"/>' 
+           							class="btn btn-primary btn-edit-course"
+									value ="Edit Course"/>
+              			</td>
               		</tr>
 				</s:iterator>
 			  

@@ -1,6 +1,8 @@
 package com.ncsu.cms.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -8,8 +10,11 @@ import org.apache.struts2.ServletActionContext;
 import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CourseListBean;
+import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.DepartmentBean;
+import com.ncsu.cms.bean.RequestBean;
+import com.ncsu.cms.bean.SemesterBean;
 import com.ncsu.cms.bean.StudentBean;
 import com.ncsu.cms.bean.StudentListBean;
 import com.ncsu.cms.db.dao.DAO;
@@ -31,6 +36,8 @@ public class AdminManagementAction extends ActionSupport {
 	private String saveMessage;
 	private String editError;
 	private StudentListBean student;
+	private CourseListBean course;
+	private CourseOfferingListBean courseOffering;
 	private List<StudentListBean> studentList;
 	private String userId;
 	private String phoneNumber;
@@ -47,15 +54,27 @@ public class AdminManagementAction extends ActionSupport {
 	private String courseName;
 	private String creditCount;
 	private String courseType;
-	
+	private String classificationLevel;
 	private List<CourseOfferingListBean> courseOfferingList;
 	private String courseOfferingId;
 	private String classSize;
 	private String waitlistSize;
 	private String semesterId;
+	private List<RequestBean> requestList;
+	private String requestId;
 	
 	private List<DepartmentBean> departmentList;
 	
+	private List<SemesterBean> semesterList;
+	private SemesterBean semester;
+	
+	public SemesterBean getSemester() {
+		return semester;
+	}
+
+	public void setSemester(SemesterBean semester) {
+		this.semester = semester;
+	}
 
 	public String execute() throws Exception{
 		
@@ -89,7 +108,7 @@ public class AdminManagementAction extends ActionSupport {
 		//	cmsDB.insertStudent(291, "firstName", "lastName", "email", "address",1211, 1, 0 , 1, 1, "userName","pass",2);
 		}
 		else if(actionName.equals("ACTION_SHOW_COURSE_LIST")){						
-			courseList = cmsDB.getCourseList();
+			courseList = cmsDB.getCourseList(null);
 		}
 		else if(actionName.equals("ACTION_INSERT_COURSE")){
 			System.out.println("Hi5");
@@ -102,8 +121,8 @@ public class AdminManagementAction extends ActionSupport {
 			
 		}
 		else if(actionName.equals("ACTION_SHOW_COURSE_OFFERING_LIST")){
-			courseOfferingList = cmsDB.getCourseOfferingList();					
-			studentList = cmsDB.getStudentList(null);
+			courseOfferingList=cmsDB.getCourseOfferingList(null);					
+			//studentList = cmsDB.getStudentList(null);
 			
 		}
 		else if(actionName.equals("ACTION_INSERT_COURSE_OFFERING")){
@@ -121,18 +140,101 @@ public class AdminManagementAction extends ActionSupport {
 			departmentList = cmsDB.getDepartmentList();
 		}
 		else if(actionName.equals("ACTION_SAVE_CURRENT_STUDENT")){
-			System.out.println(userId + " " + firstName + " " + lastName + " " + email+ " " +  address+ " " + phoneNumber+ " " + deptId+ " " + 0 + " " +  resType+ " " + levelClassification);
+			System.out.println("YoYo");
+			System.out.println(userId + " " + firstName + " " + lastName + " " + email+ " " +  address+ " " + phoneNumber+ " " + deptId+ " " + 0 + " " +gpa+" "+  resType+ " " + levelClassification);
+			System.out.println("YoYi");
 			int userInt = Integer.parseInt(userId);
 			
 			long  phoneLong= Long.parseLong(phoneNumber);
 			int depInt = Integer.parseInt(deptId);
 			int resInt = Integer.parseInt(resType);
 			int levelInt = Integer.parseInt(levelClassification);
-			double gpaDouble = Double.parseDouble(gpa);
+			//double gpaDouble = Double.parseDouble(gpa);
 		
-			cmsDB.editStudent(userInt,firstName, lastName, email, address, phoneLong, depInt, gpaDouble, resInt, levelInt);
+			cmsDB.editStudent(userInt,userName,firstName, lastName, email, address, phoneLong, depInt, resInt, levelInt);
+			
+
+			student = cmsDB.getStudentList(userId).get(0);
+			departmentList = cmsDB.getDepartmentList();
+		}
+		else if(actionName.equals("ACTION_EDIT_CURRENT_COURSE")){
+			course = cmsDB.getCourseList(courseId).get(0);
+		//	departmentList = cmsDB.getDepartmentList();
+		}
+		else if(actionName.equals("ACTION_EDIT_CURRENT_COURSE_OFFERING")){
+			courseOffering = cmsDB.getCourseOfferingList(courseOfferingId).get(0);
+		//  departmentList = cmsDB.getDepartmentList();
+		}
+		else if(actionName.equals("ACTION_SAVE_CURRENT_COURSE")){
+			int depInt = Integer.parseInt(deptId);
+			int creditInt = Integer.parseInt(creditCount);
+			int courseTypeInt = Integer.parseInt(courseType);
+			int levelInt = Integer.parseInt(levelClassification);
+			cmsDB.editCourse(courseId, courseName, depInt, creditInt, courseTypeInt, levelInt);
+		}
+		else if(actionName.equals("ACTION_SAVE_CURRENT_COURSE_OFFERING")){
+			int coInt = Integer.parseInt(courseOfferingId);
+			int classInt = Integer.parseInt(classSize);
+			int waitlistInt = Integer.parseInt(waitlistSize);
+			int semInt = Integer.parseInt(semesterId);
+			int locInt = Integer.parseInt(locationId);
+			cmsDB.editCourseOffering(coInt, courseId, classInt, waitlistInt, semInt, locInt);
+		}
+		else if(actionName.equals("ACTION_VIEW_ALERTS")){
+			requestList = cmsDB.getRequestDetails();
+			
+			
+		}
+		else if(actionName.equals("ACTION_APPROVE_REQUEST")){
+			System.out.println(requestId+"  Hi Request");
+			int reqIdInt = Integer.parseInt(requestId);
+			long millis=System.currentTimeMillis();  
+	        Date date=new Date(millis);  
+	        String adminId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+			int admInt = Integer.parseInt(adminId);	        	        
+			cmsDB.approveRequest(reqIdInt,date,admInt);
+			requestList = cmsDB.getRequestDetails();
+			Iterator<RequestBean> it = requestList.iterator();
+			RequestBean request;
+			String offeringId = null;
+			while(it.hasNext()){
+				request = it.next();
+				if(request.getRequestId().equals(requestId)){
+					offeringId = request.getOfferingId();
+				}
+			}
+			System.out.println("Offering Id= "+offeringId);
+			
 		}
 		
+		else if(actionName.equals("ACTION_DECLINE_REQUEST")){
+			System.out.println(requestId+"  Hi Request");
+			int reqIdInt = Integer.parseInt(requestId);
+			long millis=System.currentTimeMillis();  
+	        Date date=new Date(millis);  
+	        String adminId = (String) ServletActionContext.getServletContext().getAttribute("userId");
+			int admInt = Integer.parseInt(adminId);	        	        
+			cmsDB.declineRequest(reqIdInt,date,admInt);
+			requestList = cmsDB.getRequestDetails();
+			Iterator<RequestBean> it = requestList.iterator();
+			RequestBean request;
+			String offeringId = null;
+			while(it.hasNext()){
+				request = it.next();
+				if(request.getRequestId().equals(requestId)){
+					offeringId = request.getOfferingId();
+				}
+			}
+			System.out.println("Offering Id= "+offeringId);
+			
+		}
+		
+		else if(actionName.equals("ACTION_SHOW_SEMESTER_LIST")){
+			this.semesterList = cmsDB.getSemesterList(null);
+		}
+		else if(actionName.equals("ACTION_EDIT_CURRENT_SEMESTER")){
+			 semester= cmsDB.getSemesterList(semesterId).get(0);
+		}
 		return SUCCESS;		
 		
 	}
@@ -459,6 +561,62 @@ public class AdminManagementAction extends ActionSupport {
 
 	public void setDepartmentList(List<DepartmentBean> departmentList) {
 		this.departmentList = departmentList;
+	}
+
+	public String getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(String gpa) {
+		this.gpa = gpa;
+	}
+
+	public CourseListBean getCourse() {
+		return course;
+	}
+
+	public void setCourse(CourseListBean course) {
+		this.course = course;
+	}
+
+	public CourseOfferingListBean getCourseOffering() {
+		return courseOffering;
+	}
+
+	public void setCourseOffering(CourseOfferingListBean courseOffering) {
+		this.courseOffering = courseOffering;
+	}
+
+	public String getClassificationLevel() {
+		return classificationLevel;
+	}
+
+	public void setClassificationLevel(String classificationLevel) {
+		this.classificationLevel = classificationLevel;
+	}
+
+	public List<RequestBean> getRequestList() {
+		return requestList;
+	}
+
+	public void setRequestList(List<RequestBean> requestList) {
+		this.requestList = requestList;
+	}
+
+	public String getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+
+	public List<SemesterBean> getSemesterList() {
+		return semesterList;
+	}
+
+	public void setSemesterList(List<SemesterBean> semesterList) {
+		this.semesterList = semesterList;
 	}
 
 

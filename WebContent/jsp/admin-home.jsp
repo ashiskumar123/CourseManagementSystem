@@ -69,6 +69,18 @@
 		      </form>
 	      </div>
 	      
+	      <div style="margin-top: 10px">	      
+		      <form id="frmViewAlerts" method="get" action="viewAlerts">    		
+			    	<input type ="submit" class="btn btn-primary" id ="btnViewAlerts" value ="View Requests" />    		   		
+		      </form>
+	      </div>
+	      
+	      <div style="margin-top: 10px">	      
+		      <form id="frmEditSemester" method="get" action="editSemester">    		
+			    	<input type ="submit" class="btn btn-primary" id ="btnEditSemester" value ="Edit Semester" />    		   		
+		      </form>
+	      </div>
+	      
 	    </div>
 	</div>
 	<jsp:include page="common-footer.jsp" />

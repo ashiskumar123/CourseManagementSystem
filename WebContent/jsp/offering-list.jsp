@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Course List</title>'
+<title>Course Offering List</title>'
 <jsp:include page="common-include.jsp" />
+<script type='text/javascript' src='js/course-offering-list.js'></script>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
 	<div id ="courseTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
 		 <div>
-		   <h2>Course List</h2>
+		   <h2>Course Offering List</h2>
 		 </div>
 		 <div style="margin-top: 20px">
 		   <table class="table" style="width:70%;">
@@ -31,6 +32,7 @@
 	                <th>Waitlist Size</th>
 	                <th>Semester ID</th>
 	                <th>Location ID</th>
+	                <th>Edit Course Offering</th>
 	              </tr>
               </thead>
               <tbody>
@@ -42,6 +44,11 @@
               			<td><s:property value="waitlistSize"/></td>
               			<td><s:property value="semesterId"/></td>
               			<td><s:property value="locationId"/></td>
+              			<td>
+           					<input type ="button" data-course-offering-id='<s:property value="courseOfferingId"/>' 
+           							class="btn btn-primary btn-edit-course-offering"
+									value ="Edit Course Offering"/>
+              			</td>
               		</tr>
 				</s:iterator>
 			  

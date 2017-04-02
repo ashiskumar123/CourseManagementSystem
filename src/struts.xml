@@ -100,9 +100,42 @@
 			<param name="actionName">ACTION_SAVE_CURRENT_STUDENT</param>
 			<result name="success">/jsp/edit-current-student.jsp</result>
 		</action>
-		
-		
-		
+		<action name="editCurrentCourse" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_COURSE</param>
+			<result name="success">/jsp/edit-current-course.jsp</result>
+		</action>
+		<action name="editCurrentCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_COURSE_OFFERING</param>
+			<result name="success">/jsp/edit-current-course-offering.jsp</result>
+		</action>
+		<action name="saveCurrentCourse" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_CURRENT_COURSE</param>
+			<result name="success">/jsp/edit-current-course.jsp</result>
+		</action>
+		<action name="saveCurrentCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_CURRENT_COURSE_OFFERING</param>
+			<result name="success">/jsp/edit-current-course-offering.jsp</result>
+		</action>
+		<action name="viewAlerts" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_VIEW_ALERTS</param>
+			<result name="success">/jsp/view-alerts.jsp</result>
+		</action>
+		<action name="approveRequest" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_APPROVE_REQUEST</param>
+			<result name="success">/jsp/view-alerts.jsp</result>
+		</action>
+		<action name="declineRequest" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_DECLINE_REQUEST</param>
+			<result name="success">/jsp/view-alerts.jsp</result>
+		</action>
+		<action name="editSemester" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SHOW_SEMESTER_LIST</param>
+			<result name="success">/jsp/semester-list.jsp</result>
+		</action>
+		<action name="editCurrentSemester" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_SEMESTER</param>
+			<result name="success">/jsp/edit-current-semester.jsp</result>
+		</action>
 	</package>
 	
 

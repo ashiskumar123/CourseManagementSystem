@@ -248,9 +248,14 @@ public class QueryStrings {
 			 								 " VALUES (?,?,?,?)";
 	
 	
-	public static final String GET_COURSE_LIST =   "SELECT * "+
-													" FROM "+
-													"COURSE ";
+	public static final String GET_COURSE_LIST =  " SELECT COURSE.COURSE_ID,"+
+												"   COURSE.COURSE_NAME,"+
+												"   COURSE.DEPARTMENT_ID,"+
+												"   COURSE.CREDIT_COUNT,"+
+												"   COURSE.COURSE_TYPE,"+
+												"   COURSE.CLASSIFICATION_LEVEL"+
+												" 	FROM COURSE"+
+												" 	WHERE COURSE.COURSE_ID LIKE ?";
 	
 	public static final String ADD_COURSE = "INSERT "+
 											" INTO COURSE "+
@@ -258,24 +263,79 @@ public class QueryStrings {
 
 											" VALUES (?,?,?,?,?,?)";
 	
-	public static final String GET_COURSE_OFFERING_LIST =   "SELECT * "+
-															" FROM "+
-															"COURSE_OFFERING ";
+	public static final String GET_COURSE_OFFERING_LIST =  " SELECT COURSE_OFFERING.OFFERING_ID,"+
+															"   COURSE_OFFERING.COURSE_ID,"+
+															"   COURSE_OFFERING.CLASS_SIZE,"+
+															"   COURSE_OFFERING.WAITLIST_SIZE,"+
+															"   COURSE_OFFERING.SEM_ID,"+
+															"   COURSE_OFFERING.LOCATION_ID"+
+															" 	FROM COURSE_OFFERING"+
+															" 	WHERE COURSE_OFFERING.OFFERING_ID LIKE ?";
 	
 	public static final String ADD_COURSE_OFFERING = "INSERT "+
 													 " INTO COURSE_OFFERING "+
 													 "(OFFERING_ID, COURSE_ID, CLASS_SIZE, WAITLIST_SIZE, SEM_ID, LOCATION_ID) "+
 													 " VALUES (?,?,?,?,?,?)";
 	
-	public static final String EDIT_STUDENT = "UPDATE STUDENT S"+
-			 								 " SET S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.GPA =?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
-			 								 "WHERE "+
-			 								 " S.USER_ID =? ";
+	public static final String EDIT_STUDENT = 	" UPDATE STUDENT S"+
+				 								 " SET S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
+				 								 " WHERE "+
+				 								 " S.USER_ID =? ;" + 
+				 								 " UPDATE USER U SET U.USERNAME=? WHERE U.USER_ID=? ";
+			 								 
 	
 	public static final String SELECT_DEPARTMENT_LIST = " SELECT"+
 														"  DEPARTMENT.DEPARTMENT_ID,"+
 														"  DEPARTMENT.DEPARTMENT_NAME"+
 														" FROM DEPARTMENT";
+	
+	public static final String EDIT_COURSE = 	" UPDATE COURSE C"+
+												 " SET C.COURSE_ID=?, C.COURSE_NAME=?,C.DEPARTMENT_ID=?,C.CREDIT_COUNT=?,C.COURSE_TYPE=?,C.CLASSIFICATION_LEVEL=?"+
+												 " WHERE "+
+												 " C.COURSE_ID =? ";
+	
+	public static final String EDIT_COURSE_OFFERING = 	" UPDATE COURSE_OFFERING O"+
+														 " SET O.OFFERING_ID=?, O.COURSE_ID=?,O.CLASS_SIZE=?,O.WAITLIST_SIZE=?,O.SEM_ID=?,O.LOCATION_ID=?"+
+														 " WHERE "+
+														 " O.OFFERING_ID =? ";
+	
+			 
+	public static final String GET_REQUEST_DETAILS = "SELECT "+
+													 " R.REQ_ID, R.USER_ID, S.USERNAME,  R.CREDIT_COUNT, A.USERNAME, R.REQUEST_DATE, R.UPDATE_DATE, R.OFFERING_ID, R.STATUS "+
+													 "FROM REQUEST R , USERS S, USERS A "+
+													 " WHERE "+
+													 "R.USER_ID=S.USER_ID AND A.USER_ID=R.ADMIN_ID";
+	public static final String APPROVE_REQUEST = "UPDATE REQUEST R "+
+												 " SET R.STATUS='APPROVED', R.UPDATE_DATE=?, R.ADMIN_ID=? "+
+												 "WHERE "+
+												 " R.REQ_ID=?";
+	public static final String DECLINE_REQUEST = "UPDATE REQUEST R "+
+			 									 " SET R.STATUS='DECLINED', R.UPDATE_DATE=?, R.ADMIN_ID=? "+
+			 									 "WHERE "+
+			 									 " R.REQ_ID=?";
+	
+	public static final String ENROLL_STUDENT = "INSERT "+
+												" INTO ENROLLED_IN "+
+												 "(USER_ID,OFFERING_ID,GRADE,WAITLIST_NO,ENROLLMENT_STATUS,DROP_COURSE,CREDIT_COUNT) "+
+												 " VALUES (?,?,'F',0,1,'null',?)";
+
+	public static final String ADD_SEMESTER = "INSERT "+
+											  " INTO SEMESTER "+
+											  "(SEMESTER_ID,SEMESTER_TYPE,START_DATE,END_DATE,COURSE_ADD_DEADLINE,COURSE_DROP_DEADLINE) "+
+											  " VALUES (?,?,?,?,?,?,?)";
+	
+	public static final String GET_SEMESTER_LIST =  " SELECT SEMESTER.SEMESTER_ID,"+													
+													"   SEMESTER.SEMESTER_TYPE,"+
+													"   SEMESTER.START_DATE,"+
+													"   SEMESTER.END_DATE,"+
+													"   SEMESTER.COURSE_ADD_DEADLINE,"+
+													"   SEMESTER.COURSE_DROP_DEADLINE"+
+													" 	FROM SEMESTER"+
+													" 	WHERE SEMESTER.SEMESTER_ID LIKE ?";
+
+
+	
+	
 	
 
 }
