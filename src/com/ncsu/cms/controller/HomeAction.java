@@ -25,6 +25,7 @@ public class HomeAction extends ActionSupport{
 	private List<FacultyBean> facultyList;
     private List<CompletedCoursesBean> completedCoursesList;
     private AdminBean adminDetails;
+	private int pendingRequestCount;
 	
 	
 	public String execute() throws Exception {
@@ -40,7 +41,7 @@ public class HomeAction extends ActionSupport{
 			
 		DAO cmsDB = new DAOImpl();
 		if(actionName.equals("ACTION_HOME_REDIRECT")){
-			if(userRole.equals("1")){
+			if(userRole.equals("2")){
 				//Load Home Student Details from DB
 				String studentId = (String) ServletActionContext.getServletContext().getAttribute("userId");
 				
@@ -50,12 +51,13 @@ public class HomeAction extends ActionSupport{
 				
 				return "studenthome";
 			}				
-			else if(userRole.equals("2")){
+			else if(userRole.equals("1")){
 				//Load Home Admin Details from DB
 				String adminId = (String) ServletActionContext.getServletContext().getAttribute("userId");
 				int adminInt = Integer.parseInt(adminId);
 				System.out.println(adminId);
 				adminDetails = cmsDB.getAdminDetails(adminInt);
+				setPendingRequestCount(cmsDB.getRequestDetails().size());
 				System.out.println(adminDetails.getFirstName());
 				
 				
@@ -123,6 +125,14 @@ public class HomeAction extends ActionSupport{
 
 	public void setAdminDetails(AdminBean adminDetails) {
 		this.adminDetails = adminDetails;
+	}
+
+	public int getPendingRequestCount() {
+		return pendingRequestCount;
+	}
+
+	public void setPendingRequestCount(int pendingRequestCount) {
+		this.pendingRequestCount = pendingRequestCount;
 	}
 
 	

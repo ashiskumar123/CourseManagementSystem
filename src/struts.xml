@@ -101,6 +101,107 @@
 			<result name="success">/jsp/edit-current-student.jsp</result>
 		</action>
 		
+		<action name="enrollStudent" class="com.ncsu.cms.controller.CourseManagementAction">
+			<param name="actionName">ACTION_ENROLL_COURSE</param>
+			<result name="success">/jsp/register-course.jsp</result>
+		</action>
+		<action name="dropStudentCourse" class="com.ncsu.cms.controller.CourseManagementAction">
+			<param name="actionName">ACTION_DROP_COURSE</param>
+			<result name="success">/jsp/register-course.jsp</result>
+		</action>
+		<action name="requestSpecialPermission" class="com.ncsu.cms.controller.CourseManagementAction">
+			<param name="actionName">ACTION_REQUEST_SPPERM</param>
+			<result name="success">/jsp/register-course.jsp</result>
+		</action>
+		
+				<action name="editCurrentCourse" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_COURSE</param>
+			<result name="success">/jsp/edit-current-course.jsp</result>
+		</action>
+		<action name="editCurrentCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_COURSE_OFFERING</param>
+			<result name="success">/jsp/edit-current-course-offering.jsp</result>
+		</action>
+		<action name="saveCurrentCourse" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_CURRENT_COURSE</param>
+			<result name="success">/jsp/edit-current-course.jsp</result>
+		</action>
+		<action name="saveCurrentCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_CURRENT_COURSE_OFFERING</param>
+			<result name="success">/jsp/edit-current-course-offering.jsp</result>
+		</action>
+		<action name="viewAlerts" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_VIEW_ALERTS</param>
+			<result name="success">/jsp/view-alerts.jsp</result>
+		</action>
+		<action name="approveRequest" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_APPROVE_REQUEST</param>
+			<result name="success">/jsp/view-alerts.jsp</result>
+		</action>
+		<action name="declineRequest" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_DECLINE_REQUEST</param>
+			<result name="success">/jsp/view-alerts.jsp</result>
+		</action>
+		<action name="editSemester" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SHOW_SEMESTER_LIST</param>
+			<result name="success">/jsp/semester-list.jsp</result>
+		</action>
+		<action name="editCurrentSemester" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_CURRENT_SEMESTER</param>
+			<result name="success">/jsp/edit-current-semester.jsp</result>
+		</action>
+		<action name="saveCurrentSemester" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_CURRENT_SEMESTER</param>
+			<result name="success">/jsp/edit-current-semester.jsp</result>
+		</action>
+		<action name="addSemester" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ADD_SEMESTER</param>
+			<result name="success">/jsp/add-semester.jsp</result>
+		</action>
+		<action name="searchCourse" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SEARCH_COURSE</param>
+			<result name="success">/jsp/search-course-details.jsp</result>
+		</action>
+		<action name="searchCourseOffering" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SEARCH_COURSE_OFFERING</param>
+			<result name="success">/jsp/search-course-offering-details.jsp</result>
+		</action>
+		<action name="addPrerequisite" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ADD_PREREQUISITE</param>
+			<result name="success">/jsp/add-edit-prerequisite.jsp</result>
+		</action>
+		<action name="savePrerequisite" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_PREREQUISITE</param>
+			<result name="success">/jsp/add-edit-prerequisite.jsp</result>
+		</action>
+		<action name="enterGrades" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ENTER_GRADES</param>
+			<result name="success">/jsp/enter-grades.jsp</result>
+		</action>
+		<action name="saveGrade" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_GRADE</param>
+			<result name="success">/jsp/enter-grades.jsp</result>
+		</action>
+		<action name="addFaculty" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ADD_FACULTY</param>
+			<result name="success">/jsp/add-faculty.jsp</result>
+		</action>
+		<action name="saveFaculty" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_FACULTY</param>
+			<result name="success">/jsp/add-faculty.jsp</result>
+		</action>
+        <action name="addSchedule" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ADD_SCHEDULE</param>
+			<result name="success">/jsp/add-schedule.jsp</result>
+		</action>
+		<action name="saveSchedule" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_SAVE_SCHEDULE</param>
+			<result name="success">/jsp/add-schedule.jsp</result>
+		</action>
+		<action name="enforceDropDeadline" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_ENFORCE_DROP_DEADLINE</param>
+			<result name="success">/jsp/admin-home.jsp</result>
+		</action>
 		
 		
 	</package>

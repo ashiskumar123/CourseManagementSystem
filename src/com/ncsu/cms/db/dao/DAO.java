@@ -10,11 +10,18 @@ import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.DepartmentBean;
+import com.ncsu.cms.bean.ErrorBean;
+import com.ncsu.cms.bean.EnrolledBean;
 import com.ncsu.cms.bean.FacultyBean;
+import com.ncsu.cms.bean.FacultyMapBean;
 import com.ncsu.cms.bean.LocationBean;
+import com.ncsu.cms.bean.LocationListBean;
 import com.ncsu.cms.bean.LoginBean;
 import com.ncsu.cms.bean.LoginResultBean;
+import com.ncsu.cms.bean.RequestListBean;
+import com.ncsu.cms.bean.RequestBean;
 import com.ncsu.cms.bean.ScheduleBean;
+import com.ncsu.cms.bean.SemesterBean;
 import com.ncsu.cms.bean.StudentBean;
 import com.ncsu.cms.bean.StudentListBean;
 
@@ -53,15 +60,62 @@ public interface DAO {
 	
 	public void insertUser(int userId, String userName,String password,int role);
 	
-	public List<CourseListBean>  getCourseList();
+	public List<CourseListBean>  getCourseList(String courseId);
 	
-	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel );
+	public void insertCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits );
 	
-	public List<CourseOfferingListBean> getCourseOfferingList();
+	public List<CourseOfferingListBean> getCourseOfferingList(String courseOfferingId);
 	
 	public void insertCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId);
 	
-	public void editStudent(int userId, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId, double gpa,int resType, int levelClassification);
+	public void editCourseOffering(int courseOfferingId, String courseId,int classSize,int waitlistSize, int semId, int locationId);
+	
+	
+	public void editStudent(int userId, String userName, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId,int resType, int levelClassification);
 	
 	public List<DepartmentBean> getDepartmentList();
+	
+	public List<CourseOfferingBean> getStudentCurrentCourseDetailsList(String studentId);
+	
+	public ErrorBean enrollStudentToCourse(String studentId, String offeringId, String credits, String dropOfferingId);
+	
+	public ErrorBean dropStudentCourse(String studentId, String offeringId);
+
+	public ErrorBean requestSpecialPermission(String studentId, String offeringId, String creditCount);
+	
+	public List<RequestListBean> getSPPERMRequestList(String studentId);
+	
+	public void editCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits);
+	
+	public List<RequestBean> getRequestDetails();
+	
+	public void approveRequest(int requestId, Date date, int adminId);
+	
+	public void declineRequest(int requestId, Date date, int adminId);
+	
+	public List<SemesterBean> getSemesterList(String semesterId);
+	
+	public void enrollFromRequest(String userId, String offeringId, String creditCount);
+	
+	public LocationListBean getLocation(String offeringId);
+	
+	public String getSemesterId(String courseOfferingId);
+	
+	public void editCurrentSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline);
+	
+	public void insertSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline);
+	
+	public void insertPrerequisite(String id, String courseId, String typeId, String details );
+	
+	public List<EnrolledBean> getEnrolledDetails(String userId);
+	
+	public void updateGrade(String grade, String userId);
+	
+	public List<FacultyMapBean> getFacultyFullNameList();
+	
+	public void addFaculty(String offeringId, String facultyId);
+	
+	public void addSchedule(String offeringId, String scheduleId,String day, String fromTime, String toTime );
+	
+	public void enforceDropDeeadline();
 }

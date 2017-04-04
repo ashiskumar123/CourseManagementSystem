@@ -27,6 +27,9 @@ public class CourseOfferingBean implements Serializable{
     private String days;
     private String levelClassification;
     private String courseType;
+    private String availability;
+    private String enrollmentStatusId;
+    private String enrollmentStatus;
     
 	public CourseOfferingBean(String courseId, String offeringId, String courseName, String creditCount, String departmentName,
 			List<FacultyBean> facultyList, String classSize, String enrolledSize, String waitlistSize,
@@ -50,8 +53,54 @@ public class CourseOfferingBean implements Serializable{
 		this.days = days;
 		this.levelClassification = levelClassification;
 		this.courseType = courseType;
+
+		int classCnt = Integer.parseInt(classSize==null?"0":classSize);
+		int enrolledCnt = Integer.parseInt(enrolledSize==null?"0":enrolledSize);
+		int waitlistCnt = Integer.parseInt(waitlistSize==null?"0":waitlistSize);
+		int waitlistEnrolled = Integer.parseInt(waitlistCount==null?"0":waitlistCount);
+		
+		if(enrolledCnt >= classCnt){
+			if(waitlistEnrolled >= waitlistCnt){
+				availability = "closed";
+			}
+			else{
+				availability = "Waitlist " + String.valueOf(waitlistCnt-waitlistEnrolled) + " of " + waitlistSize;
+			}
+		}
+		else{
+			availability = "Available " + String.valueOf(classCnt-enrolledCnt) + " of " + classSize;
+		}
+		
+		//if(courseType.equals("2")) //
+		//System.out.println("Availability: " + availability);
 	}
 	
+	
+	
+	public CourseOfferingBean(String courseId, String offeringId, String courseName, String creditCount,
+			String departmentName, List<FacultyBean> facultyList, String roomNo, String building, String fromTime,
+			String toTime, String days, String levelClassification, String courseType, String enrollmentStatusId,
+			String enrollmentStatus) {
+		super();
+		this.courseId = courseId;
+		this.offeringId = offeringId;
+		this.courseName = courseName;
+		this.creditCount = creditCount;
+		this.departmentName = departmentName;
+		this.facultyList = facultyList;
+		this.roomNo = roomNo;
+		this.building = building;
+		this.fromTime = fromTime;
+		this.toTime = toTime;
+		this.days = days;
+		this.levelClassification = levelClassification;
+		this.courseType = courseType;
+		this.enrollmentStatusId = enrollmentStatusId;
+		this.enrollmentStatus = enrollmentStatus;
+	}
+
+
+
 	public String getCourseId() {
 		return courseId;
 	}
@@ -158,6 +207,30 @@ public class CourseOfferingBean implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(String availability) {
+		this.availability = availability;
+	}
+
+	public String getEnrollmentStatusId() {
+		return enrollmentStatusId;
+	}
+
+	public void setEnrollmentStatusId(String enrollmentStatusId) {
+		this.enrollmentStatusId = enrollmentStatusId;
+	}
+
+	public String getEnrollmentStatus() {
+		return enrollmentStatus;
+	}
+
+	public void setEnrollmentStatus(String enrollmentStatus) {
+		this.enrollmentStatus = enrollmentStatus;
 	}
     
     
