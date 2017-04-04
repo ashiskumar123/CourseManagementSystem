@@ -1,5 +1,6 @@
 package com.ncsu.cms.db.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.ncsu.cms.bean.AdminBean;
@@ -74,7 +75,7 @@ public interface DAO {
 	public void editStudent(int userId, String userName, String firstName, String lastName,  String email , String address, long phoneNumber, int deptId,int resType, int levelClassification);
 	
 	public List<DepartmentBean> getDepartmentList();
-	
+
 	public List<CourseOfferingBean> getStudentCurrentCourseDetailsList(String studentId);
 	
 	public ErrorBean enrollStudentToCourse(String studentId, String offeringId, String credits, String dropOfferingId);
@@ -84,7 +85,7 @@ public interface DAO {
 	public ErrorBean requestSpecialPermission(String studentId, String offeringId, String creditCount);
 	
 	public List<RequestListBean> getSPPERMRequestList(String studentId);
-	
+
 	public void editCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits);
 	
 	public List<RequestBean> getRequestDetails();

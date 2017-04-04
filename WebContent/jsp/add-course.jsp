@@ -62,13 +62,23 @@
 			   </div>   		        
 	        </div>
 	        
+	        
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
-		         <label>Credit Count: </label>
-		         <input type ="text" name="creditCount" id ="creditCount" class="form-control" placeholder="Enter Credit Count" value =  ></input>
+		         <label>Max Credits: </label>
+		         <input type ="text" name="maxCredits" id ="maxCredits" class="form-control" placeholder="Enter Credit Count" value =  ></input>
 		       </div>
 	        
 	        </div>
+	        <div class="row inter-row" >
+	        	<div class="col-xs-6">
+		         <label>Min Credits: </label>
+		         <input type ="text" name="minCredits" id ="minCredits" class="form-control" placeholder="Enter Credit Count" value =  ></input>
+		       </div>
+	        
+	        </div>
+	        
+	        
 	        
 	        
 	        
@@ -94,11 +104,9 @@
 	          <input type = "reset" class="btn btn-primary" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
 	        
+	        
 	      </form>
-	   
-	      
-	      
-	      
+	      	      
 	    </div>
     </div>
 	<jsp:include page="common-footer.jsp" />

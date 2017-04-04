@@ -240,7 +240,7 @@ public class DAOImpl implements DAO{
 		
 		int statusCode = pstmt.executeUpdate();
 		
-		conn.commit();
+		
 		
 		System.out.println("ByeBro");
 		System.out.println(statusCode);
@@ -257,7 +257,7 @@ public class DAOImpl implements DAO{
 			pstmt.setInt(2, studentId);
 			
 			int statusCode = pstmt.executeUpdate();
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -274,7 +274,7 @@ public class DAOImpl implements DAO{
 			System.out.println("Hi");
 			int statusCode = pstmt.executeUpdate();
 			System.out.println("Bye");
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -1399,7 +1399,6 @@ public class DAOImpl implements DAO{
 		//ErrorBean errorData = new DAOImpl().dropStudentCourse(5, 8);
 		System.out.println("message=" +errorData.getErrorMessage());
 		System.out.println("code="+errorData.getErrorCode());
-		
 	}
 	
 }

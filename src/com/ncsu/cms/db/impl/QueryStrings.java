@@ -263,7 +263,6 @@ public class QueryStrings {
 	
 	public static final String ADD_COURSE = "INSERT "+
 											" INTO COURSE "+
-											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, MAX_CREDITS, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
 											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, MAX_CREDITS, COURSE_TYPE, CLASSIFICATION_LEVEL,MIN_CREDITS) "+
 
 											" VALUES (?,?,?,?,?,?,?)";
@@ -337,8 +336,9 @@ public class QueryStrings {
 	
 	public static final String ENROLL_STUDENT = "INSERT "+
 												" INTO ENROLLED_IN "+
-												 "(USER_ID,OFFERING_ID,GRADE,WAITLIST_NO,ENROLLMENT_STATUS,DROP_COURSE,CREDIT_COUNT) "+
-												 " VALUES (?,?,'F',0,1,NULL,?)";
+												" (USER_ID,OFFERING_ID,GRADE,WAITLIST_NO,ENROLLMENT_STATUS,DROP_COURSE,CREDIT_COUNT) "+
+												" VALUES (?, ?, 'F', 0, 1 NULL, ?)";
+			
 
 	public static final String ADD_SEMESTER = "INSERT "+
 											  " INTO SEMESTER "+
@@ -399,10 +399,6 @@ public class QueryStrings {
     		  											" JOIN ENROLLED_IN E ON E.USER_ID = B.USER_ID "+
     		  											" WHERE B.BILL_AMOUNT > 0) ";
         
-
-	
-	
-	
 	public static final String SELECT_STUDENT_CURRENT_COURSE_DETAILS_LIST = "  SELECT COURSE_ID,"+
 																			"     TO_CHAR(OFFERING_ID,'000'),"+
 																			"     COURSE_NAME,"+

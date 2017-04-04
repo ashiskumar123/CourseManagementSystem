@@ -1,0 +1,14 @@
+$(document).ready(function(){
+	alert("Hi")
+	$("#selectDeptId").change(function(){
+		$("#deptId").val($(this).find(":selected").val());
+	});
+	$("#selectResType").val($("#resType").val());
+	$("#selectResType").change(function(){
+		$("#resType").val($(this).find(":selected").val());
+	});
+	$("#selectLevelClassification").val($("#levelClassification").val());
+	$("#selectLevelClassification").change(function(){
+		$("#levelClassification").val($(this).find(":selected").val());
+	})
+})
