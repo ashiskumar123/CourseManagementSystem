@@ -7,8 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Student - Course Management System</title>
 <jsp:include page="common-include.jsp" />
-<script type="text/javascript" src="js/student-home-main.js"></script>
-
+<script type="text/javascript" src="js/edit-current-student-main.js"></script>
 
 <style>
     .inter-row{
@@ -105,30 +104,50 @@
 	        </div>
 
 	        
-	        <div class="row inter-row">
+	       <!--   <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Department Id: </label>
 	           <input type="text" id = "deptId" name = "deptId" class="form-control" placeholder ="Enter Department ID"  ></input>
 	          </div>
+	        </div>-->
+	        
+	        <div class="row inter-row">
+	          <div class="col-xs-6">
+	           <label>Department Id: </label>
+	           <input type="text" id="deptId" name="deptId" class="form-control" placeholder ="Enter Values between 1-4"  ></input>
+	           </div>
 	        </div>
 
 
 	        
-	        <div class="row inter-row">
+	       <!--   <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Residency Type: </label>
 	           <input type="text" id="resType" name="resType" class="form-control" placeholder ="Enter Residency Type"  ></input>
 	          </div>
+	        </div>-->
+	        
+	        <div class="row inter-row">
+	          <div class="col-xs-6">
+	           <label>Residency Type: </label>
+				<input type="text" id="resType" name="resType" class="form-control" placeholder ="Enter Residency Type"  ></input>
+	          </div>
 	        </div>
 
 	        
-	        <div class="row inter-row">
+	        <!--  <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Level Classification: </label>
 	           <input type="text" id="levelClassification" name="levelClassification" class="form-control" placeholder ="Enter Level Classification"></input>
 	          </div>
+	        </div>-->
+			
+			<div class="row inter-row">
+	          <div class="col-xs-6">
+	           <label>Level Classification: </label>
+				<input type="text" id="levelClassification" name="levelClassification" class="form-control" placeholder ="Enter Level Classification"  ></input>
+	          </div>
 	        </div>
-
 	        
 	        
 	        <div class="row inter-row" id="btndiv">
@@ -138,7 +157,9 @@
 	        
 	      </form>
 	   
-	      
+	     <input type="hidden" name="deptId" id="deptId" />
+	        <input type="hidden" name="resType" id="resType"  />
+	        <input type="hidden" name="levelClassification" id="levelClassification"  />
 	      
 	      
 	    </div>

@@ -121,7 +121,11 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Residency Type: </label>
-	           <input type="text" id="resType" name="resType" class="form-control" placeholder ="Enter Residency Type"  ></input>
+	           	<select id="selectResType" class="form-control">
+		           	<option value="1">In-State</option>
+		           	<option value="2">Out-State</option>
+		           	<option value="3">International</option>
+	           	</select>
 	          </div>
 	        </div>
 
@@ -129,7 +133,10 @@
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Level Classification: </label>
-	           <input type="text" id="levelClassification" name="levelClassification" class="form-control" placeholder ="Enter Level Classification"></input>
+	           <select id="selectLevelClassification" class="form-control">
+	           	<option value="1">Graduate</option>
+	           	<option value="2">Undergraduate</option>
+	           </select>
 	          </div>
 	        </div>
 	        <div class="row inter-row" id="btndiv">
@@ -138,7 +145,7 @@
 	        </div>
 	        <input type="hidden" name="userId" value='<s:property value="userId"/>' />
 	        <input type="hidden" name="deptId" id="deptId" value='<s:property value="%{student.deptId}"/>' />
-	        <input type="hidden" name="resType" id="resType" value='<s:property value="%{student.resType}"/>' />
+	        <input type="hidden" name="resType" id="resType" value='<s:property value="%{student.residencyType}"/>' />
 	        <input type="hidden" name="levelClassification" id="levelClassification" value='<s:property value="%{student.levelClassification}"/>' />
 	      </form>
 	    </div>

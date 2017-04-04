@@ -16,11 +16,11 @@
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
-	</div>
 	<div id ="semesterTable" style="margin-top: 20px" class="container">
+		<ol class="breadcrumb">
+		  	<li><a href="#" onclick="postNavigate('home')">Home</a></li>
+		  	<li class="active">Semester List</li>
+		</ol>
       <div class="maincontent">
 		 <div>
 		   <h2>Semester List</h2>
@@ -59,8 +59,8 @@
            </table>
 		 </div>
 	  </div>	 
-	  <form id="frmBillr" method="get" action="addStudent" style = "margin-top:15px">    		
-		  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="Add Student" />   		   		
+	  <form id="frmBillr" method="get" action="addSemester" style = "margin-top:15px">    		
+		  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="Add Semester" />   		   		
 	  </form>
 	</div>
 

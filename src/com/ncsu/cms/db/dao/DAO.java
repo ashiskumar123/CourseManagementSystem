@@ -11,8 +11,11 @@ import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.DepartmentBean;
+import com.ncsu.cms.bean.EnrolledBean;
 import com.ncsu.cms.bean.FacultyBean;
+import com.ncsu.cms.bean.FacultyMapBean;
 import com.ncsu.cms.bean.LocationBean;
+import com.ncsu.cms.bean.LocationListBean;
 import com.ncsu.cms.bean.LoginBean;
 import com.ncsu.cms.bean.LoginResultBean;
 import com.ncsu.cms.bean.RequestBean;
@@ -58,7 +61,7 @@ public interface DAO {
 	
 	public List<CourseListBean>  getCourseList(String courseId);
 	
-	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel );
+	public void insertCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits );
 	
 	public List<CourseOfferingListBean> getCourseOfferingList(String courseOfferingId);
 	
@@ -71,7 +74,7 @@ public interface DAO {
 	
 	public List<DepartmentBean> getDepartmentList();
 	
-	public void editCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel );
+	public void editCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits);
 	
 	public List<RequestBean> getRequestDetails();
 	
@@ -83,4 +86,25 @@ public interface DAO {
 	
 	public void enrollFromRequest(String userId, String offeringId, String creditCount);
 	
+	public LocationListBean getLocation(String offeringId);
+	
+	public String getSemesterId(String courseOfferingId);
+	
+	public void editCurrentSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline);
+	
+	public void insertSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline);
+	
+	public void insertPrerequisite(String id, String courseId, String typeId, String details );
+	
+	public List<EnrolledBean> getEnrolledDetails(String userId);
+	
+	public void updateGrade(String grade, String userId);
+	
+	public List<FacultyMapBean> getFacultyFullNameList();
+	
+	public void addFaculty(String offeringId, String facultyId);
+	
+	public void addSchedule(String offeringId, String scheduleId,String day, String fromTime, String toTime );
+	
+	public void enforceDropDeeadline();
 }

@@ -1,5 +1,6 @@
 package com.ncsu.cms.db.impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,9 +23,12 @@ import com.ncsu.cms.bean.CourseOfferingBean;
 
 import com.ncsu.cms.bean.CurrentCourseBean;
 import com.ncsu.cms.bean.DepartmentBean;
+import com.ncsu.cms.bean.EnrolledBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.FacultyBean;
+import com.ncsu.cms.bean.FacultyMapBean;
 import com.ncsu.cms.bean.LocationBean;
+import com.ncsu.cms.bean.LocationListBean;
 import com.ncsu.cms.bean.LoginBean;
 import com.ncsu.cms.bean.LoginResultBean;
 import com.ncsu.cms.bean.RequestBean;
@@ -240,7 +244,7 @@ public class DAOImpl implements DAO{
 		
 		int statusCode = pstmt.executeUpdate();
 		
-		conn.commit();
+		
 		
 		System.out.println("ByeBro");
 		System.out.println(statusCode);
@@ -257,7 +261,7 @@ public class DAOImpl implements DAO{
 			pstmt.setInt(2, studentId);
 			
 			int statusCode = pstmt.executeUpdate();
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -274,7 +278,7 @@ public class DAOImpl implements DAO{
 			System.out.println("Hi");
 			int statusCode = pstmt.executeUpdate();
 			System.out.println("Bye");
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -432,7 +436,7 @@ public class DAOImpl implements DAO{
 			System.out.println("Hi");
 			int statusCode = pstmt.executeUpdate();
 			System.out.println("Bye");
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -498,7 +502,7 @@ public class DAOImpl implements DAO{
 			System.out.println("Hi");
 			int statusCode = pstmt.executeUpdate();
 			System.out.println("Bye");
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -517,7 +521,7 @@ public class DAOImpl implements DAO{
 
 			int statusCode = pstmt.executeUpdate();
 
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -526,18 +530,19 @@ public class DAOImpl implements DAO{
 		}
 		
 	}
-	public void insertCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel ){
+	public void insertCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits ){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_COURSE);
 			pstmt.setString(1, courseId);
 			pstmt.setString(2, courseName);
 			pstmt.setInt(3, deptID);
-			pstmt.setInt(4, creditCount);
+			pstmt.setInt(4, maxCredits);
 			pstmt.setInt(5, courseType);
 			pstmt.setInt(6, classificationLevel);
+			pstmt.setInt(7,minCredits);
 			int statusCode = pstmt.executeUpdate();
 
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -567,7 +572,11 @@ public class DAOImpl implements DAO{
 							rs.getString(3),
 							rs.getString(4),
 							rs.getString(5),
-							rs.getString(6)
+							rs.getString(6),
+							rs.getString(7),
+							rs.getString(8),
+							rs.getString(9),
+							rs.getString(10)
 						);
 				courseList.add(course);
 			}
@@ -621,7 +630,7 @@ public class DAOImpl implements DAO{
 			pstmt.setInt(6, locationId);
 			int statusCode = pstmt.executeUpdate();
 
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -633,7 +642,7 @@ public class DAOImpl implements DAO{
 	public void editStudent(int userId,String userName,String firstName, String lastName,  String email , String address, long phoneNumber, int deptId,int resType, int levelClassification) {
 		try{
 			
-		PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT);
+		PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT1);
 			//pstmt.setInt(1, userId);
 			pstmt.setString(1, firstName);
 			pstmt.setString(2, lastName);
@@ -645,14 +654,14 @@ public class DAOImpl implements DAO{
 			pstmt.setInt(7, resType);			
 			pstmt.setInt(8, levelClassification);
 			pstmt.setInt(9, userId);
-			pstmt.setString(10, userName);
-			pstmt.setInt(11, userId);
-		//	insertUser(userId,username,HashUtil.generateSHA256Hash(password), role);
-			System.out.println("Hi");
+			
 			int statusCode = pstmt.executeUpdate();
-			System.out.println("Bye");
-			conn.commit();
-			System.out.println(statusCode);
+			
+
+			pstmt = conn.prepareStatement(QueryStrings.EDIT_STUDENT2);
+			pstmt.setString(1, userName);
+			pstmt.setInt(2, userId);
+			statusCode = pstmt.executeUpdate();
 			
 		}
 		catch(SQLException e){
@@ -661,20 +670,21 @@ public class DAOImpl implements DAO{
 		
 	}
 	
-	public void editCourse(String courseId, String courseName, int deptID ,int creditCount, int courseType, int classificationLevel ){
+	public void editCourse(String courseId, String courseName, int deptID ,int maxCredits, int courseType, int classificationLevel,int minCredits){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_COURSE);
 			
-			pstmt.setString(1, courseId);
-			pstmt.setString(2, courseName);
-			pstmt.setInt(3, deptID);
-			pstmt.setInt(4, creditCount);
-			pstmt.setInt(5, courseType);
-			pstmt.setInt(6, classificationLevel);
-			pstmt.setString(7, courseId);			
+			
+			pstmt.setString(1, courseName);
+			pstmt.setInt(2, deptID);
+			pstmt.setInt(3, maxCredits);
+			pstmt.setInt(4, courseType);
+			pstmt.setInt(5, classificationLevel);	
+			pstmt.setInt(6, minCredits);
+			pstmt.setString(7, courseId);
 			int statusCode = pstmt.executeUpdate();
 
-			conn.commit();
+			//
 			System.out.println(statusCode);
 			
 		}
@@ -696,7 +706,7 @@ public class DAOImpl implements DAO{
 			pstmt.setInt(7, courseOfferingId);
 			int statusCode = pstmt.executeUpdate();
 
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -826,8 +836,6 @@ public class DAOImpl implements DAO{
 		
 		int statusCode = pstmt.executeUpdate();
 		
-		conn.commit();
-		
 		System.out.println("ByeBro");
 		System.out.println(statusCode);
 		}
@@ -846,7 +854,7 @@ public class DAOImpl implements DAO{
 			
 			int statusCode = pstmt.executeUpdate();
 			
-			conn.commit();
+			
 			
 			System.out.println("ByeBro");
 			System.out.println(statusCode);
@@ -872,10 +880,10 @@ public class DAOImpl implements DAO{
 				SemesterBean semester  = new SemesterBean(
 							rs.getString(1),
 							rs.getString(2),
-							rs.getDate(3),
-							rs.getDate(4),
-							rs.getDate(5),
-							rs.getDate(6)
+							rs.getString(3),
+							rs.getString(4),
+							rs.getString(5),
+							rs.getString(6)
 
 						);
 				semesterList.add(semester);
@@ -896,7 +904,7 @@ public class DAOImpl implements DAO{
 
 			int statusCode = pstmt.executeUpdate();
 
-			conn.commit();
+			
 			System.out.println(statusCode);
 			
 		}
@@ -906,6 +914,242 @@ public class DAOImpl implements DAO{
 		
 	}
 	
+	public LocationListBean getLocation(String offeringId){
+		LocationListBean location = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_LOCATION);
+			pstmt.setString(1, offeringId);
+			ResultSet rs = pstmt.executeQuery();
+
+		
+			if(rs.next())
+			{
+				 location  = new LocationListBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3)
+
+						);
+				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return location;
+	}
+	
+
+		
+	public String getSemesterId(String courseOfferingId){
+		String semesterId = null;
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_LOCATION);
+			pstmt.setString(1, courseOfferingId);
+			ResultSet rs = pstmt.executeQuery();
+
+		
+			if(rs.next())
+			{
+				 semesterId = rs.getString(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return semesterId;
+	}
+	public void editCurrentSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.EDIT_CURRENT_SEMESTER);
+			pstmt.setString(1, semesterType);
+			pstmt.setString(2, startDate); 
+			pstmt.setString(3, endDate);
+			pstmt.setString(4, courseAddDeadline);
+			pstmt.setString(5, courseDropDeadline);
+			pstmt.setString(6, semesterId);
+			
+			
+			int statusCode = pstmt.executeUpdate();
+			
+			System.out.println(statusCode);
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+	}
+	
+	public void insertSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline){
+		
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_SEMESTER);
+			pstmt.setString(1, semesterId);
+			pstmt.setString(2, semesterType);
+			pstmt.setString(3, startDate); 
+			pstmt.setString(4, endDate);
+			pstmt.setString(5, courseAddDeadline);
+			pstmt.setString(6, courseDropDeadline);
+			
+			
+			
+			int statusCode = pstmt.executeUpdate();
+			
+			System.out.println(statusCode);
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		
+		
+	}
+	public void insertPrerequisite(String id, String courseId, String typeId, String details ){
+		
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_PREREQUISITE);
+			pstmt.setString(1, id);
+			pstmt.setString(2, courseId);
+			pstmt.setString(3, typeId);
+			pstmt.setString(4, details);
+			int statusCode = pstmt.executeUpdate();
+
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	public List<EnrolledBean> getEnrolledDetails(String userId){
+		
+		List<EnrolledBean> enrolledList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_ENROLLED_DETAILS);
+			pstmt.setString(1,userId);
+			ResultSet rs = pstmt.executeQuery();
+
+			enrolledList = new ArrayList<EnrolledBean>();
+			
+			while(rs.next())
+			{
+				EnrolledBean enroll  = new EnrolledBean(
+							rs.getString(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4)
+						);
+				enrolledList.add(enroll);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return enrolledList;
+		
+		
+	}
+	public void updateGrade(String grade, String userId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SAVE_GRADES);
+			pstmt.setString(1, grade);
+			pstmt.setString(2, userId); 						
+			int statusCode = pstmt.executeUpdate();
+			
+			
+			
+			System.out.println("ByeBro");
+			System.out.println(statusCode);
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		
+		
+	}
+	public List<FacultyMapBean> getFacultyFullNameList(){
+		
+		List<FacultyMapBean> facultyList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.LIST_OF_FACULTY);
+			
+			ResultSet rs = pstmt.executeQuery();
+
+			facultyList = new ArrayList<FacultyMapBean>();
+			
+			while(rs.next())
+			{
+				FacultyMapBean faculty  = new FacultyMapBean(
+							rs.getString(1),
+							rs.getString(2)
+
+						);
+				facultyList.add(faculty);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return facultyList;
+		
+		
+		
+	}
+	public void addFaculty(String offeringId, String facultyId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_FACULTY);
+			pstmt.setString(1, offeringId);
+			pstmt.setString(2, facultyId);
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	public void addSchedule(String offeringId, String scheduleId,String day, String fromTime, String toTime ){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_SCHEDULE);
+			pstmt.setString(1, scheduleId);
+			pstmt.setString(2, offeringId);
+			pstmt.setString(3, day);
+			pstmt.setString(4, fromTime);
+			pstmt.setString(5, toTime);
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	public void enforceDropDeeadline(){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ENFORCE_DROP_DEADLINE);
+			int statusCode = pstmt.executeUpdate();			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -933,8 +1177,14 @@ public class DAOImpl implements DAO{
 			System.out.println(it.next().getCourseId());*/
 		//new DAOImpl().editCourse("CSC517", courseName, deptID, creditCount, courseType, classificationLevel);
 		//System.out.println(new DAOImpl().getRequestDetails().get(0).getStudentName());
-		System.out.println(new DAOImpl().getSemesterList("1").get(0).getCourseAddDeadline());
-		
+		//System.out.println(new DAOImpl().getSemesterList("1").get(0).getCourseAddDeadline());
+		//System.out.println(new DAOImpl().getCourseList(null).get(0).getClassificationLevel());
+       // new DAOImpl().editCourse("CSC517", "OODD", 1, 2, 1, 1, 1);	
+		//System.out.println(new DAOImpl().getCourseList("CS421").get(0).getCourseName());
+		//new DAOImpl().insertPrerequisite("22", "CS515", "2", "CS510");
+		//System.out.println(new DAOImpl().getEnrolledDetails("200").get(0).getUserId());
+		//new DAOImpl().updateGrade("B-", "200");
+		System.out.println(new DAOImpl().getFacultyFullNameList().get(0));
 
 	}
 	

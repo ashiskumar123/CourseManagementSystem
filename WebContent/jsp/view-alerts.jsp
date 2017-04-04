@@ -10,7 +10,7 @@
 <script type='text/javascript' src='js/course-list-main.js'></script>
 <script type='text/javascript' src='js/approve-request.js'></script>
 <script type='text/javascript' src='js/decline-request.js'></script>
-<script type='text/javascript' src='js/disable-button.js'></script>
+<%-- <script type='text/javascript' src='js/disable-button.js'></script> --%>
 </head>
 <body>
 
@@ -56,12 +56,20 @@
               			<td><s:property value="offeringId"/></td>
               			<td id="tdStatus<%out.print(i++);%>" class="requestStatus"><s:property value="status"/></td>
               			<td>
-              				<input type ="button" id="btnApprove<%out.print(p++);%>>" data-request-id='<s:property value="requestId"/>' 
+              				<input type ="button" id="btnApprove<%out.print(p++);%>" 
+		              				<s:if test="%{status.equals('APPROVED') || status.equals('DECLINED')}">
+										disabled
+									</s:if>
+              						data-request-id='<s:property value="requestId"/>' 
            							class="btn btn-primary btn-approve-request"
 									value ="Approve Request"/>
               			</td>
               			<td>
-              				<input type ="button" id="btnDecline<%out.print(q++);%>>" data-request-id='<s:property value="requestId"/>' 
+              				<input type ="button" id="btnDecline<%out.print(q++);%>"
+		              				<s:if test="%{status.equals('APPROVED') || status.equals('DECLINED')}">
+										disabled
+									</s:if>
+              						data-request-id='<s:property value="requestId"/>' 
            							class="btn btn-primary btn-decline-request"
 									value ="Decline Request"/>
               			</td>

@@ -40,16 +40,15 @@
 	      </div>
 		  <form id="frmEditCourseOffering" method="post" action="saveCurrentCourseOffering">
 		    
-	        <div class="row inter-row" >
-		       <div class= "col-xs-6">
-		         <label>Course Offering ID: </label>
-		         	<input type ="text" name = "courseOfferingId"
-		         	 id ="courseOfferingId" class="form-control" 
-		         	 placeholder = "Enter Course Offering Id"
-					 value='<s:property value="%{courseOffering.courseOfferingId}"/>'/>
-		         	 
-			   </div>   		        
+	        <div class="row inter-row" >  
+			   <div class="col-xs-6">
+		        	Course Offering ID: 
+			        <label for="coid">
+			        	<s:property value="%{courseOffering.courseOfferingId}"/>
+			        </label>
+				</div>		        
 	        </div>
+	        
 	        
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
@@ -90,7 +89,7 @@
 		         <input type ="text" name="semesterId" 
 		         id ="semesterId" class="form-control" 
 		         placeholder="Enter Semester ID" 
-		         value='<s:property value="%{courseOffering.semesterId}"/>'/>
+		         value='<s:property value="%{semId}"/>'/>
 		       </div>
 	        
 	        </div>
@@ -101,7 +100,8 @@
 		         <input type ="text" name="locationId" 
 		         id ="locationId" class="form-control" 
 		         placeholder="Enter Location ID" 
-		         value='<s:property value="%{courseOffering.locationId}"/>'/>
+		         value='<s:property value="%{location.locationId}"/>'/>
+		         
 		       </div>
 	        
 	        </div>
@@ -113,6 +113,7 @@
 	          <input type ="submit" class="btn btn-primary" id ="save" value ="Update" />
 	          <input type = "reset" class="btn btn-primary" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
+	        <input type="hidden" name="courseOfferingId" value=<s:property value="%{courseOffering.courseOfferingId}"/> /> 
 	        <!-- <input type="hidden" name="userId" value='<s:property value="userId"/>' /> 
 	        <input type="hidden" name="deptId" id="deptId" value='<s:property value="%{student.deptId}"/>' />
 	        <input type="hidden" name="resType" id="resType" value='<s:property value="%{student.resType}"/>' />

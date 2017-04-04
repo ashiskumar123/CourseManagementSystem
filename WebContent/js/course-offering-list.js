@@ -2,4 +2,10 @@ $(document).ready(function(){
 	$(".btn-edit-course-offering").click(function(){
 		postNavigate('editCurrentCourseOffering',{"courseOfferingId":$(this).data("course-offering-id")});
 	});
+	$(".btn-add-faculty").click(function(){
+		postNavigate('addFaculty',{"courseOfferingId":$(this).data("course-offering-id")});
+	});
+	$(".btn-add-schedule").click(function(){
+		postNavigate('addSchedule',{"courseOfferingId":$(this).data("course-offering-id")});
+	});
 });

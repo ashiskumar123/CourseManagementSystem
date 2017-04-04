@@ -13,6 +13,9 @@ import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.DepartmentBean;
+import com.ncsu.cms.bean.EnrolledBean;
+import com.ncsu.cms.bean.FacultyMapBean;
+import com.ncsu.cms.bean.LocationListBean;
 import com.ncsu.cms.bean.RequestBean;
 import com.ncsu.cms.bean.SemesterBean;
 import com.ncsu.cms.bean.StudentBean;
@@ -21,6 +24,7 @@ import com.ncsu.cms.db.dao.DAO;
 import com.ncsu.cms.db.impl.DAOImpl;
 import com.ncsu.cms.utils.HashUtil;
 import com.opensymphony.xwork2.ActionSupport;
+
 
 public class AdminManagementAction extends ActionSupport {
 
@@ -62,7 +66,137 @@ public class AdminManagementAction extends ActionSupport {
 	private String semesterId;
 	private List<RequestBean> requestList;
 	private String requestId;
+	private String maxCredits;
+	private String minCredits;
+	public List<LocationListBean> locationList;
+	private LocationListBean location;
+	private String semId;
+	private String semesterType;
+	private String startDate;
+	private String endDate;
+	private String courseAddDeadline;
+	private String courseDropDeadline;
+	private String searchCourse;
+	private String searchOfferingCourse;
+	private String prereqType;
+	private String prereqId;
+	private String prereqDeatils;
+	private List<EnrolledBean> enrolledList;
+	private String grade;
+	private List<FacultyMapBean> listOfFaculty;
+	private String facultyId;
+	private String fromTime;
+	private String toTime;
+	private String schDay;
+	private String scheduleId;
+
 	
+	public String getScheduleId() {
+		return scheduleId;
+	}
+
+	public void setScheduleId(String scheduleId) {
+		this.scheduleId = scheduleId;
+	}
+
+	public String getFromTime() {
+		return fromTime;
+	}
+
+	public void setFromTime(String fromTime) {
+		this.fromTime = fromTime;
+	}
+
+	public String getToTime() {
+		return toTime;
+	}
+
+	public void setToTime(String toTime) {
+		this.toTime = toTime;
+	}
+
+	public String getSchDay() {
+		return schDay;
+	}
+
+	public void setSchDay(String schDay) {
+		this.schDay = schDay;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getSearchCourse() {
+		return searchCourse;
+	}
+
+	public void setSearchCourse(String searchCourse) {
+		this.searchCourse = searchCourse;
+	}
+
+	public String getSemesterType() {
+		return semesterType;
+	}
+
+	public void setSemesterType(String semesterType) {
+		this.semesterType = semesterType;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getCourseAddDeadline() {
+		return courseAddDeadline;
+	}
+
+	public void setCourseAddDeadline(String courseAddDeadline) {
+		this.courseAddDeadline = courseAddDeadline;
+	}
+
+	public String getCourseDropDeadline() {
+		return courseDropDeadline;
+	}
+
+	public void setCourseDropDeadline(String courseDropDeadline) {
+		this.courseDropDeadline = courseDropDeadline;
+	}
+
+	public List<LocationListBean> getLocationList() {
+		return locationList;
+	}
+
+	public void setLocationList(List<LocationListBean> locationList) {
+		this.locationList = locationList;
+	}
+
+	public String getMaxCredits() {
+		return maxCredits;
+	}
+
+	public void setMaxCredits(String maxCredits) {
+		this.maxCredits = maxCredits;
+	}
+
+
+
 	private List<DepartmentBean> departmentList;
 	
 	private List<SemesterBean> semesterList;
@@ -95,6 +229,9 @@ public class AdminManagementAction extends ActionSupport {
 		else if(actionName.equals("ACTION_SHOW_STUDENT_LIST")){						
 			studentList = cmsDB.getStudentList(null);
 		}
+		else if(actionName.equals("ACTION_ADD_STUDENT")){
+			departmentList = cmsDB.getDepartmentList();
+		}
 		
 		else if(actionName.equals("ACTION_INSERT_STUDENT")){
 			System.out.println("Hi");
@@ -103,6 +240,7 @@ public class AdminManagementAction extends ActionSupport {
 			int depInt = Integer.parseInt(deptId);
 			int resInt = Integer.parseInt(resType);
 			int levelInt = Integer.parseInt(levelClassification);
+			departmentList = cmsDB.getDepartmentList();
 			System.out.println(userInt + " " + firstName + " " + lastName + " " + email+ " " +  address+ " " + phoneLong+ " " + depInt+ " " + 0 + " " +  resInt+ " " + levelInt+ " " + userName+ " " + "pass"+ " " + 2);
 			cmsDB.insertStudent(userInt, firstName, lastName, email, address,phoneLong, depInt, 0 , resInt, levelInt, userName,"pass",2);
 		//	cmsDB.insertStudent(291, "firstName", "lastName", "email", "address",1211, 1, 0 , 1, 1, "userName","pass",2);
@@ -113,10 +251,13 @@ public class AdminManagementAction extends ActionSupport {
 		else if(actionName.equals("ACTION_INSERT_COURSE")){
 			System.out.println("Hi5");
 			int depInt = Integer.parseInt(deptId);
-			int creditInt = Integer.parseInt(creditCount);
+			int maxCredInt = Integer.parseInt(maxCredits);
 			int courseTypeInt = Integer.parseInt(courseType);
 			int levelInt = Integer.parseInt(levelClassification);
-			cmsDB.insertCourse(courseId, courseName, depInt, creditInt, courseTypeInt, levelInt);
+			int minCreditInt = Integer.parseInt(minCredits);
+			System.out.println(courseId+" "+ courseName+" "+ depInt+" "+ maxCredInt+" "+ courseTypeInt+" "+ levelInt+" "+ minCreditInt);
+			System.out.println("YoYi");
+			cmsDB.insertCourse(courseId, courseName, depInt, maxCredInt, courseTypeInt, levelInt, minCreditInt);
 			
 			
 		}
@@ -141,7 +282,8 @@ public class AdminManagementAction extends ActionSupport {
 		}
 		else if(actionName.equals("ACTION_SAVE_CURRENT_STUDENT")){
 			System.out.println("YoYo");
-			System.out.println(userId + " " + firstName + " " + lastName + " " + email+ " " +  address+ " " + phoneNumber+ " " + deptId+ " " + 0 + " " +gpa+" "+  resType+ " " + levelClassification);
+			System.out.println(userId + " " + firstName + " " + lastName + " " + email+ " "); 
+			System.out.println(address+ " " + phoneNumber+ " " + deptId+ " " + 0 + " " +gpa+" "+  resType);
 			System.out.println("YoYi");
 			int userInt = Integer.parseInt(userId);
 			
@@ -159,18 +301,35 @@ public class AdminManagementAction extends ActionSupport {
 		}
 		else if(actionName.equals("ACTION_EDIT_CURRENT_COURSE")){
 			course = cmsDB.getCourseList(courseId).get(0);
-		//	departmentList = cmsDB.getDepartmentList();
+			departmentList = cmsDB.getDepartmentList();
+		}
+		else if(actionName.equals("ACTION_ADD_PREREQUISITE")){
+			course = cmsDB.getCourseList(courseId).get(0);
+			
+		}
+		else if(actionName.equals("ACTION_SAVE_PREREQUISITE")){
+			course = cmsDB.getCourseList(courseId).get(0);
+			cmsDB.insertPrerequisite(prereqId, courseId, prereqType, prereqDeatils);
 		}
 		else if(actionName.equals("ACTION_EDIT_CURRENT_COURSE_OFFERING")){
 			courseOffering = cmsDB.getCourseOfferingList(courseOfferingId).get(0);
-		//  departmentList = cmsDB.getDepartmentList();
+			location = cmsDB.getLocation(courseOfferingId);
+			semId = cmsDB.getSemesterId(courseOfferingId);
 		}
 		else if(actionName.equals("ACTION_SAVE_CURRENT_COURSE")){
+			
 			int depInt = Integer.parseInt(deptId);
-			int creditInt = Integer.parseInt(creditCount);
+			int maxCreditInt = Integer.parseInt(maxCredits);
+			int minCreditInt = Integer.parseInt((minCredits==null || minCredits.equals("") )?"0":minCredits);
 			int courseTypeInt = Integer.parseInt(courseType);
 			int levelInt = Integer.parseInt(levelClassification);
-			cmsDB.editCourse(courseId, courseName, depInt, creditInt, courseTypeInt, levelInt);
+			System.out.println(" CID= "+courseId+" Cname= "+courseName+" DID= "+depInt+" maxCredit= "+maxCreditInt+" courseTypeInt= "+courseTypeInt+" levelInt="+levelInt+" minCreditInt= "+minCreditInt);
+			System.out.println("HiCourse");
+			//cmsDB.editCourse(courseId, courseName, depInt, maxCreditInt, courseTypeInt, levelInt, minCreditInt, courseIdHidden);
+			cmsDB.editCourse(courseId, courseName, depInt, maxCreditInt, courseTypeInt, levelInt, minCreditInt);
+
+			course = cmsDB.getCourseList(courseId).get(0);
+			departmentList = cmsDB.getDepartmentList();
 		}
 		else if(actionName.equals("ACTION_SAVE_CURRENT_COURSE_OFFERING")){
 			int coInt = Integer.parseInt(courseOfferingId);
@@ -179,6 +338,9 @@ public class AdminManagementAction extends ActionSupport {
 			int semInt = Integer.parseInt(semesterId);
 			int locInt = Integer.parseInt(locationId);
 			cmsDB.editCourseOffering(coInt, courseId, classInt, waitlistInt, semInt, locInt);
+			location = cmsDB.getLocation(courseOfferingId);
+			courseOffering = cmsDB.getCourseOfferingList(courseOfferingId).get(0);
+			semId = cmsDB.getSemesterId(courseOfferingId);
 		}
 		else if(actionName.equals("ACTION_VIEW_ALERTS")){
 			requestList = cmsDB.getRequestDetails();
@@ -236,13 +398,83 @@ public class AdminManagementAction extends ActionSupport {
 		else if(actionName.equals("ACTION_SHOW_SEMESTER_LIST")){
 			this.semesterList = cmsDB.getSemesterList(null);
 		}
+		else if(actionName.equals("ACTION_ENTER_GRADES")){
+			System.out.println("User Id ="+userId);
+			enrolledList = cmsDB.getEnrolledDetails(userId);
+			
+		}
+		else if(actionName.equals("ACTION_SAVE_GRADE")){
+			//System.out.println("User Id ="+userId);
+			//enrolledList = cmsDB.getEnrolledDetails(userId);
+			System.out.println("User Id ="+userId+" Grade="+grade);
+			cmsDB.updateGrade(grade, userId);
+			enrolledList = cmsDB.getEnrolledDetails(userId);
+		}
 		else if(actionName.equals("ACTION_EDIT_CURRENT_SEMESTER")){
 			 semester= cmsDB.getSemesterList(semesterId).get(0);
 		}
+		else if(actionName.equals("ACTION_SAVE_CURRENT_SEMESTER")){
+			cmsDB.editCurrentSemester(semesterId, semesterType, startDate, endDate, courseAddDeadline, courseDropDeadline);
+			 semester= cmsDB.getSemesterList(semesterId).get(0);
+		}
+		else if(actionName.equals("ACTION_ADD_SEMESTER")){
+			System.out.println(semesterId+" "+ semesterType+" "+ startDate+" "+ endDate+" "+ courseAddDeadline+" "+ courseDropDeadline);
+			cmsDB.insertSemester(semesterId, semesterType, startDate, endDate, courseAddDeadline, courseDropDeadline);
+		}
+		else if(actionName.equals("ACTION_SEARCH_COURSE")){
+			System.out.println(searchCourse);
+			course = cmsDB.getCourseList(searchCourse).get(0);
+			System.out.println(course.getCourseName());
+			courseList = cmsDB.getCourseList(searchCourse);
+		}
+		else if(actionName.equals("ACTION_SEARCH_COURSE_OFFERING")){
+			/*System.out.println(searchCourse);
+			course = cmsDB.getCourseList(searchCourse).get(0);
+			System.out.println(course.getCourseName());*/
+			System.out.println(searchOfferingCourse);
+			courseOfferingList = cmsDB.getCourseOfferingList(searchOfferingCourse);
+		}
+		else if(actionName.equals("ACTION_ADD_PREREQUISITE")){
+			
+		}
+		else if(actionName.equals("ACTION_ADD_FACULTY")){
+			//System.out.println("courseOfferingId= "+courseOfferingId);
+			courseOfferingList = cmsDB.getCourseOfferingList(courseOfferingId);
+			listOfFaculty = cmsDB.getFacultyFullNameList();
+		}
+		else if(actionName.equals("ACTION_SAVE_FACULTY")){
+			System.out.println("courseOfferingIdX= "+courseOfferingId+"facultyId= "+facultyId);
+			courseOfferingList = cmsDB.getCourseOfferingList(courseOfferingId);
+			listOfFaculty = cmsDB.getFacultyFullNameList();
+			cmsDB.addFaculty(courseOfferingId, facultyId);
+		}
+		else if(actionName.equals("ACTION_ADD_SCHEDULE")){
+			courseOfferingList = cmsDB.getCourseOfferingList(courseOfferingId);
+			listOfFaculty = cmsDB.getFacultyFullNameList();
+		}
+		else if(actionName.equals("ACTION_SAVE_SCHEDULE")){
+			
+			System.out.println(courseOfferingId+" "+ scheduleId+" "+schDay+" "+ fromTime+" "+ toTime);
+			cmsDB.addSchedule(courseOfferingId, scheduleId,schDay, fromTime, toTime);
+			
+		}
+		else if(actionName.equals("ACTION_ENFORCE_DROP_DEADLINE")){
+			cmsDB.enforceDropDeeadline();
+			
+		}
+		
 		return SUCCESS;		
 		
 	}
 	
+	public String getFacultyId() {
+		return facultyId;
+	}
+
+	public void setFacultyId(String facultyId) {
+		this.facultyId = facultyId;
+	}
+
 	public String getCourseOfferingId() {
 		return courseOfferingId;
 	}
@@ -622,6 +854,81 @@ public class AdminManagementAction extends ActionSupport {
 	public void setSemesterList(List<SemesterBean> semesterList) {
 		this.semesterList = semesterList;
 	}
+
+	public String getMinCredits() {
+		return minCredits;
+	}
+
+	public void setMinCredits(String minCredits) {
+		this.minCredits = minCredits;
+	}
+
+	public LocationListBean getLocation() {
+		return location;
+	}
+
+	public void setLocation(LocationListBean location) {
+		this.location = location;
+	}
+
+	public String getSemId() {
+		return semId;
+	}
+
+	public void setSemId(String semId) {
+		this.semId = semId;
+	}
+
+	public String getSearchOfferingCourse() {
+		return searchOfferingCourse;
+	}
+
+	public void setSearchOfferingCourse(String searchOfferingCourse) {
+		this.searchOfferingCourse = searchOfferingCourse;
+	}
+
+	public String getPrereqType() {
+		return prereqType;
+	}
+
+	public void setPrereqType(String prereqType) {
+		this.prereqType = prereqType;
+	}
+
+	public String getPrereqId() {
+		return prereqId;
+	}
+
+	public void setPrereqId(String prereqId) {
+		this.prereqId = prereqId;
+	}
+
+	public String getPrereqDeatils() {
+		return prereqDeatils;
+	}
+
+	public void setPrereqDeatils(String prereqDeatils) {
+		this.prereqDeatils = prereqDeatils;
+	}
+
+	public List<EnrolledBean> getEnrolledList() {
+		return enrolledList;
+	}
+
+	public void setEnrolledList(List<EnrolledBean> enrolledList) {
+		this.enrolledList = enrolledList;
+	}
+
+	public List<FacultyMapBean> getListOfFaculty() {
+		return listOfFaculty;
+	}
+
+	public void setListOfFaculty(List<FacultyMapBean> listOfFaculty) {
+		this.listOfFaculty = listOfFaculty;
+	}
+
+
+
 
 
 

@@ -1,6 +1,5 @@
 package com.ncsu.cms.bean;
 import java.io.*;
-import java.sql.Date;
 public class SemesterBean implements Serializable{
 
 	/**
@@ -9,12 +8,12 @@ public class SemesterBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String semesterId;
 	private String semesterType;
-	private Date startDate;
-	private Date endDate;
-	private Date courseAddDeadline;
-	private Date courseDropDeadline;
-	public SemesterBean(String semesterId, String semesterType, Date startDate, Date endDate, Date courseAddDeadline,
-			Date courseDropDeadline) {
+	private String startDate;
+	private String endDate;
+	private String courseAddDeadline;
+	private String courseDropDeadline;
+	public SemesterBean(String semesterId, String semesterType, String startDate, String endDate,
+			String courseAddDeadline, String courseDropDeadline) {
 		super();
 		this.semesterId = semesterId;
 		this.semesterType = semesterType;
@@ -35,31 +34,31 @@ public class SemesterBean implements Serializable{
 	public void setSemesterType(String semesterType) {
 		this.semesterType = semesterType;
 	}
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Date getCourseAddDeadline() {
+	public String getCourseAddDeadline() {
 		return courseAddDeadline;
 	}
-	public void setCourseAddDeadline(Date courseAddDeadline) {
+	public void setCourseAddDeadline(String courseAddDeadline) {
 		this.courseAddDeadline = courseAddDeadline;
 	}
-	public Date getCourseDropDeadline() {
+	public String getCourseDropDeadline() {
 		return courseDropDeadline;
 	}
-	public void setCourseDropDeadline(Date courseDropDeadline) {
+	public void setCourseDropDeadline(String courseDropDeadline) {
 		this.courseDropDeadline = courseDropDeadline;
 	}
-	
-	
-
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

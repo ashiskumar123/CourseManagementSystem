@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Student - Course Management System</title>
 <jsp:include page="common-include.jsp" />
-<script type="text/javascript" src="js/edit-current-student-main.js"></script>
+<script type="text/javascript" src="js/edit-current-course-main.js"></script>
 
 <style>
     .inter-row{
@@ -20,11 +20,12 @@
 
 <body>
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
-	</div>
 	<div id ="course info" class="container">
+		<ol class="breadcrumb">
+		  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+		  <li><a href="#" onclick="postNavigate('showCourseList')">Course List</a></li>
+		  <li class="active">Edit Course</li>
+		</ol>
 		<div class ="maincontent">
 		    
 		    <div>
@@ -40,16 +41,15 @@
 	      </div>
 		  <form id="frmEditCourse" method="post" action="saveCurrentCourse">
 		    
-	        <div class="row inter-row" >
-		       <div class= "col-xs-6">
-		         <label>Course ID: </label>
-		         	<input type ="text" name = "courseId"
-		         	 id ="courseId" class="form-control" 
-		         	 placeholder = "Enter Course Id"
-					 value='<s:property value="%{course.courseId}"/>'/>
-		         	 
-			   </div>   		        
+	       <div class="row inter-row" >  
+			   <div class="col-xs-6">
+		        	Course ID: 
+			        <label for="cid">
+			        	<s:property value="%{course.courseId}"/>
+			        </label>
+				</div>		        
 	        </div>
+	        	
 		    
 	        <div class="row inter-row" >
 		       <div class= "col-xs-6">
@@ -64,46 +64,48 @@
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
 		         <label>Department ID: </label>
-		         <input type ="text" name="deptId" 
-		         id ="deptId"class="form-control" 
-		         placeholder="Enter Department ID" 
-		         value='<s:property value="%{course.deptId}"/>'/>
-		       </div>
-	        
-	        </div>
-	        
-	        
-	        
-	        <div class="row inter-row">
-	          <div class="col-xs-6">
-	            <label>Credit Count: </label>
-	            <input type ="text" name="creditCount" 
-	            id="creditCount" class="form-control" 
-	            placeholder="Enter Credit Count"  
-	            value='<s:property value="%{course.creditCount}"/>'/>
-	          </div>
-	        </div>
-	        
-	        
-	        
+		           <s:select value="%{course.departmentId}" cssClass="form-control" id="selectDeptId" 
+		           		list="departmentList" listKey="departmentId" listValue="departmentName"/>
+	           </div>
+	       	</div>
+	       	
 	        <div class="row inter-row">
 	           <div class="col-xs-6">
-	             <label>Course Type: </label>
-	             <input type="text" name="courseType" 
-	             id="courseType" class="form-control" 
-	             placeholder ="Enter Phone Number"  
-	             value='<s:property value="%{course.courseType}"/>'/>
+	             	<label>Course Type: </label>
+		           	<select id="selectCourseType" class="form-control">
+			           	<option value="1">Fixed Credit</option>
+			           	<option value="2">Variable Credit</option>
+		           	</select>
 	          </div>
-	         
+	        </div>
+
+	        <div id="minCreditsRow" class="row inter-row" style="display: none;">
+	          <div class="col-xs-6">
+	            <label>Minimum Credits: </label>
+	            <input type ="text" name="minCredits" 
+	            id="minCredits" class="form-control" 
+	            placeholder="Enter Credit Count"  
+	            value='<s:property value="%{course.minCredits}"/>'/>
+	          </div>
+	        </div>
+	        
+	        <div class="row inter-row" >
+	        	<div class="col-xs-6">
+		         <label>Max Credits: </label>
+		         <input type ="text" name="maxCredits" 
+		         id ="maxCredits"class="form-control" 
+		         placeholder="Enter Max Credits" 
+		         value='<s:property value="%{course.maxCredits}"/>'/>
+		       </div>
 	        </div>
 	        
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
 	           <label>Classification Level: </label>
-	           <input type="text" id="levelClassification" 
-	           name="levelClassification" class="form-control" 
-	           placeholder ="Enter Classification Level"  
-	           value='<s:property value="%{course.classificationLevel}"/>'/>
+		           <select id="selectLevelClassification" class="form-control">
+		           	<option value="1">Graduate</option>
+		           	<option value="2">Undergraduate</option>
+		           </select>
 	          </div>
 	        </div>
 	        	        
@@ -111,10 +113,10 @@
 	          <input type ="submit" class="btn btn-primary" id ="save" value ="Update" />
 	          <input type = "reset" class="btn btn-primary" style= "margin-left: 10px" id="cancel" value="Cancel" />
 	        </div>
-	        <!-- <input type="hidden" name="userId" value='<s:property value="userId"/>' /> -->
-	      <!--   <input type="hidden" name="deptId" id="deptId" value='<s:property value="%{student.deptId}"/>' />
-	        <input type="hidden" name="resType" id="resType" value='<s:property value="%{student.resType}"/>' />
-	        <input type="hidden" name="levelClassification" id="levelClassification" value='<s:property value="%{student.levelClassification}"/>' /> -->
+	        <input type="hidden" name="courseId" value=<s:property value="%{course.courseId}"/> /> 
+	      	<input type="hidden" name="deptId" id="deptId" value='<s:property value="%{course.departmentId}"/>' />
+	        <input type="hidden" name="courseType" id="courseType" value='<s:property value="%{course.courseType}"/>' />
+	        <input type="hidden" name="levelClassification" id="levelClassification" value='<s:property value="%{course.classificationLevel}"/>' />
 	      </form>
 	    </div>
     </div>

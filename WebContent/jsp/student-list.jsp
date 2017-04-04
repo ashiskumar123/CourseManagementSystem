@@ -42,6 +42,7 @@
 	                <th>Address</th>
 	                <th>Level Classification</th>
 	                <th>Edit Student</th>
+	                <th>Add/Edit Grades</th>
 	              </tr>
               </thead>
               <tbody>
@@ -62,6 +63,11 @@
            					<input type ="button" data-user-id='<s:property value="userId"/>' 
            							class="btn btn-primary btn-edit-student"
 									value ="Edit Student"/>
+              			</td>
+              			<td>
+           					<input type ="button" data-user-id='<s:property value="userId"/>' 
+           							class="btn btn-primary btn-enter-grades"
+									value ="Add/Edit Grades"/>
               			</td>
               		</tr>
 				</s:iterator>

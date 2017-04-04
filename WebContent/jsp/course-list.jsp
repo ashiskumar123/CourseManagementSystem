@@ -12,9 +12,11 @@
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-		<div class="container">
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
+	<div class="container">
+		<ol class="breadcrumb">
+		  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+		  <li class="active">Course List</li>
+		</ol>
 	</div>
 	<div id ="courseTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
@@ -29,9 +31,10 @@
 	                <th>Course ID</th>
 	                <th>Course Name</th>
 	                <th>Department ID</th>
-	                <th>Credit Count</th>
+	                <th>Max Credits</th>
+	                <th>Minimum Credits</th>
 	                <th>Course type</th>
-	                <th>Classification Level</th>
+	                <th>Classification Level</th>	                
 	                <th>Edit Course</th>
 	              </tr>
               </thead>
@@ -40,14 +43,22 @@
               		<tr>
               			<td><s:property value="courseId"/></td>
               			<td><s:property value="courseName"/></td>
-              			<td><s:property value="deptId"/></td>
-              			<td><s:property value="creditCount"/></td>
-              			<td><s:property value="courseType"/></td>
-              			<td><s:property value="classificationLevel"/></td>
+              			<td><s:property value="departmentDescription"/></td>
+              			<td><s:property value="maxCredits"/></td>
+              			<td><s:property value="minCredits"/></td>
+              			<td><s:property value="courseTypeDescription"/></td>
+              			<td><s:property value="classificationLevelDescription"/></td>
+              			
               			<td>
            					<input type ="button" data-course-id='<s:property value="courseId"/>' 
            							class="btn btn-primary btn-edit-course"
 									value ="Edit Course"/>
+              			</td>
+              			<td>   		
+			    			<input type ="button" data-course-id='<s:property value="courseId"/>' 
+           							class="btn btn-primary btn-add-prereq"
+									value ="Add Prerequisite"/>    		   		
+
               			</td>
               		</tr>
 				</s:iterator>
@@ -59,6 +70,25 @@
 		  <input type ="submit" class="btn btn-primary" id ="btnAddCourse" value ="Add Course" />   		   		
 	  </form>
 	</div>
+	
+	<div class="container">
+	<div class="row inter-row" >
+		       
+			   
+			   	<form id="frmBillr" method="post" action="searchCourse" style = "margin-top:15px">    
+			   		<div class= "col-xs-3">
+			            <label>Search Course: </label>
+			         	<input type ="text" name = "searchCourse"
+			         	id ="searchCourse" class="form-control"
+			         	placeholder = "Enter Course ID"/>
+			        </div>  
+			        <div class="col-xs-3"style="margin-top:25px">		
+		  				<input type ="submit" class="btn btn-primary" id ="btnSearchCourse" value ="Search Course" />
+		  			</div>   		   		
+	 			 </form>
+			   	        
+	        </div>
+	        </div>
 
 	<jsp:include page="common-footer.jsp" />
 

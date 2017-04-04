@@ -30,8 +30,8 @@
 	                <th>Course ID</th>
 	                <th>Class Size</th>
 	                <th>Waitlist Size</th>
-	                <th>Semester ID</th>
-	                <th>Location ID</th>
+	                <th>Semester </th>
+	                <th>Location </th>
 	                <th>Edit Course Offering</th>
 	              </tr>
               </thead>
@@ -49,6 +49,16 @@
            							class="btn btn-primary btn-edit-course-offering"
 									value ="Edit Course Offering"/>
               			</td>
+              			<td>
+           					<input type ="button" data-course-offering-id='<s:property value="courseOfferingId"/>' 
+           							class="btn btn-primary btn-add-faculty"
+									value ="Add Faculty"/>
+              			</td>
+              			<td>
+           					<input type ="button" data-course-offering-id='<s:property value="courseOfferingId"/>' 
+           							class="btn btn-primary btn-add-schedule"
+									value ="Add Schedule"/>
+              			</td>
               		</tr>
 				</s:iterator>
 			  
@@ -59,6 +69,24 @@
 		  <input type ="submit" class="btn btn-primary" id ="btnAddCourseOffering" value ="Add Course Offering" />   		   		
 	  </form>
 	</div>
+	<div class="container">
+	<div class="row inter-row" >
+		       
+			   
+			   	<form id="frmSearchCourseOffering" method="post" action="searchCourseOffering" style = "margin-top:15px">    
+			   		<div class= "col-xs-3">
+			            <label>Search Course Offering: </label>
+			         	<input type ="text" name = "searchOfferingCourse"
+			         	id ="searchOfferingCourse" class="form-control"
+			         	placeholder = "Enter Course Offering ID"/>
+			        </div>  
+			        <div class="col-xs-3"style="margin-top:25px">		
+		  				<input type ="submit" class="btn btn-primary" id ="btnSearchCourseOffering" value ="Search Course Offering" />
+		  			</div>   		   		
+	 			 </form>
+			   	        
+	        </div>
+	        </div>
 
 	<jsp:include page="common-footer.jsp" />
 

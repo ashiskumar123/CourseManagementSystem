@@ -248,27 +248,32 @@ public class QueryStrings {
 			 								 " VALUES (?,?,?,?)";
 	
 	
-	public static final String GET_COURSE_LIST =  " SELECT COURSE.COURSE_ID,"+
-												"   COURSE.COURSE_NAME,"+
-												"   COURSE.DEPARTMENT_ID,"+
-												"   COURSE.CREDIT_COUNT,"+
-												"   COURSE.COURSE_TYPE,"+
-												"   COURSE.CLASSIFICATION_LEVEL"+
-												" 	FROM COURSE"+
-												" 	WHERE COURSE.COURSE_ID LIKE ?";
+	public static final String GET_COURSE_LIST =  	" SELECT COURSE.COURSE_ID,"+
+													"   COURSE.COURSE_NAME,"+
+													"	COURSE.DEPARTMENT_ID,"+
+													"   (SELECT DEPARTMENT_NAME FROM DEPARTMENT WHERE DEPARTMENT_ID = COURSE.DEPARTMENT_ID),"+
+													"   COURSE.MAX_CREDITS,"+
+													"	COURSE.MIN_CREDITS,"+
+													"	COURSE.COURSE_TYPE,"+
+													"   (SELECT DESCRIPTION FROM COURSE_TYPE_LOOKUP WHERE ID = COURSE.COURSE_TYPE),"+	
+													"	COURSE.CLASSIFICATION_LEVEL,"+
+													"   (SELECT DESCRIPTION FROM LEVEL_CLASSIFICATION_LOOKUP WHERE ID = COURSE.CLASSIFICATION_LEVEL)"+
+													" 	FROM COURSE"+
+													" 	WHERE COURSE.COURSE_ID LIKE ?";
 	
 	public static final String ADD_COURSE = "INSERT "+
 											" INTO COURSE "+
-											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, CREDIT_COUNT, COURSE_TYPE, CLASSIFICATION_LEVEL) "+
+											"(COURSE_ID, COURSE_NAME, DEPARTMENT_ID, MAX_CREDITS, COURSE_TYPE, CLASSIFICATION_LEVEL,MIN_CREDITS) "+
 
-											" VALUES (?,?,?,?,?,?)";
+											" VALUES (?,?,?,?,?,?,?)";
 	
 	public static final String GET_COURSE_OFFERING_LIST =  " SELECT COURSE_OFFERING.OFFERING_ID,"+
 															"   COURSE_OFFERING.COURSE_ID,"+
 															"   COURSE_OFFERING.CLASS_SIZE,"+
 															"   COURSE_OFFERING.WAITLIST_SIZE,"+
-															"   COURSE_OFFERING.SEM_ID,"+
-															"   COURSE_OFFERING.LOCATION_ID"+
+															"   (SELECT SEMESTER_TYPE || ' ' || TO_CHAR(START_DATE, 'YYYY') FROM SEMESTER "+
+															"	 WHERE SEMESTER_ID = COURSE_OFFERING.SEM_ID),"+
+															"   (SELECT ROOM_NO || ' ' || BUILDING FROM LOCATION WHERE LOCATION_ID = COURSE_OFFERING.LOCATION_ID)"+
 															" 	FROM COURSE_OFFERING"+
 															" 	WHERE COURSE_OFFERING.OFFERING_ID LIKE ?";
 	
@@ -277,22 +282,37 @@ public class QueryStrings {
 													 "(OFFERING_ID, COURSE_ID, CLASS_SIZE, WAITLIST_SIZE, SEM_ID, LOCATION_ID) "+
 													 " VALUES (?,?,?,?,?,?)";
 	
-	public static final String EDIT_STUDENT = 	" UPDATE STUDENT S"+
-				 								 " SET S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=? "+
+	public static final String EDIT_STUDENT1 = 	" UPDATE STUDENT S"+
+				 								 " SET S.FIRSTNAME=?, S.LASTNAME=?,S.EMAIL=?,S.ADDRESS=?,S.PHONE_NUMBER=?,S.DEPT_ID=?,S.RESIDENCY_TYPE=?,S.LEVEL_CLASSIFICATION=?"+
 				 								 " WHERE "+
-				 								 " S.USER_ID =? ;" + 
-				 								 " UPDATE USER U SET U.USERNAME=? WHERE U.USER_ID=? ";
+				 								 " S.USER_ID =?";
+				 								 
 			 								 
+	public static final String EDIT_STUDENT2 = 	" UPDATE USERS U SET U.USERNAME=? WHERE U.USER_ID=?";
 	
 	public static final String SELECT_DEPARTMENT_LIST = " SELECT"+
 														"  DEPARTMENT.DEPARTMENT_ID,"+
 														"  DEPARTMENT.DEPARTMENT_NAME"+
 														" FROM DEPARTMENT";
 	
-	public static final String EDIT_COURSE = 	" UPDATE COURSE C"+
-												 " SET C.COURSE_ID=?, C.COURSE_NAME=?,C.DEPARTMENT_ID=?,C.CREDIT_COUNT=?,C.COURSE_TYPE=?,C.CLASSIFICATION_LEVEL=?"+
+	public static final String SELECT_LOCATION = " SELECT"+
+													  " LOCATION.LOCATION_ID,"+
+													  " LOCATION.ROOM_NO,"+
+													  " LOCATION.BUILDING"+
+													  " FROM LOCATION, COURSE_OFFERING"+
+													  " WHERE LOCATION.LOCATION_ID=COURSE_OFFERING.LOCATION_ID AND COURSE_OFFERING.OFFERING_ID=?";
+	
+	public static final String SELECT_SEMESTER = " SELECT"+
+													" COURSE_OFFERING.SEM_ID"+
+													" FROM"+
+													" COURSE_OFFERING"+
+													" WHERE COURSE_OFFERING.OFFERING_ID=?";
+	
+	public static final String EDIT_COURSE = 	 " UPDATE COURSE C"+
+												 " SET"+
+												 " C.COURSE_NAME=?,C.DEPARTMENT_ID=?,C.MAX_CREDITS=?,C.COURSE_TYPE=?,C.CLASSIFICATION_LEVEL=?,C.MIN_CREDITS=?"+
 												 " WHERE "+
-												 " C.COURSE_ID =? ";
+												 " C.COURSE_ID =?";
 	
 	public static final String EDIT_COURSE_OFFERING = 	" UPDATE COURSE_OFFERING O"+
 														 " SET O.OFFERING_ID=?, O.COURSE_ID=?,O.CLASS_SIZE=?,O.WAITLIST_SIZE=?,O.SEM_ID=?,O.LOCATION_ID=?"+
@@ -322,17 +342,62 @@ public class QueryStrings {
 	public static final String ADD_SEMESTER = "INSERT "+
 											  " INTO SEMESTER "+
 											  "(SEMESTER_ID,SEMESTER_TYPE,START_DATE,END_DATE,COURSE_ADD_DEADLINE,COURSE_DROP_DEADLINE) "+
-											  " VALUES (?,?,?,?,?,?,?)";
+											  " VALUES (?,?,TO_DATE(?,'YYYY-MM-DD'),TO_DATE(?,'YYYY-MM-DD'),TO_DATE(?,'YYYY-MM-DD'),TO_DATE(?,'YYYY-MM-DD'))";
 	
 	public static final String GET_SEMESTER_LIST =  " SELECT SEMESTER.SEMESTER_ID,"+													
 													"   SEMESTER.SEMESTER_TYPE,"+
-													"   SEMESTER.START_DATE,"+
-													"   SEMESTER.END_DATE,"+
-													"   SEMESTER.COURSE_ADD_DEADLINE,"+
-													"   SEMESTER.COURSE_DROP_DEADLINE"+
+													"   TO_CHAR(SEMESTER.START_DATE, 'YYYY-MM-DD'),"+
+													"   TO_CHAR(SEMESTER.END_DATE, 'YYYY-MM-DD'),"+
+													"   TO_CHAR(SEMESTER.COURSE_ADD_DEADLINE, 'YYYY-MM-DD'),"+
+													"   TO_CHAR(SEMESTER.COURSE_DROP_DEADLINE, 'YYYY-MM-DD')"+
 													" 	FROM SEMESTER"+
 													" 	WHERE SEMESTER.SEMESTER_ID LIKE ?";
+	
+	public static final String EDIT_CURRENT_SEMESTER =" UPDATE SEMESTER"+
+												" SET"+
+												" SEMESTER.SEMESTER_TYPE=?, SEMESTER.START_DATE=TO_DATE(?,'YYYY-MM-DD'), SEMESTER.END_DATE=TO_DATE(?,'YYYY-MM-DD'),"+
+												" SEMESTER.COURSE_ADD_DEADLINE=TO_DATE(?,'YYYY-MM-DD'), SEMESTER.COURSE_DROP_DEADLINE=TO_DATE(?,'YYYY-MM-DD')"+
+												" WHERE"+
+												" SEMESTER.SEMESTER_ID=?";
+	
+	public static String SEARCH_COURSE ="SELECT * FROM COURSE WHERE COURSE.COURSE_ID=?";
+	
+	public static String ADD_PREREQUISITE = "INSERT "+
+											" INTO PREREQUISITE "+
+											"(ID, COURSE_ID, TYPE_ID, DETAILS) "+
+											" VALUES (?,?,?,?)";
+	
+	
+		public static String GET_ENROLLED_DETAILS = 
+												" SELECT OFFERING_ID, CREDIT_COUNT, GRADE, USER_ID " +
+												"FROM ENROLLED_IN " + 
+												"WHERE USER_ID=? AND ENROLLMENT_STATUS=1";
 
+		public static String SAVE_GRADES = 
+												"UPDATE ENROLLED_IN" + 
+												" SET  GRADE=?" + 
+												" WHERE USER_ID=?";
+		
+		public static String LIST_OF_FACULTY = " SELECT FACULTY.FIRST_NAME || ' ' || FACULTY.LAST_NAME, FACULTY.FACULTY_ID "+
+											   " FROM FACULTY";
+	
+	
+        public static String ADD_FACULTY =  "INSERT "+
+        									" INTO FACULTY_LIST "+
+        									"(OFFERING_ID,FACULTY_ID) "+
+        									" VALUES (?,?)";
+        
+        public static String ADD_SCHEDULE = "INSERT "+
+        									" INTO OFFERING_SCHEDULE "+
+        									" (SCHEDULE_ID, OFFERING_ID, DAY, FROM_TIME, TO_TIME) "+
+        									" VALUES(?,?,?,TO_TIMESTAMP(?),TO_TIMESTAMP(?)) ";
+        
+      public static final String ENFORCE_DROP_DEADLINE=" DELETE from ENROLLED_IN "+
+    		  											" where user_id in (select B.USER_ID "+
+    		  											" FROM BILL_PAYS B JOIN STUDENT S ON  B.USER_ID = S.USER_ID "+
+    		  											" JOIN ENROLLED_IN E ON E.USER_ID = B.USER_ID "+
+    		  											" WHERE B.BILL_AMOUNT > 0) ";
+        
 
 	
 	
