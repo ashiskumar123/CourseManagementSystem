@@ -106,7 +106,7 @@ public interface DAO {
 	
 	public void insertSemester(String semesterId, String semesterType, String startDate, String endDate, String courseAddDeadline, String courseDropDeadline);
 	
-	public void insertPrerequisite(String id, String courseId, String typeId, String details );
+	public void insertPrerequisite(String courseId, String typeId, String details );
 	
 	public List<EnrolledBean> getEnrolledDetails(String userId);
 	
@@ -116,7 +116,7 @@ public interface DAO {
 	
 	public void addFaculty(String offeringId, String facultyId);
 	
-	public void addSchedule(String offeringId, String scheduleId,String day, String fromTime, String toTime );
+	public void addSchedule(String offeringId, String day, String fromTime, String toTime );
 	
 	public void enforceDropDeeadline();
 }

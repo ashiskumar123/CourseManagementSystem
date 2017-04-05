@@ -21,16 +21,16 @@
 
 <body>
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
-	</div>
 	<div id ="student info" class="container">
 		<div class ="maincontent">
-		    
 		    <div>
-		      <h2>Admin Information</h2>
+		      <h2>Edit Admin Information</h2>
 		    </div>
+			<ol class="breadcrumb">
+			  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+			  <li class="active">Edit Admin</li>
+			</ol>
+			
 		    <div style="margin-top: 10px; color:green;font-family:'Lilita One', cursive; font-size:20px;">
 	      	<s:property value="%{saveMessage}"/>
 	      </div>

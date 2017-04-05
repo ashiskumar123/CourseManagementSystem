@@ -18,15 +18,17 @@
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="editStudent">Go Back</a>
-	</div>
 	<div class="container">
 		<div class ="maincontent">
 		    <div>
 		      <h2>Add Prerequisite</h2>
 		    </div>
+		    
+			<ol class="breadcrumb">
+			  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+			  <li><a href="#" onclick="postNavigate('showCourseList')">Course List</a></li>
+			  <li class="active">Manage Prerequisites</li>
+			</ol>
 		  <form id="frmAddPrereq" method="post" action="savePrerequisite">
 		    
 		    <div class="row inter-row" >  
@@ -38,13 +40,13 @@
 				</div>		        
 	        </div>
 		    
-		    <div class="row inter-row" >
+		    <!-- <div class="row inter-row" >
 	        	<div class="col-xs-6">
 		         <label>Prerequisite ID: </label>
 		         <input type ="text" name="prereqId" id ="prereqId" class="form-control"  placeholder="Enter Prerequisite ID" ></input>
 		       </div>
 	        
-	        </div>
+	        </div> -->
 	        
 	        <div class="row inter-row">
 	          <div class="col-xs-6">
@@ -60,12 +62,12 @@
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
 		         <label>Prerequisite Details: </label>
-		         <input type ="text" name="prereqDeatils" id ="prereqDeatils" class="form-control"  placeholder="Enter Prerequisite Details" ></input>
+		         <input type ="text" name="prereqDetails" id ="prereqDetails" class="form-control"  placeholder="Enter Prerequisite Details" ></input>
 		       </div>
-	        
 	        </div>
-	         <input type="hidden" name="courseId" value=<s:property value="%{course.courseId}"/> /> 
-	         <input type="hidden" name="prereqType" id="prereqType" />
+	        
+	        <input type="hidden" name="courseId" value=<s:property value="%{course.courseId}"/> /> 
+	        <input type="hidden" name="prereqType" value="1" id="prereqType" />
 	        
 	        <div class="row inter-row">
 	          <input type ="submit" class="btn btn-primary" id ="addPrereq" value ="Add Prerequisite" />         

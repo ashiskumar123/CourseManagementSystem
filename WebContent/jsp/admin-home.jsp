@@ -14,7 +14,6 @@
 </head>
 <body>
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
 	<div id ="studentinfo" class="container">
 	  <div class="maincontent">
 		<div>
@@ -47,45 +46,48 @@
 			        	<s:property value="%{adminDetails.ssn}"/>
 			        </label>
 	           </div>
+	           <div class="col-xs-3">
+	             <input type ="submit" class="btn btn-primary" id ="edit" value ="Edit Admin Details" />
+	           </div>
 	          
 	        </div>
-	        	        
-	        <div class="row inter-row" id="btndiv">
-	          <input type ="submit" class="btn btn-primary" id ="edit" value ="Edit" />
-	        </div>
 	        
+			<div>
+		      <h2>Manage</h2>
+		    </div>
+		    
 	      </form>
 	      <div style="margin-top: 10px">	      
 		      <form id="frmStudentList" method="get" action="showStudentList">    		
-			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnStudentList" value ="Show Student List" />    		   		
+			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnStudentList" value ="Manage Students" />    		   		
 		      </form>
 	      </div>
 	      <div style="margin-top: 10px">	      
 		      <form id="frmCourseList" method="get" action="showCourseList">    		
-			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnCourseList" value ="Show Course List" />    		   		
+			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnCourseList" value ="Manage Courses" />    		   		
 		      </form>
 	      </div>
 	      <div style="margin-top: 10px">	      
 		      <form id="frmCourseOfferingList" method="get" action="showCourseOfferingList">    		
-			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnCourseOfferingList" value ="Show Course Offering List" />    		   		
+			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnCourseOfferingList" value ="Manage Offerings" />    		   		
 		      </form>
 	      </div>
 	      
 	      <div style="margin-top: 10px">	      
 		      <form id="frmViewAlerts" method="get" action="viewAlerts">    		
-			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnViewAlerts" value ="View Requests" />    		   		
+			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnViewAlerts" value ="Manage Permissions" />    		   		
 		      </form>
 	      </div>
 	      
 	      <div style="margin-top: 10px">	      
 		      <form id="frmEditSemester" method="get" action="editSemester">    		
-			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnEditSemester" value ="Edit Semester" />    		   		
+			    	<input type ="submit" class="btn btn-default btn-admin-action" id ="btnEditSemester" value ="Manage Semesters" />    		   		
 		      </form>
 	      </div>
 	      
 	      <div style="margin-top: 10px">	      
 		      <form id="frmEnforceDropDeadline" method="get" action="enforceDropDeadline">    		
-			    	<input type ="submit" class="btn btn-danger" id ="btnEnforceDropDeadline" value ="Enforce Drop Deadline" />    		   		
+			    	<input type ="submit" class="btn btn-danger btn-admin-action" id ="btnEnforceDropDeadline" value ="Enforce Drop Deadline" />    		   		
 		      </form>
 	      </div>
 	      

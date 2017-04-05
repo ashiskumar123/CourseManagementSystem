@@ -1211,14 +1211,14 @@ public class DAOImpl implements DAO{
 		
 		
 	}
-	public void insertPrerequisite(String id, String courseId, String typeId, String details ){
+	public void insertPrerequisite(String courseId, String typeId, String details ){
 		
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_PREREQUISITE);
-			pstmt.setString(1, id);
-			pstmt.setString(2, courseId);
-			pstmt.setString(3, typeId);
-			pstmt.setString(4, details);
+			pstmt.setString(1, courseId);
+			pstmt.setString(2, typeId);
+			pstmt.setString(3, details==null?" ":details);
+			System.out.println("!!!!!!!details"+details);
 			int statusCode = pstmt.executeUpdate();
 
 			System.out.println(statusCode);
@@ -1227,10 +1227,8 @@ public class DAOImpl implements DAO{
 		catch(SQLException e){
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
+	
 	public List<EnrolledBean> getEnrolledDetails(String userId){
 		
 		List<EnrolledBean> enrolledList = null;
@@ -1325,14 +1323,13 @@ public class DAOImpl implements DAO{
 			e.printStackTrace();
 		}
 	}
-	public void addSchedule(String offeringId, String scheduleId,String day, String fromTime, String toTime ){
+	public void addSchedule(String offeringId, String day, String fromTime, String toTime ){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_SCHEDULE);
-			pstmt.setString(1, scheduleId);
-			pstmt.setString(2, offeringId);
-			pstmt.setString(3, day);
-			pstmt.setString(4, fromTime);
-			pstmt.setString(5, toTime);
+			pstmt.setString(1, offeringId);
+			pstmt.setString(2, day);
+			pstmt.setString(3, fromTime);
+			pstmt.setString(4, toTime);
 
 			int statusCode = pstmt.executeUpdate();
 

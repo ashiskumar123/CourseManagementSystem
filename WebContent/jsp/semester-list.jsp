@@ -10,21 +10,18 @@
 
 <script type='text/javascript' src='js/semester-list-main.js'></script>
 </head>
-
-
-
 <body>
 
 	<jsp:include page="common-header.jsp" />
 	<div id ="semesterTable" style="margin-top: 20px" class="container">
-		<ol class="breadcrumb">
-		  	<li><a href="#" onclick="postNavigate('home')">Home</a></li>
-		  	<li class="active">Semester List</li>
-		</ol>
       <div class="maincontent">
 		 <div>
 		   <h2>Semester List</h2>
 		 </div>
+		<ol class="breadcrumb">
+		  	<li><a href="#" onclick="postNavigate('home')">Home</a></li>
+		  	<li class="active">Semester List</li>
+		</ol>
 		 <div style="margin-top: 20px">
 		   <table class="table" style="width:70%;">
 

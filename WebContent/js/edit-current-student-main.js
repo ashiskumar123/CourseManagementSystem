@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	alert("Hi")
 	$("#selectDeptId").change(function(){
 		$("#deptId").val($(this).find(":selected").val());
 	});

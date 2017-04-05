@@ -58,11 +58,7 @@ public class HomeAction extends ActionSupport{
 				System.out.println(adminId);
 				adminDetails = cmsDB.getAdminDetails(adminInt);
 				setPendingRequestCount(cmsDB.getRequestDetails().size());
-				System.out.println(adminDetails.getFirstName());
-				
-				
-				
-				
+				System.out.println(adminDetails.getFirstName());				
 				return "adminhome";
 			}
 		}

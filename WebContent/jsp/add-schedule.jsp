@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Schedule</title>'
 <jsp:include page="common-include.jsp" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap-timepicker.min.css"/>
+<script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
 <script type="text/javascript" src="js/add-edit-prereq-main.js"></script>
 <style>
     .inter-row{
@@ -18,16 +20,18 @@
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="editStudent">Go Back</a>
-	</div>
 	<div class="container">
 		<div class ="maincontent">
 		    <div>
 		      <h2>Add Schedule</h2>
 		    </div>
-		  <form id="frmAddFaculty" method="post" action="saveSchedule">
+		    
+			<ol class="breadcrumb">
+			  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+			  <li><a href="#" onclick="postNavigate('showCourseOfferingList')">Manage Course Offerings</a></li>
+			  <li class="active">Add Schedule</li>
+			</ol>
+		  <form id="frmAddSchedule" method="POST" action="saveSchedule">
 		    
 		    <div class="row inter-row" >  
 			   <div class="col-xs-6">
@@ -36,14 +40,6 @@
 			        	<s:property value="%{courseOfferingId}"/>
 			        </label>
 				</div>		        
-	        </div>
-		    
-		    <div class="row inter-row" >
-	        	<div class="col-xs-6">
-		         <label>Schedule ID: </label>
-		         <input type ="text" name="scheduleId" id ="scheduleId" class="form-control"  placeholder="Enter Schedule Id" ></input>
-		       </div>
-	        
 	        </div>
 		    
 		    
@@ -57,16 +53,21 @@
 	        
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
-		         <label>From Time: </label>
-		         <input type ="text" name="schDay" id ="schDay" class="form-control"  placeholder="  " ></input>
-		       </div>
-	        
+			        <label>From Time: </label>
+			        <div class="input-group bootstrap-timepicker timepicker">
+			            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			            <input id="fromTime" name="fromTime" type="text" class="form-control input-small">
+			        </div>
+		        </div>
 	        </div>
 	        
 	        <div class="row inter-row" >
 	        	<div class="col-xs-6">
-		         <label>To Time: </label>
-		         <input type ="text" name="schDay" id ="schDay" class="form-control"  placeholder="  " ></input>
+			        <label>To Time: </label>
+			        <div class="input-group bootstrap-timepicker timepicker">
+			            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			            <input id="toTime" name="toTime" type="text" class="form-control input-small">
+			        </div>
 		       </div>
 	        
 	        </div>

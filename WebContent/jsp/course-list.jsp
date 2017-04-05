@@ -12,18 +12,38 @@
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<div class="container">
-		<ol class="breadcrumb">
-		  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
-		  <li class="active">Course List</li>
-		</ol>
-	</div>
 	<div id ="courseTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
-		 <div>
-		   <h2>Course List</h2>
-		 </div>
+		<div>
+			<h2>Course List</h2>
+		</div>
+		 
+		<div class="container">
+			<ol class="breadcrumb">
+			  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+			  <li class="active">Course List</li>
+			</ol>
+		</div>
+		<div class="container">
+			<div class="row inter-row" >			   
+			 	 <form id="frmBillr" method="post" action="searchCourse" style = "margin-top:15px">    
+			  	   <div class= "col-xs-3">
+			           <label>Search Course: </label>
+			        	<input type ="text" name = "searchCourse"
+			        	id ="searchCourse" class="form-control"
+			        	placeholder = "Enter Course ID"/>
+			       </div>  
+			      	<div class="col-xs-3"style="margin-top:25px">		
+						<input type ="submit" class="btn btn-primary" id ="btnSearchCourse" value ="Search Course" />
+					</div>
+				 </form>
+		      </div>
+      	 </div>
 		 <div style="margin-top: 20px">
+      	 
+		 <form id="frmBillr" method="get" action="addCourse" style = "margin-top:15px">    		
+			  <input type ="submit" class="btn btn-primary" id ="btnAddCourse" value ="Add Course" />   		   		
+		 </form>
 		   <table class="table" style="width:70%;">
 
 		      <thead class="thead-default">
@@ -65,31 +85,10 @@
 			  
            </table>
 		 </div>
-	  </div>	 
-	  <form id="frmBillr" method="get" action="addCourse" style = "margin-top:15px">    		
-		  <input type ="submit" class="btn btn-primary" id ="btnAddCourse" value ="Add Course" />   		   		
-	  </form>
+	  </div>
 	</div>
-	
-	<div class="container">
-	<div class="row inter-row" >
-		       
-			   
-			   	<form id="frmBillr" method="post" action="searchCourse" style = "margin-top:15px">    
-			   		<div class= "col-xs-3">
-			            <label>Search Course: </label>
-			         	<input type ="text" name = "searchCourse"
-			         	id ="searchCourse" class="form-control"
-			         	placeholder = "Enter Course ID"/>
-			        </div>  
-			        <div class="col-xs-3"style="margin-top:25px">		
-		  				<input type ="submit" class="btn btn-primary" id ="btnSearchCourse" value ="Search Course" />
-		  			</div>   		   		
-	 			 </form>
-			   	        
-	        </div>
-	        </div>
 
 	<jsp:include page="common-footer.jsp" />
 
 </body>
+</html>

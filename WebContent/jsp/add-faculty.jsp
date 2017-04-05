@@ -30,15 +30,18 @@ $(document).ready(function(){
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="editStudent">Go Back</a>
-	</div>
 	<div class="container">
 		<div class ="maincontent">
 		    <div>
 		      <h2>Add Faculty</h2>
 		    </div>
+		    
+			<ol class="breadcrumb">
+			  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+			  <li><a href="#" onclick="postNavigate('showCourseOfferingList')">Manage Course Offerings</a></li>
+			  <li class="active">Add Faculty</li>
+			</ol>
+			
 		  <form id="frmAddFaculty" method="post" action="saveFaculty">
 		    
 		    <div class="row inter-row" >  

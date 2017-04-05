@@ -322,9 +322,12 @@ public class QueryStrings {
 			 
 	public static final String GET_REQUEST_DETAILS = "SELECT "+
 													 " R.REQ_ID, R.USER_ID, S.USERNAME,  R.CREDIT_COUNT, A.USERNAME, R.REQUEST_DATE, R.UPDATE_DATE, R.OFFERING_ID, R.STATUS "+
-													 "FROM REQUEST R , USERS S, USERS A "+
-													 " WHERE "+
-													 "R.USER_ID=S.USER_ID AND A.USER_ID=R.ADMIN_ID";
+													 " FROM REQUEST R"+
+													 " JOIN USERS S"+
+													 " ON R.USER_ID=S.USER_ID"+
+													 " LEFT JOIN USERS A "+
+													 " ON R.ADMIN_ID = A.USER_ID";
+	
 	public static final String APPROVE_REQUEST = "UPDATE REQUEST R "+
 												 " SET R.STATUS='APPROVED', R.UPDATE_DATE=?, R.ADMIN_ID=? "+
 												 "WHERE "+
@@ -336,8 +339,8 @@ public class QueryStrings {
 	
 	public static final String ENROLL_STUDENT = "INSERT "+
 												" INTO ENROLLED_IN "+
-												" (USER_ID,OFFERING_ID,GRADE,WAITLIST_NO,ENROLLMENT_STATUS,DROP_COURSE,CREDIT_COUNT) "+
-												" VALUES (?, ?, 'F', 0, 1 NULL, ?)";
+												" (USER_ID,OFFERING_ID,GRADE,WAITLIST_NO,ENROLLMENT_STATUS,DROP_OFFERING_ID,CREDIT_COUNT) "+
+												" VALUES (?, ?, 'F', 0, 1, NULL, ?)";
 			
 
 	public static final String ADD_SEMESTER = "INSERT "+
@@ -365,8 +368,8 @@ public class QueryStrings {
 	
 	public static String ADD_PREREQUISITE = "INSERT "+
 											" INTO PREREQUISITE "+
-											"(ID, COURSE_ID, TYPE_ID, DETAILS) "+
-											" VALUES (?,?,?,?)";
+											"(COURSE_ID, TYPE_ID, DETAILS) "+
+											" VALUES (?,?,?)";
 	
 	
 		public static String GET_ENROLLED_DETAILS = 
@@ -391,7 +394,8 @@ public class QueryStrings {
         public static String ADD_SCHEDULE = "INSERT "+
         									" INTO OFFERING_SCHEDULE "+
         									" (SCHEDULE_ID, OFFERING_ID, DAY, FROM_TIME, TO_TIME) "+
-        									" VALUES(?,?,?,TO_TIMESTAMP(?),TO_TIMESTAMP(?)) ";
+        									" VALUES((SELECT MAX(SCHEDULE_ID)+1 FROM OFFERING_SCHEDULE),"+
+        									" ?,?,TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS'),TO_TIMESTAMP(?, 'YYYY-MM-DD HH24:MI:SS')) ";
         
       public static final String ENFORCE_DROP_DEADLINE=" DELETE from ENROLLED_IN "+
     		  											" where user_id in (select B.USER_ID "+

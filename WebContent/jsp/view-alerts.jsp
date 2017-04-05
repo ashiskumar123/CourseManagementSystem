@@ -10,20 +10,21 @@
 <script type='text/javascript' src='js/course-list-main.js'></script>
 <script type='text/javascript' src='js/approve-request.js'></script>
 <script type='text/javascript' src='js/decline-request.js'></script>
-<%-- <script type='text/javascript' src='js/disable-button.js'></script> --%>
 </head>
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<jsp:include page="common-menu.jsp" />
-		<div class="container">
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
-	</div>
 	<div id ="courseTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
 		 <div>
-		   <h2>Student Requests</h2>
+		   <h2>Manage Special Requests</h2>
 		 </div>
+		    
+		<ol class="breadcrumb">
+		  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+		  <li class="active">Manage Special Requests</li>
+		</ol>
+		
 		 <div style="margin-top: 20px">
 		   <table class="table" style="width:70%;">
 
