@@ -75,12 +75,13 @@ public class QueryStrings {
 													 " FROM ADMIN "+
 													 "WHERE USER_ID=? ";
 	
-	public static final String SELECT_BILL_AMOUNT =  "SELECT "+
-													 " Bill.BILL_AMOUNT "+
-													 "FROM "+
-													 " BILL_PAYS Bill "+
-													 "WHERE "+
-													 " Bill.USER_ID=? ";
+	public static final String SELECT_BILL_AMOUNT = "SELECT BILL_AMOUNT"+
+													" from ("+
+													"   select bill.*, row_number() over (order by SEM_ID desc) as seqnum"+
+													"   from BILL_PAYS bill"+
+													"	WHERE USER_ID=?"+
+													" ) bill"+
+													" where seqnum = 1";
 	
 	public static final String UPDATE_BILL_AMOUNT =  "UPDATE "+
 													 " BILL_PAYS Bill "+
@@ -231,7 +232,7 @@ public class QueryStrings {
 														"WHERE "+
 														" A.USER_ID =? ";
 	
-	public static final String GET_STUDENT_LIST =   " SELECT STUDENT.USER_ID,"+
+	public static final String GET_STUDENT_LIST =   "  SELECT STUDENT.USER_ID,"+
 													" 	(SELECT USERNAME FROM USERS WHERE USER_ID=STUDENT.USER_ID) USERNAME,"+
 													"   STUDENT.FIRSTNAME,"+
 													"   STUDENT.LASTNAME,"+
@@ -241,11 +242,18 @@ public class QueryStrings {
 													"   (SELECT DEPARTMENT_NAME FROM DEPARTMENT WHERE DEPARTMENT_ID = STUDENT.DEPT_ID),"+
 													"   STUDENT.GPA,"+
 													"   (SELECT DESCRIPTION FROM RESIDENCY_TYPE_LOOKUP WHERE ID = STUDENT.RESIDENCY_TYPE) RESIDENCY_TYPE,"+
-													"   (SELECT DESCRIPTION FROM LEVEL_CLASSIFICATION_LOOKUP WHERE ID = STUDENT.LEVEL_CLASSIFICATION) LEVEL_CLASSIFICATION"+
-													"	"+
-													"	"+
-													" FROM STUDENT"+
-													" WHERE STUDENT.USER_ID LIKE ?";
+													"   (SELECT DESCRIPTION FROM LEVEL_CLASSIFICATION_LOOKUP WHERE ID = STUDENT.LEVEL_CLASSIFICATION) LEVEL_CLASSIFICATION,"+
+													" 	(SELECT DOB FROM USERS WHERE USER_ID = STUDENT.USER_ID),"+
+													" 	BILL.BILL_AMOUNT"+
+													" FROM STUDENT,"+
+													" (SELECT USER_ID, BILL_AMOUNT,"+
+													"     rank() over (partition by user_id order by sem_id desc) rnk"+
+													"     FROM"+
+													"     BILL_PAYS) BILL"+
+													" WHERE"+
+													" BILL.RNK = 1 AND"+
+													" STUDENT.USER_ID = BILL.USER_ID AND"+
+													" STUDENT.USER_ID LIKE ?";
 	
 	public static final String ADD_STUDENT = "INSERT "+
 			 								 " INTO STUDENT "+
@@ -338,10 +346,8 @@ public class QueryStrings {
 													 " LEFT JOIN USERS A "+
 													 " ON R.ADMIN_ID = A.USER_ID";
 	
-	public static final String APPROVE_REQUEST = "UPDATE REQUEST R "+
-												 " SET R.STATUS='APPROVED', R.UPDATE_DATE=?, R.ADMIN_ID=? "+
-												 "WHERE "+
-												 " R.REQ_ID=?";
+	public static final String APPROVE_REQUEST = "{call APPROVE_REQUEST(?,?)}";
+	
 	public static final String DECLINE_REQUEST = "UPDATE REQUEST R "+
 			 									 " SET R.STATUS='DECLINED', R.UPDATE_DATE=?, R.ADMIN_ID=? "+
 			 									 "WHERE "+

@@ -16,7 +16,7 @@ public class DBConnection {
 					"jdbc:oracle:thin:@localhost:1521:xe", "ashis", "root");*/
 			
 			connection = DriverManager.getConnection(
-					"jdbc:oracle:thin:@orca.csc.ncsu.edu:1521/orcl.csc.ncsu.edu", "aksahoo", "200152929");
+					"jdbc:oracle:thin:@orca.csc.ncsu.edu:1521/orcl.csc.ncsu.edu", "msachde", "200131144");
 
 		} catch (SQLException e) {
 

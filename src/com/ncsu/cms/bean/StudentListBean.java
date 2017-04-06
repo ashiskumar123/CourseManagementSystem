@@ -17,6 +17,8 @@ public class StudentListBean implements Serializable {
 	private String residencyType;
 	private String address;
 	private String levelClassification;
+	private String dob;
+	private String billAmount;
 	
 	public StudentListBean(String userId, String userName, String firstName, String lastName, String email, String address, String phoneNumber, 
 			String deptId, String gpa, String residencyType, String levelClassification) {
@@ -33,6 +35,25 @@ public class StudentListBean implements Serializable {
 		this.address = address;
 		this.levelClassification = levelClassification;
 	}
+	
+	public StudentListBean(String userId, String userName, String firstName, String lastName, String email, String address, String phoneNumber, 
+			String deptId, String gpa, String residencyType, String levelClassification, String dob, String billAmount) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.phoneNumber = phoneNumber;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.deptId = deptId;
+		this.gpa = gpa;
+		this.email = email;
+		this.residencyType = residencyType;
+		this.address = address;
+		this.levelClassification = levelClassification;
+		this.dob = dob;
+		this.billAmount = billAmount;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -99,6 +120,18 @@ public class StudentListBean implements Serializable {
 	}
 	public void setLevelClassification(String levelClassification) {
 		this.levelClassification = levelClassification;
+	}
+	public String getDob() {
+		return dob;
+	}
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+	public String getBillAmount() {
+		return billAmount;
+	}
+	public void setBillAmount(String billAmount) {
+		this.billAmount = billAmount;
 	}
 	
 	

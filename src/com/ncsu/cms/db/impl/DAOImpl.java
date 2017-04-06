@@ -518,6 +518,7 @@ public class DAOImpl implements DAO{
 			
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.GET_STUDENT_LIST);
 			
+			System.out.println("studentId="+studentId);
 			pstmt.setString(1, studentId==null?"%":studentId);
 
 			ResultSet rs = pstmt.executeQuery();
@@ -537,7 +538,9 @@ public class DAOImpl implements DAO{
 							rs.getString(8),
 							rs.getString(9),
 							rs.getString(10),
-							rs.getString(11)							
+							rs.getString(11),
+							rs.getString(12),
+							rs.getString(13)
 						);
 				studentList.add(student);
 			}
@@ -1030,20 +1033,17 @@ public class DAOImpl implements DAO{
 		
 	}
 	public void approveRequest(int requestId, Date date, int adminId){
-		try{
-		PreparedStatement pstmt = conn.prepareStatement(QueryStrings.APPROVE_REQUEST);
-		
-		pstmt.setDate(1, date);
-		pstmt.setInt(2, adminId);
-		pstmt.setInt(3,requestId); 
-		
-		
-		int statusCode = pstmt.executeUpdate();
-		
-		System.out.println("ByeBro");
-		System.out.println(statusCode);
-		}
-		catch(SQLException e){
+		CallableStatement callableStatement = null;
+
+		try {
+			callableStatement = conn.prepareCall(QueryStrings.APPROVE_REQUEST);
+
+			callableStatement.setInt(1,requestId);
+			callableStatement.setInt(2, adminId);
+
+			callableStatement.executeUpdate();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

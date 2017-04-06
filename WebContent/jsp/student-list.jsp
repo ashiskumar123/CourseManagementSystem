@@ -29,6 +29,13 @@
 	  <form id="frmBillr" method="get" action="addStudent" style = "margin-top:15px">    		
 		  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="Add Student" />   		   		
 	  </form>
+	  <form id="frmBillr" method="POST" action="showStudentList" style = "margin-top:15px">
+		  <input type ="text" class="form-control" style="width: 200px;" name ="studentId" placeholder="Student Id" value ="" />   
+		  <input type ="submit" class="btn btn-primary" value ="Search" />
+	  </form>
+	  <form id="frmBillr" method="POST" action="showStudentList" style = "margin-top:15px"> 
+		  <input type ="submit" class="btn btn-primary" value ="Clear" />
+	  </form>
 		 <div style="margin-top: 20px">
 		   <table class="table">
 
@@ -37,10 +44,12 @@
 	                <th>User ID</th>
 	                <th>First Name</th>
 	                <th>Last Name</th>
-	                <th>Department ID</th>
+	                <th>Department</th>
 	                <th>Phone Number</th>
 	                <th>Email</th>
 	                <th>Address</th>
+	                <th>DOB</th>
+	                <th>Bill Amount</th>
 	                <th>GPA</th>
 	                <th>Residency Type</th>
 	                <th>Level Classification</th>
@@ -58,6 +67,8 @@
               			<td id="tdphoneNumber"><s:property value="phoneNumber"/></td>
               			<td id="tdemail"><s:property value="email"/></td>
               			<td id="tdaddress"><s:property value="address"/></td>
+              			<td id="tdob"><s:property value="dob"/></td>
+              			<td id="tbillAmount"><s:property value="billAmount"/></td>
               			<td id="tdgpa"><s:property value="gpa"/></td>
               			<td id="tdresidencyType"><s:property value="residencyType"/></td>
               			<td id="tdlevelClassification"><s:property value="levelClassification"/></td>

@@ -225,6 +225,7 @@ public class AdminManagementAction extends ActionSupport {
 	
 	private List<SemesterBean> semesterList;
 	private SemesterBean semester;
+	private String studentId;
 	
 	public SemesterBean getSemester() {
 		return semester;
@@ -251,7 +252,7 @@ public class AdminManagementAction extends ActionSupport {
 			
 		}
 		else if(actionName.equals("ACTION_SHOW_STUDENT_LIST")){						
-			studentList = cmsDB.getStudentList(null);
+			studentList = cmsDB.getStudentList(studentId);
 		}
 		else if(actionName.equals("ACTION_ADD_STUDENT")){
 			departmentList = cmsDB.getDepartmentList();
@@ -982,6 +983,14 @@ public class AdminManagementAction extends ActionSupport {
 
 	public void setPrereqDetails(String prereqDetails) {
 		this.prereqDetails = prereqDetails;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 
 
