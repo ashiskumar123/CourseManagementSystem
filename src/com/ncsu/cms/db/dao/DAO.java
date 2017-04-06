@@ -6,6 +6,7 @@ import java.util.List;
 import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
+import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
@@ -110,7 +111,7 @@ public interface DAO {
 	
 	public List<EnrolledBean> getEnrolledDetails(String userId);
 	
-	public void updateGrade(String grade, String userId);
+	public void updateGrade(String grade, String userId, String offeringId);
 	
 	public List<FacultyMapBean> getFacultyFullNameList();
 	
@@ -119,4 +120,14 @@ public interface DAO {
 	public void addSchedule(String offeringId, String day, String fromTime, String toTime );
 	
 	public void enforceDropDeeadline();
+	
+	public List<CourseBean> getDropCourseList(String studentId);
+	
+	public List<String> getFacultyForOffering();
+	
+	public void updateBillAmountForSemester(String userId, int payValue);
+	
+	public void updateGPA(String offeringId, String userId);
+	
+	public void deleteFaculty(String offeringId, String facultyId);
 }

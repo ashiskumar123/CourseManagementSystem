@@ -7,12 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.ncsu.cms.bean.AdminBean;
 import com.ncsu.cms.bean.BillBean;
 import com.ncsu.cms.bean.CompletedCoursesBean;
+import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
@@ -26,8 +26,8 @@ import com.ncsu.cms.bean.LocationBean;
 import com.ncsu.cms.bean.LocationListBean;
 import com.ncsu.cms.bean.LoginBean;
 import com.ncsu.cms.bean.LoginResultBean;
-import com.ncsu.cms.bean.RequestListBean;
 import com.ncsu.cms.bean.RequestBean;
+import com.ncsu.cms.bean.RequestListBean;
 import com.ncsu.cms.bean.ScheduleBean;
 import com.ncsu.cms.bean.SemesterBean;
 import com.ncsu.cms.bean.StudentBean;
@@ -354,14 +354,21 @@ public class DAOImpl implements DAO{
 			
 			while(rs.next())
 			{
+			    List<FacultyBean> fList = null;
+			    
 				String facultyList = rs.getString(6);
-
-			    List<FacultyBean> fList = new ArrayList<FacultyBean>();
-				for(String faculty: facultyList.split(";"))
-				{	
-					String [] fName = faculty.split(",");
 				
-					fList.add(new FacultyBean(fName[0], fName[1]));
+				if(facultyList!=null)
+				{
+					fList = new ArrayList<FacultyBean>();
+					
+				    System.out.println("flist=="+facultyList);
+					for(String faculty: facultyList.split(";"))
+					{	
+						String [] fName = faculty.split(",");
+					
+						fList.add(new FacultyBean(fName[0], fName[1]));
+					}
 				}
 				CourseOfferingBean course  = new CourseOfferingBean(
 							rs.getString(1),
@@ -409,15 +416,21 @@ public class DAOImpl implements DAO{
 			
 			while(rs.next())
 			{
-				
+			    List<FacultyBean> fList = null;
+			    
 				String facultyList = rs.getString(6);
-
-			    List<FacultyBean> fList = new ArrayList<FacultyBean>();
-				for(String faculty: facultyList.split(";"))
-				{	
-					String [] fName = faculty.split(",");
-					System.out.println("faculty="+faculty);
-					fList.add(new FacultyBean(fName[0], fName[1]));
+				
+				if(facultyList!=null)
+				{
+					fList = new ArrayList<FacultyBean>();
+					
+				    System.out.println("flist=="+facultyList);
+					for(String faculty: facultyList.split(";"))
+					{	
+						String [] fName = faculty.split(",");
+					
+						fList.add(new FacultyBean(fName[0], fName[1]));
+					}
 				}
 				CourseOfferingBean course  = new CourseOfferingBean(
 							rs.getString(1),
@@ -658,7 +671,11 @@ public class DAOImpl implements DAO{
 							rs.getString(3),
 							rs.getString(4),
 							rs.getString(5),
-							rs.getString(6)						
+							rs.getString(6),
+							getCourseFaculty(rs.getInt(1)),
+							getCurrentSchedule(rs.getInt(1))
+							
+							
 						);
 				courseOfferingList.add(courseOffering);
 			}
@@ -824,48 +841,28 @@ public class DAOImpl implements DAO{
 		return errorData;
 	}
 
-	List<CourseOfferingBean> getDropCourseList(String studentId){
+	public List<CourseBean> getDropCourseList(String studentId){
 
-		List<CourseOfferingBean> offeringList = null;
+		List<CourseBean> offeringList = null;
 		
 		try {
 			
-			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_STUDENT_CURRENT_COURSE_DETAILS_LIST);
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_STUDENT_DROP_COURSE_DETAILS_LIST);
 
 			pstmt.setString(1, studentId);
+			pstmt.setString(2, studentId);
 			
 			ResultSet rs = pstmt.executeQuery();
 
-			offeringList = new ArrayList<CourseOfferingBean>();
+			offeringList = new ArrayList<CourseBean>();
 			
 			while(rs.next())
 			{
-				
-				String facultyList = rs.getString(6);
-
-			    List<FacultyBean> fList = new ArrayList<FacultyBean>();
-				for(String faculty: facultyList.split(";"))
-				{	
-					String [] fName = faculty.split(",");
-					System.out.println("faculty="+faculty);
-					fList.add(new FacultyBean(fName[0], fName[1]));
-				}
-				CourseOfferingBean course  = new CourseOfferingBean(
+				CourseBean course  = new CourseBean(
+							null,
 							rs.getString(1),
 							rs.getString(2),
-							rs.getString(3),
-							rs.getString(4),
-							rs.getString(5),
-							fList,
-							rs.getString(7),
-							rs.getString(8),
-							rs.getString(9),
-							rs.getString(10),
-							rs.getString(11),
-							rs.getString(12),
-							rs.getString(13),
-							rs.getString(14),
-							rs.getString(15)
+							rs.getString(3)
 						);
 				offeringList.add(course);
 			}
@@ -1259,11 +1256,12 @@ public class DAOImpl implements DAO{
 		
 		
 	}
-	public void updateGrade(String grade, String userId){
+	public void updateGrade(String grade, String userId, String offeringId){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SAVE_GRADES);
 			pstmt.setString(1, grade);
-			pstmt.setString(2, userId); 						
+			pstmt.setString(2, userId); 	
+			pstmt.setString(3, offeringId);
 			int statusCode = pstmt.executeUpdate();
 			
 			
@@ -1323,6 +1321,26 @@ public class DAOImpl implements DAO{
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteFaculty(String offeringId, String facultyId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.DELETE_FACULTY);
+			pstmt.setString(1, facultyId);
+			pstmt.setString(2, offeringId);
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	public void addSchedule(String offeringId, String day, String fromTime, String toTime ){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_SCHEDULE);
@@ -1352,6 +1370,64 @@ public class DAOImpl implements DAO{
 			e.printStackTrace();
 		}
 		
+	}
+	public List<String> getFacultyForOffering(){
+		List<String> facultyList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_FACULTY_LIST_NAME);
+			ResultSet rs = pstmt.executeQuery();
+
+			facultyList = new ArrayList<String>();
+			
+			while(rs.next())
+			{
+				String faculty  = rs.getString(1);
+				facultyList.add(faculty);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return facultyList;
+	}
+	public void updateBillAmountForSemester(String userId, int payValue){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_BILL_AMOUNT2);
+			pstmt.setInt(1, payValue);
+			pstmt.setString(2, userId);
+			
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public void updateGPA(String offeringId, String userId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_GPA);
+			pstmt.setString(1, offeringId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
+			
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
@@ -1387,15 +1463,18 @@ public class DAOImpl implements DAO{
 		//new DAOImpl().insertPrerequisite("22", "CS515", "2", "CS510");
 		//System.out.println(new DAOImpl().getEnrolledDetails("200").get(0).getUserId());
 		//new DAOImpl().updateGrade("B-", "200");
-		System.out.println(new DAOImpl().getFacultyFullNameList().get(0));
+		//System.out.println(new DAOImpl().getFacultyFullNameList().get(0));
 		/*ErrorBean errorData = new DAOImpl().enrollStudentToCourse(5, 4, 3, -1);
 		
 		System.out.println("message=" +errorData.getErrorMessage());
 		System.out.println("code="+errorData.getErrorCode());*/
-		ErrorBean errorData = new DAOImpl().enrollStudentToCourse("5", "7", "3", null);
+		//ErrorBean errorData = new DAOImpl().enrollStudentToCourse("5", "7", "3", null);
 		//ErrorBean errorData = new DAOImpl().dropStudentCourse(5, 8);
-		System.out.println("message=" +errorData.getErrorMessage());
-		System.out.println("code="+errorData.getErrorCode());
+		//System.out.println("message=" +errorData.getErrorMessage());
+		//System.out.println("code="+errorData.getErrorCode());
+	    //System.out.println(new DAOImpl().getFacultyForOffering().get(1));
+		//System.out.println(new DAOImpl().getCourseOfferingList(null).get(0).getFaculty().get(0).getFirstName());
+		System.out.println(new DAOImpl().getCourseFaculty(1).get(1).getFacultyId());
 	}
 	
 }

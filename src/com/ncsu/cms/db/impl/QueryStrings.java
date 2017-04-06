@@ -5,7 +5,7 @@ public class QueryStrings {
 	
 	public static final String SELECT_STUDENT_DETAILS = "SELECT "+
 														"	USER_ID, FIRSTNAME, LASTNAME, PHONE_NUMBER, ADDRESS, EMAIL, GPA, DEPARTMENT_NAME,"+
-														"	CASE LEVEL_CLASSIFICATION WHEN 1 THEN 'UNDERGRADUATE' WHEN 2 THEN 'GRADUATE' END LEVEL_CLASSIFICATION,"+
+														"	(SELECT DESCRIPTION FROM LEVEL_CLASSIFICATION_LOOKUP WHERE ID = LEVEL_CLASSIFICATION) LEVEL_CLASSIFICATION,"+
 														"	(SELECT DESCRIPTION FROM RESIDENCY_TYPE_LOOKUP WHERE ID = RESIDENCY_TYPE) RESIDENCY_TYPE"+
 														" FROM"+
 														" 	STUDENT, DEPARTMENT"+
@@ -43,6 +43,15 @@ public class QueryStrings {
 														 "	FACULTY Fac, FACULTY_LIST Flist, COURSE_OFFERING O "+
 														 " WHERE "+
 														 "	O.OFFERING_ID =? AND Flist.OFFERING_ID = O.OFFERING_ID AND Flist.FACULTY_ID = Fac.FACULTY_ID ";
+	
+	public static final String SELECT_COURSE_FACULTY_2 =   "SELECT "+ 
+															 "	Fac.FACULTY_ID, Fac.FIRST_NAME, Fac.LAST_NAME "+
+															 " FROM "+
+															 "	FACULTY Fac, FACULTY_LIST Flist, COURSE_OFFERING O "+
+															 " WHERE "+
+															 "	O.OFFERING_ID =? AND Flist.OFFERING_ID = O.OFFERING_ID AND Flist.FACULTY_ID = Fac.FACULTY_ID ";
+	
+	
 	
 	public static final String UPDATE_STUDENT_DETAILS = "UPDATE STUDENT Stu "+
 														"SET Stu.FIRSTNAME=?, Stu.LASTNAME=?, Stu.EMAIL=?, "+ 
@@ -114,7 +123,7 @@ public class QueryStrings {
 																"     FROM_TIME,"+
 																"     TO_TIME,"+
 																"     DAY,"+
-																"     LISTAGG(FIRST_NAME || ',' || LAST_NAME , ';')"+
+																"     LISTAGG( CASE WHEN FIRST_NAME IS NULL THEN NULL ELSE FIRST_NAME || ',' || LAST_NAME END, ';')"+
 																"       WITHIN GROUP (ORDER BY FIRST_NAME) AS FACULTY_LIST,"+
 																"     LEVEL_CLASSIFICATION_ID,"+
 																"     LEVEL_CLASSIFICATION,"+
@@ -151,9 +160,9 @@ public class QueryStrings {
 																"   ON LEVEL_CLASSIFICATION_LOOKUP.ID = COURSE.CLASSIFICATION_LEVEL"+
 																"   LEFT JOIN OFFERING_SCHEDULE"+
 																"   ON COURSE_OFFERING.OFFERING_ID = OFFERING_SCHEDULE.OFFERING_ID"+
-																"   INNER JOIN FACULTY_LIST"+
+																"   LEFT JOIN FACULTY_LIST"+
 																"   ON COURSE_OFFERING.OFFERING_ID = FACULTY_LIST.OFFERING_ID"+
-																"   INNER JOIN FACULTY"+
+																"   LEFT JOIN FACULTY"+
 																"   ON FACULTY.FACULTY_ID = FACULTY_LIST.FACULTY_ID"+
 																"   INNER JOIN LOCATION"+
 																"   ON LOCATION.LOCATION_ID = COURSE_OFFERING.LOCATION_ID"+
@@ -230,10 +239,12 @@ public class QueryStrings {
 													"   STUDENT.EMAIL,"+
 													"   STUDENT.ADDRESS,"+
 													"   STUDENT.PHONE_NUMBER,"+
-													"   STUDENT.DEPT_ID,"+
+													"   (SELECT DEPARTMENT_NAME FROM DEPARTMENT WHERE DEPARTMENT_ID = STUDENT.DEPT_ID),"+
 													"   STUDENT.GPA,"+
-													"   STUDENT.RESIDENCY_TYPE,"+
-													"   STUDENT.LEVEL_CLASSIFICATION"+
+													"   (SELECT DESCRIPTION FROM RESIDENCY_TYPE_LOOKUP WHERE ID = STUDENT.RESIDENCY_TYPE) RESIDENCY_TYPE,"+
+													"   (SELECT DESCRIPTION FROM LEVEL_CLASSIFICATION_LOOKUP WHERE ID = STUDENT.LEVEL_CLASSIFICATION) LEVEL_CLASSIFICATION"+
+													"	"+
+													"	"+
 													" FROM STUDENT"+
 													" WHERE STUDENT.USER_ID LIKE ?";
 	
@@ -377,21 +388,41 @@ public class QueryStrings {
 												"FROM ENROLLED_IN " + 
 												"WHERE USER_ID=? AND ENROLLMENT_STATUS=1";
 
-		public static String SAVE_GRADES = 
+		public static final String SAVE_GRADES = 
 												"UPDATE ENROLLED_IN" + 
 												" SET  GRADE=?" + 
-												" WHERE USER_ID=?";
+												" WHERE USER_ID=? AND OFFERING_ID=?";
 		
-		public static String LIST_OF_FACULTY = " SELECT FACULTY.FIRST_NAME || ' ' || FACULTY.LAST_NAME, FACULTY.FACULTY_ID "+
+		public static final String UPDATE_GPA=  "UPDATE STUDENT SET GPA = "+ 
+												" (SELECT AVG(GRADE_LOOKUP.GRADE_POINTS) "+
+												" FROM ENROLLED_IN "+
+												" INNER JOIN GRADE_LOOKUP "+
+												" ON GRADE_LOOKUP.GRADE_LETTER = ENROLLED_IN.GRADE "+
+												" INNER JOIN COURSE_OFFERING COURSE_OFFERING1 "+
+												" ON COURSE_OFFERING1.OFFERING_ID = ENROLLED_IN.OFFERING_ID "+
+												" INNER JOIN COURSE_OFFERING "+
+												" ON COURSE_OFFERING1.SEM_ID = COURSE_OFFERING.SEM_ID "+
+												" WHERE "+
+												" COURSE_OFFERING.OFFERING_ID =? AND "+
+												" ENROLLED_IN.USER_ID =?) "+
+												" WHERE "+
+												" USER_ID =? ";
+		
+		public static final String LIST_OF_FACULTY = " SELECT FACULTY.FIRST_NAME || ' ' || FACULTY.LAST_NAME, FACULTY.FACULTY_ID "+
 											   " FROM FACULTY";
 	
 	
-        public static String ADD_FACULTY =  "INSERT "+
+        public static final String ADD_FACULTY =  "INSERT "+
         									" INTO FACULTY_LIST "+
         									"(OFFERING_ID,FACULTY_ID) "+
         									" VALUES (?,?)";
         
-        public static String ADD_SCHEDULE = "INSERT "+
+        public static final String DELETE_FACULTY = " DELETE FROM FACULTY_LIST "+
+        											" WHERE "+
+        											" FACULTY_ID=? AND OFFERING_ID=? ";
+        
+        
+        public static final String ADD_SCHEDULE = "INSERT "+
         									" INTO OFFERING_SCHEDULE "+
         									" (SCHEDULE_ID, OFFERING_ID, DAY, FROM_TIME, TO_TIME) "+
         									" VALUES((SELECT MAX(SCHEDULE_ID)+1 FROM OFFERING_SCHEDULE),"+
@@ -408,7 +439,7 @@ public class QueryStrings {
 																			"     COURSE_NAME,"+
 																			"     MAX_CREDITS,"+
 																			"     COURSE_DEPARTMENT,"+
-																			"     LISTAGG(FIRST_NAME || ',' || LAST_NAME , ';')"+
+																			"     LISTAGG( CASE WHEN FIRST_NAME IS NULL THEN NULL ELSE FIRST_NAME || ',' || LAST_NAME END, ';')"+
 																			"       WITHIN GROUP (ORDER BY FIRST_NAME) AS FACULTY_LIST,"+
 																			"     ROOM_NO,"+
 																			"     BUILDING,"+
@@ -451,9 +482,9 @@ public class QueryStrings {
 																			"   ON LEVEL_CLASSIFICATION_LOOKUP.ID = COURSE.CLASSIFICATION_LEVEL"+
 																			"   LEFT JOIN OFFERING_SCHEDULE"+
 																			"   ON COURSE_OFFERING.OFFERING_ID = OFFERING_SCHEDULE.OFFERING_ID"+
-																			"   INNER JOIN FACULTY_LIST"+
+																			"   LEFT JOIN FACULTY_LIST"+
 																			"   ON COURSE_OFFERING.OFFERING_ID = FACULTY_LIST.OFFERING_ID"+
-																			"   INNER JOIN FACULTY"+
+																			"   LEFT JOIN FACULTY"+
 																			"   ON FACULTY.FACULTY_ID = FACULTY_LIST.FACULTY_ID"+
 																			"   INNER JOIN LOCATION"+
 																			"   ON LOCATION.LOCATION_ID = COURSE_OFFERING.LOCATION_ID"+
@@ -511,108 +542,21 @@ public class QueryStrings {
 															" VALUES ( ?, ?, SYSDATE, ?, 'PENDING')";
 	
 
-	public static final String SELECT_STUDENT_DROP_COURSE_DETAILS_LIST = 	"  SELECT COURSE_ID,"+
-																			"     TO_CHAR(OFFERING_ID,'000'),"+
-																			"     COURSE_NAME,"+
-																			"     MAX_CREDITS,"+
-																			"     COURSE_DEPARTMENT,"+
-																			"     LISTAGG(FIRST_NAME || ',' || LAST_NAME , ';')"+
-																			"       WITHIN GROUP (ORDER BY FIRST_NAME) AS FACULTY_LIST,"+
-																			"     ROOM_NO,"+
-																			"     BUILDING,"+
-																			"     FROM_TIME,"+
-																			"     TO_TIME,"+
-																			"     DAY,"+
-																			"     LEVEL_CLASSIFICATION,"+
-																			"     COURSE_TYPE,"+
-																			"     ENROLLMENT_STATUS ENROLLMENT_STATUS_ID,"+
-																			"     (SELECT DESCRIPTION FROM ENROLLMENT_STATUS_LOOKUP WHERE ID = ENROLLMENT_STATUS)  ||"+
-																			"     (CASE ENROLLMENT_STATUS WHEN 2 THEN ' (' || WAITLIST_NO || '/' || WAITLIST_SIZE || ')' ELSE '' END) ENROLLMENT_STATUS"+
-																			"   FROM("+
-																			"   SELECT COURSE.COURSE_ID,"+
-																			"     COURSE.COURSE_NAME,"+
-																			"     COURSE.MAX_CREDITS,"+
-																			"     DEPARTMENT.DEPARTMENT_ID,"+
-																			"     DEPARTMENT.DEPARTMENT_NAME COURSE_DEPARTMENT,"+
-																			"     COURSE_OFFERING.OFFERING_ID,"+
-																			"     LOCATION.ROOM_NO,"+
-																			"     LOCATION.BUILDING,"+
-																			"     TO_CHAR(OFFERING_SCHEDULE.FROM_TIME, 'HH:MI AM') FROM_TIME,"+
-																			"     TO_CHAR(OFFERING_SCHEDULE.TO_TIME, 'HH:MI AM') TO_TIME,"+
-																			"     LISTAGG(TRIM(TO_CHAR(NEXT_DAY(TO_DATE('01-JAN-1999'), OFFERING_SCHEDULE.DAY), 'DY')) , ',')"+
-																			"       WITHIN GROUP (ORDER BY OFFERING_SCHEDULE.DAY) AS DAY,"+
-																			"     FACULTY.FIRST_NAME,"+
-																			"     FACULTY.LAST_NAME,"+
-																			"     LEVEL_CLASSIFICATION_LOOKUP.ID LEVEL_CLASSIFICATION_ID,"+
-																			"     LEVEL_CLASSIFICATION_LOOKUP.DESCRIPTION LEVEL_CLASSIFICATION,"+
-																			"     COURSE_TYPE_LOOKUP.ID COURSE_TYPE_LOOKUP_ID,"+
-																			"     COURSE_TYPE_LOOKUP.DESCRIPTION AS COURSE_TYPE,"+
-																			"     ENROLLED_IN.ENROLLMENT_STATUS,"+
-																			"     ENROLLED_IN.WAITLIST_NO,"+
-																			"     COURSE_OFFERING.WAITLIST_SIZE"+
-																			"   FROM COURSE"+
-																			"   INNER JOIN COURSE_OFFERING"+
-																			"   ON COURSE.COURSE_ID = COURSE_OFFERING.COURSE_ID"+
-																			"   INNER JOIN COURSE_TYPE_LOOKUP"+
-																			"   ON COURSE_TYPE_LOOKUP.ID = COURSE.COURSE_TYPE"+
-																			"   INNER JOIN LEVEL_CLASSIFICATION_LOOKUP"+
-																			"   ON LEVEL_CLASSIFICATION_LOOKUP.ID = COURSE.CLASSIFICATION_LEVEL"+
-																			"   LEFT JOIN OFFERING_SCHEDULE"+
-																			"   ON COURSE_OFFERING.OFFERING_ID = OFFERING_SCHEDULE.OFFERING_ID"+
-																			"   INNER JOIN FACULTY_LIST"+
-																			"   ON COURSE_OFFERING.OFFERING_ID = FACULTY_LIST.OFFERING_ID"+
-																			"   INNER JOIN FACULTY"+
-																			"   ON FACULTY.FACULTY_ID = FACULTY_LIST.FACULTY_ID"+
-																			"   INNER JOIN LOCATION"+
-																			"   ON LOCATION.LOCATION_ID = COURSE_OFFERING.LOCATION_ID"+
-																			"   INNER JOIN SEMESTER"+
-																			"   ON SEMESTER.SEMESTER_ID = COURSE_OFFERING.SEM_ID"+
-																			"   INNER JOIN DEPARTMENT"+
-																			"   ON DEPARTMENT.DEPARTMENT_ID = COURSE.DEPARTMENT_ID"+
-																			"   INNER JOIN ENROLLED_IN ON"+
-																			"   ENROLLED_IN.OFFERING_ID = COURSE_OFFERING.OFFERING_ID"+
-																			"   WHERE"+
-																			"   ENROLLED_IN.USER_ID = ? AND"+
-																			"   ENROLLED_IN.ENROLLMENT_STATUS IN(1,2)  "+
-																			"   group by (COURSE.COURSE_ID,"+
-																			"     COURSE.COURSE_NAME,"+
-																			"     COURSE.MAX_CREDITS,"+
-																			"     DEPARTMENT.DEPARTMENT_ID,"+
-																			"     DEPARTMENT.DEPARTMENT_NAME,"+
-																			"     COURSE_OFFERING.OFFERING_ID,"+
-																			"     LOCATION.ROOM_NO,"+
-																			"     LOCATION.BUILDING,"+
-																			"     TO_CHAR(OFFERING_SCHEDULE.FROM_TIME, 'HH:MI AM'),"+
-																			"     TO_CHAR(OFFERING_SCHEDULE.TO_TIME, 'HH:MI AM'),"+
-																			"     FACULTY.FIRST_NAME,"+
-																			"     FACULTY.LAST_NAME,"+
-																			"     LEVEL_CLASSIFICATION_LOOKUP.ID,"+
-																			"     LEVEL_CLASSIFICATION_LOOKUP.DESCRIPTION,"+
-																			"     COURSE_TYPE_LOOKUP.ID,"+
-																			"     COURSE_TYPE_LOOKUP.DESCRIPTION,"+
-																			"     ENROLLED_IN.ENROLLMENT_STATUS,"+
-																			"     ENROLLED_IN.WAITLIST_NO,   "+
-																			"     COURSE_OFFERING.WAITLIST_SIZE)"+
-																			"     ) COURSES"+
-																			"     group by"+
-																			"     COURSE_ID,"+
-																			"     COURSE_NAME,"+
-																			"     MAX_CREDITS,"+
-																			"     DEPARTMENT_ID,"+
-																			"     COURSE_DEPARTMENT,"+
-																			"     OFFERING_ID,"+
-																			"     ROOM_NO,"+
-																			"     BUILDING,"+
-																			"     FROM_TIME,"+
-																			"     TO_TIME,"+
-																			"     DAY,"+
-																			"     LEVEL_CLASSIFICATION_ID,"+
-																			"     LEVEL_CLASSIFICATION,"+
-																			"     COURSE_TYPE_LOOKUP_ID,"+
-																			"     COURSE_TYPE,"+
-																			"     ENROLLMENT_STATUS,"+
-																			"     WAITLIST_NO,"+
-																			"     WAITLIST_SIZE";
+	public static final String SELECT_STUDENT_DROP_COURSE_DETAILS_LIST = 	" SELECT C.COURSE_ID, C.COURSE_NAME, E.OFFERING_ID"+
+																			" FROM"+
+																			" ENROLLED_IN E,"+
+																			" COURSE_OFFERING O,"+
+																			" COURSE C"+
+																			" WHERE"+
+																			" C.COURSE_ID = O.COURSE_ID AND"+
+																			" O.OFFERING_ID = E.OFFERING_ID AND"+
+																			" E.OFFERING_ID NOT IN (SELECT DROP_OFFERING_ID "+
+																			" 						FROM ENROLLED_IN WHERE USER_ID = ? AND"+
+																			"						ENROLLMENT_STATUS = 2 AND"+
+																			"						DROP_OFFERING_ID IS NOT NULL) AND"+
+																			" E.ENROLLMENT_STATUS = 1 AND"+
+																			" E.USER_ID = ?";
+	
 	public static final String SELECT_SPPERM_REQUEST_LIST = " SELECT REQUEST.REQ_ID,"+
 															"   COURSE_OFFERING.COURSE_ID,"+
 															"   REQUEST.REQUEST_DATE,"+
@@ -622,4 +566,16 @@ public class QueryStrings {
 															" INNER JOIN COURSE_OFFERING"+
 															" ON COURSE_OFFERING.OFFERING_ID = REQUEST.OFFERING_ID WHERE"+
 															" REQUEST.USER_ID = ?";
+	
+	public static final String SELECT_FACULTY_LIST_NAME =  " SELECT FACULTY.LAST_NAME || ' ' || FACULTY.FIRST_NAME "+
+															" FROM FACULTY, FACULTY_LIST"+
+															" WHERE FACULTY.FACULTY_ID = FACULTY_LIST.FACULTY_ID ";
+	
+	public static final String UPDATE_BILL_AMOUNT2 = " UPDATE BILL_PAYS "+
+													 " SET BILL_AMOUNT = BILL_AMOUNT-? "+
+													 " WHERE "+
+													 " USER_ID =? AND "+
+													 " SEM_ID = (SELECT MAX(SEM_ID) FROM SEMESTER) ";
+	
+	
 }

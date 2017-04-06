@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	$("#dropOfferingId").val($("#selDropCourse").find("option:first-child").val());
+
+	$("#selDropCourse").change(function(){
+		$("#dropOfferingId").val($(this).find(":selected").val());
+	});
+	
 	$(".btn-enroll").click(function(){
 		console.log("offering-id="+$(this).data("offering-id"));
 		var credits;
@@ -21,7 +27,15 @@ $(document).ready(function(){
 			"dropOfferingId": $("#dropOfferingId").val()
 		})
 	});
-
+	
+	$(".btn-drop-course-enroll").click(function(){
+		postNavigate("enrollStudent", {
+			"offeringId": $("#offeringId").val(),
+			"creditCount": $("#creditCount").val(),
+			"dropOfferingId": $("#dropOfferingId").val()
+		})
+	});
+	
 	$(".btn-drop").click(function(){
 		postNavigate("dropStudentCourse", {
 			offeringId: $(this).data("offering-id")

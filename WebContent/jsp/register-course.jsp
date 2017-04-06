@@ -45,10 +45,10 @@
 						    <div class="alert alert-info" role="alert">
 							  <span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 							  <s:property value="%{errorData.errorMessage}"/>
-								<input type="button" value="Request Permission" 
-								class="btn btn-success btn-spperm"
-								data-course-id='<s:property value="courseId"/>'
-								/>
+							  	<s:select  cssClass="form-control" id="selDropCourse" 
+				           		list="dropCourseList" listKey="offeringId" listValue="%{courseId + ' - ' + courseName}"/>
+								<input type="button" value="Add Course" 
+								class="btn btn-success btn-drop-course-enroll"/>
 							</div>
 						</s:elseif>
 						<s:else>

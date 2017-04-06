@@ -16,7 +16,7 @@
 <body>
 
 	<jsp:include page="common-header.jsp" />
-	<div id ="studentTable" style="margin-top: 20px" class="container">
+	<div id ="studentTable" style="margin-top: 20px" class="container-fluid">
       <div class="maincontent">
 		 <div>
 		   <h2>Manage Students</h2>
@@ -30,20 +30,19 @@
 		  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="Add Student" />   		   		
 	  </form>
 		 <div style="margin-top: 20px">
-		   <table class="table" style="width:70%;">
+		   <table class="table">
 
 		      <thead class="thead-default">
 			      <tr>
 	                <th>User ID</th>
-	                <th>Maximum Allowed Credits</th>
-	                <th>Phone Number</th>
 	                <th>First Name</th>
 	                <th>Last Name</th>
 	                <th>Department ID</th>
-	                <th>GPA</th>
+	                <th>Phone Number</th>
 	                <th>Email</th>
-	                <th>Residency Type</th>
 	                <th>Address</th>
+	                <th>GPA</th>
+	                <th>Residency Type</th>
 	                <th>Level Classification</th>
 	                <th>Edit Student</th>
 	                <th>Add/Edit Grades</th>
@@ -53,15 +52,14 @@
               	<s:iterator value="studentList">
               		<tr>
               			<td id="tduserId"><s:property value="userId"/></td>
-              			<td id="tdmaxCredits"><s:property value="maxCredits"/></td>
-              			<td id="tdphoneNumber"><s:property value="phoneNumber"/></td>
               			<td id="tdfirstName"><s:property value="firstName"/></td>
               			<td id="tdlastName"><s:property value="lastName"/></td>
               			<td id="tddeptId"><s:property value="deptId"/></td>
-              			<td id="tdgpa"><s:property value="gpa"/></td>
+              			<td id="tdphoneNumber"><s:property value="phoneNumber"/></td>
               			<td id="tdemail"><s:property value="email"/></td>
-              			<td id="tdresidencyType"><s:property value="residencyType"/></td>
               			<td id="tdaddress"><s:property value="address"/></td>
+              			<td id="tdgpa"><s:property value="gpa"/></td>
+              			<td id="tdresidencyType"><s:property value="residencyType"/></td>
               			<td id="tdlevelClassification"><s:property value="levelClassification"/></td>
               			<td>
            					<input type ="button" data-user-id='<s:property value="userId"/>' 

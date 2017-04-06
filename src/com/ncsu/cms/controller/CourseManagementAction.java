@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.ncsu.cms.bean.CourseBean;
 import com.ncsu.cms.bean.CourseOfferingBean;
 import com.ncsu.cms.bean.ErrorBean;
 import com.ncsu.cms.bean.RequestListBean;
@@ -25,6 +26,7 @@ public class CourseManagementAction extends ActionSupport{
 	private String creditCount;
 	private String dropOfferingId;
 	private List<RequestListBean> sppermRequestList;
+	private List<CourseBean> dropCourseList;
 	
 	public String execute() throws Exception {
 		
@@ -44,6 +46,8 @@ public class CourseManagementAction extends ActionSupport{
 			courseOfferingList = cmsDB.getCourseOfferings(departmentId);
 			studentCourseOfferingList = cmsDB.getStudentCurrentCourseDetailsList(studentId);
 			sppermRequestList = cmsDB.getSPPERMRequestList(studentId);
+			dropCourseList = cmsDB.getDropCourseList(studentId);
+			
 			errorData = new ErrorBean(ErrorBean.SUCCESS, "1");
 		}
 		else if(actionName.equals("ACTION_ENROLL_COURSE")){
@@ -56,6 +60,8 @@ public class CourseManagementAction extends ActionSupport{
 			courseOfferingList = cmsDB.getCourseOfferings(departmentId);
 			studentCourseOfferingList = cmsDB.getStudentCurrentCourseDetailsList(studentId);
 			sppermRequestList = cmsDB.getSPPERMRequestList(studentId);
+			dropCourseList = cmsDB.getDropCourseList(studentId);
+			
 		}
 		else if(actionName.equals("ACTION_DROP_COURSE")){
 			errorData = cmsDB.dropStudentCourse(studentId, offeringId.trim());
@@ -63,6 +69,8 @@ public class CourseManagementAction extends ActionSupport{
 			courseOfferingList = cmsDB.getCourseOfferings(departmentId);
 			studentCourseOfferingList = cmsDB.getStudentCurrentCourseDetailsList(studentId);
 			sppermRequestList = cmsDB.getSPPERMRequestList(studentId);
+			dropCourseList = cmsDB.getDropCourseList(studentId);
+			
 		}
 		else if(actionName.equals("ACTION_REQUEST_SPPERM")){
 			System.out.println("studentId="+studentId);
@@ -73,6 +81,7 @@ public class CourseManagementAction extends ActionSupport{
 			courseOfferingList = cmsDB.getCourseOfferings(departmentId);
 			studentCourseOfferingList = cmsDB.getStudentCurrentCourseDetailsList(studentId);
 			sppermRequestList = cmsDB.getSPPERMRequestList(studentId);
+			dropCourseList = cmsDB.getDropCourseList(studentId);
 		}
 		return SUCCESS;
 	}
@@ -155,6 +164,14 @@ public class CourseManagementAction extends ActionSupport{
 
 	public void setSppermRequestList(List<RequestListBean> sppermRequestList) {
 		this.sppermRequestList = sppermRequestList;
+	}
+
+	public List<CourseBean> getDropCourseList() {
+		return dropCourseList;
+	}
+
+	public void setDropCourseList(List<CourseBean> dropCourseList) {
+		this.dropCourseList = dropCourseList;
 	}
 
 	
