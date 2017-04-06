@@ -1,5 +1,6 @@
 package com.ncsu.cms.bean;
 import java.io.Serializable;
+import java.util.List;
 public class CourseOfferingListBean implements Serializable {
 
 	/**
@@ -12,8 +13,11 @@ public class CourseOfferingListBean implements Serializable {
 	private String waitlistSize;
 	private String semesterId;
 	private String locationId;
+	private List<FacultyBean> faculty;
+    private List<ScheduleBean> schedule;
+    
 	public CourseOfferingListBean(String courseOfferingId, String courseId, String classSize, String waitlistSize,
-			String semesterId, String locationId) {
+			String semesterId, String locationId, List<FacultyBean> faculty, List<ScheduleBean> schedule) {
 		super();
 		this.courseOfferingId = courseOfferingId;
 		this.courseId = courseId;
@@ -21,6 +25,8 @@ public class CourseOfferingListBean implements Serializable {
 		this.waitlistSize = waitlistSize;
 		this.semesterId = semesterId;
 		this.locationId = locationId;
+		this.faculty = faculty;
+		this.schedule = schedule;
 	}
 	public String getCourseOfferingId() {
 		return courseOfferingId;
@@ -57,6 +63,18 @@ public class CourseOfferingListBean implements Serializable {
 	}
 	public void setLocationId(String locationId) {
 		this.locationId = locationId;
+	}
+	public List<FacultyBean> getFaculty() {
+		return faculty;
+	}
+	public void setFaculty(List<FacultyBean> faculty) {
+		this.faculty = faculty;
+	}
+	public List<ScheduleBean> getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(List<ScheduleBean> schedule) {
+		this.schedule = schedule;
 	}
 	
 

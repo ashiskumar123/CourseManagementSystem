@@ -119,4 +119,6 @@ public interface DAO {
 	public void addSchedule(String offeringId, String day, String fromTime, String toTime );
 	
 	public void enforceDropDeeadline();
+	
+	public List<String> getFacultyForOffering();
 }

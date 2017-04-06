@@ -85,6 +85,7 @@ public class AdminManagementAction extends ActionSupport {
 	private String toTime;
 	private String schDay;
 	private String scheduleId;
+	private List<String> allFaculty;
 
 	
 	public String getScheduleId() {
@@ -243,6 +244,7 @@ public class AdminManagementAction extends ActionSupport {
 		}
 		else if(actionName.equals("ACTION_SHOW_COURSE_LIST")){						
 			courseList = cmsDB.getCourseList(null);
+			
 		}
 		else if(actionName.equals("ACTION_INSERT_COURSE")){
 			System.out.println("Hi5");
@@ -940,6 +942,14 @@ public class AdminManagementAction extends ActionSupport {
 
 	public void setPrereqDetails(String prereqDetails) {
 		this.prereqDetails = prereqDetails;
+	}
+
+	public List<String> getAllFaculty() {
+		return allFaculty;
+	}
+
+	public void setAllFaculty(List<String> allFaculty) {
+		this.allFaculty = allFaculty;
 	}
 
 

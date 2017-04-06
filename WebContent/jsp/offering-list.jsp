@@ -56,7 +56,11 @@
 	                <th>Waitlist Size</th>
 	                <th>Semester </th>
 	                <th>Location </th>
+	                <th>Faculty</th>
+	                <th>Schedule</th>
 	                <th>Edit Course Offering</th>
+	                <th>Add Faculty</th>
+	                <th>Add Schedule</th>
 	              </tr>
               </thead>
               <tbody>
@@ -68,6 +72,20 @@
               			<td><s:property value="waitlistSize"/></td>
               			<td><s:property value="semesterId"/></td>
               			<td><s:property value="locationId"/></td>
+              			<td>
+              				<s:iterator value="faculty">
+              					<s:property value="firstName"/>
+              					<s:property value="lastName"/>,
+              				</s:iterator>
+              			</td>
+              			<td>
+              				<s:iterator value="schedule">
+              					<s:property value="day"/>
+              					From <s:property value="fromTime"/>
+              					To <s:property value="toTime"/>
+              					<br>
+              				</s:iterator>
+              			</td>
               			<td>
            					<input type ="button" data-course-offering-id='<s:property value="courseOfferingId"/>' 
            							class="btn btn-primary btn-edit-course-offering"
@@ -82,6 +100,11 @@
            					<input type ="button" data-course-offering-id='<s:property value="courseOfferingId"/>' 
            							class="btn btn-primary btn-add-schedule"
 									value ="Add Schedule"/>
+              			</td>
+              			<td>
+           					<input type ="button" data-course-offering-id='<s:property value="courseOfferingId"/>' 
+           							class="btn btn-primary btn-edit-faculty"
+									value ="Edit Faculty"/>
               			</td>
               		</tr>
 				</s:iterator>

@@ -622,4 +622,8 @@ public class QueryStrings {
 															" INNER JOIN COURSE_OFFERING"+
 															" ON COURSE_OFFERING.OFFERING_ID = REQUEST.OFFERING_ID WHERE"+
 															" REQUEST.USER_ID = ?";
+	
+	public static final String SELECT_FACULTY_LIST_NAME =  " SELECT FACULTY.LAST_NAME || ' ' || FACULTY.FIRST_NAME "+
+															" FROM FACULTY, FACULTY_LIST"+
+															" WHERE FACULTY.FACULTY_ID = FACULTY_LIST.FACULTY_ID ";
 }

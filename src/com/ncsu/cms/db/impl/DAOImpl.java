@@ -658,7 +658,11 @@ public class DAOImpl implements DAO{
 							rs.getString(3),
 							rs.getString(4),
 							rs.getString(5),
-							rs.getString(6)						
+							rs.getString(6),
+							getCourseFaculty(rs.getInt(1)),
+							getCurrentSchedule(rs.getInt(1))
+							
+							
 						);
 				courseOfferingList.add(courseOffering);
 			}
@@ -1353,6 +1357,27 @@ public class DAOImpl implements DAO{
 		}
 		
 	}
+	public List<String> getFacultyForOffering(){
+		List<String> facultyList = null;
+		
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_FACULTY_LIST_NAME);
+			ResultSet rs = pstmt.executeQuery();
+
+			facultyList = new ArrayList<String>();
+			
+			while(rs.next())
+			{
+				String faculty  = rs.getString(1);
+				facultyList.add(faculty);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return facultyList;
+	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -1387,15 +1412,17 @@ public class DAOImpl implements DAO{
 		//new DAOImpl().insertPrerequisite("22", "CS515", "2", "CS510");
 		//System.out.println(new DAOImpl().getEnrolledDetails("200").get(0).getUserId());
 		//new DAOImpl().updateGrade("B-", "200");
-		System.out.println(new DAOImpl().getFacultyFullNameList().get(0));
+		//System.out.println(new DAOImpl().getFacultyFullNameList().get(0));
 		/*ErrorBean errorData = new DAOImpl().enrollStudentToCourse(5, 4, 3, -1);
 		
 		System.out.println("message=" +errorData.getErrorMessage());
 		System.out.println("code="+errorData.getErrorCode());*/
-		ErrorBean errorData = new DAOImpl().enrollStudentToCourse("5", "7", "3", null);
+		//ErrorBean errorData = new DAOImpl().enrollStudentToCourse("5", "7", "3", null);
 		//ErrorBean errorData = new DAOImpl().dropStudentCourse(5, 8);
-		System.out.println("message=" +errorData.getErrorMessage());
-		System.out.println("code="+errorData.getErrorCode());
+		//System.out.println("message=" +errorData.getErrorMessage());
+		//System.out.println("code="+errorData.getErrorCode());
+	    //System.out.println(new DAOImpl().getFacultyForOffering().get(1));
+		System.out.println(new DAOImpl().getCourseOfferingList(null).get(0).getFaculty().get(0).getFirstName());
 	}
 	
 }
