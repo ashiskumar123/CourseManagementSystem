@@ -12,6 +12,7 @@ import com.ncsu.cms.bean.CourseListBean;
 import com.ncsu.cms.bean.CourseOfferingListBean;
 import com.ncsu.cms.bean.DepartmentBean;
 import com.ncsu.cms.bean.EnrolledBean;
+import com.ncsu.cms.bean.FacultyBean;
 import com.ncsu.cms.bean.FacultyMapBean;
 import com.ncsu.cms.bean.LocationListBean;
 import com.ncsu.cms.bean.RequestBean;
@@ -85,8 +86,35 @@ public class AdminManagementAction extends ActionSupport {
 	private String toTime;
 	private String schDay;
 	private String scheduleId;
+	private List<FacultyBean> facultyList;
+	private List<String> facultyIdList;
+	private String offeringId;
 
 	
+	public String getOfferingId() {
+		return offeringId;
+	}
+
+	public void setOfferingId(String offeringId) {
+		this.offeringId = offeringId;
+	}
+
+	public List<String> getFacultyIdList() {
+		return facultyIdList;
+	}
+
+	public void setFacultyIdList(List<String> facultyIdList) {
+		this.facultyIdList = facultyIdList;
+	}
+
+	public List<FacultyBean> getFacultyList() {
+		return facultyList;
+	}
+
+	public void setFacultyList(List<FacultyBean> facultyList) {
+		this.facultyList = facultyList;
+	}
+
 	public String getScheduleId() {
 		return scheduleId;
 	}
@@ -243,6 +271,7 @@ public class AdminManagementAction extends ActionSupport {
 		}
 		else if(actionName.equals("ACTION_SHOW_COURSE_LIST")){						
 			courseList = cmsDB.getCourseList(null);
+			
 		}
 		else if(actionName.equals("ACTION_INSERT_COURSE")){
 			System.out.println("Hi5");
@@ -406,8 +435,9 @@ public class AdminManagementAction extends ActionSupport {
 		else if(actionName.equals("ACTION_SAVE_GRADE")){
 			//System.out.println("User Id ="+userId);
 			//enrolledList = cmsDB.getEnrolledDetails(userId);
-			System.out.println("User Id ="+userId+" Grade="+grade);
-			cmsDB.updateGrade(grade, userId);
+			System.out.println("User Id ="+userId+" Grade="+grade+" Offering Id= "+courseOfferingId);
+			cmsDB.updateGrade(grade, userId, courseOfferingId);
+			cmsDB.updateGPA(courseOfferingId, userId);
 			enrolledList = cmsDB.getEnrolledDetails(userId);
 		}
 		else if(actionName.equals("ACTION_EDIT_CURRENT_SEMESTER")){
@@ -476,6 +506,18 @@ public class AdminManagementAction extends ActionSupport {
 			//setPendingRequestCount(cmsDB.getRequestDetails().size());
 			System.out.println(adminDetails.getFirstName());
 			
+		}
+		else if(actionName.equals("ACTION_EDIT_FACULTY")){
+			int courseOfferingInt = Integer.parseInt(courseOfferingId); 
+			listOfFaculty = cmsDB.getFacultyFullNameList();
+			facultyList = cmsDB.getCourseFaculty(courseOfferingInt);
+		}
+		else if(actionName.equals("ACTION_DELETE_FACULTY")){
+			cmsDB.deleteFaculty(courseOfferingId, facultyId);
+			
+			int courseOfferingInt = Integer.parseInt(courseOfferingId); 
+			listOfFaculty = cmsDB.getFacultyFullNameList();
+			facultyList = cmsDB.getCourseFaculty(courseOfferingInt);
 		}
 		
 		return SUCCESS;		
@@ -941,6 +983,7 @@ public class AdminManagementAction extends ActionSupport {
 	public void setPrereqDetails(String prereqDetails) {
 		this.prereqDetails = prereqDetails;
 	}
+
 
 
 

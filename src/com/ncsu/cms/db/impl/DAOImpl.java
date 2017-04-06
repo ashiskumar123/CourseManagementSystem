@@ -204,7 +204,7 @@ public class DAOImpl implements DAO{
 		List<FacultyBean> facultyList = null;
 		try {
 			
-			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_COURSE_FACULTY);
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_COURSE_FACULTY_2);
 
 			pstmt.setInt(1, offeringId);
 			
@@ -216,7 +216,8 @@ public class DAOImpl implements DAO{
 			{
 				FacultyBean faculty  = new FacultyBean(
 						rs.getString(1),
-						rs.getString(2)
+						rs.getString(2),
+						rs.getString(3)
 						);
 				facultyList.add(faculty);
 			}

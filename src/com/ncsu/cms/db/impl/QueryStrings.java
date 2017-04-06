@@ -52,7 +52,6 @@ public class QueryStrings {
 															 "	O.OFFERING_ID =? AND Flist.OFFERING_ID = O.OFFERING_ID AND Flist.FACULTY_ID = Fac.FACULTY_ID ";
 	
 	
-	
 	public static final String UPDATE_STUDENT_DETAILS = "UPDATE STUDENT Stu "+
 														"SET Stu.FIRSTNAME=?, Stu.LASTNAME=?, Stu.EMAIL=?, "+ 
 														" Stu.PHONE_NUMBER=?, Stu.ADDRESS=? "+

@@ -8,4 +8,7 @@ $(document).ready(function(){
 	$(".btn-add-schedule").click(function(){
 		postNavigate('addSchedule',{"courseOfferingId":$(this).data("course-offering-id")});
 	});
+	$(".btn-edit-faculty").click(function(){
+		postNavigate('editFaculty',{"courseOfferingId":$(this).data("course-offering-id")});
+	});
 });

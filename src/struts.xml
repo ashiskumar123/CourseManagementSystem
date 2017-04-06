@@ -202,6 +202,17 @@
 			<param name="actionName">ACTION_ENFORCE_DROP_DEADLINE</param>
 			<result name="success">/jsp/admin-home.jsp</result>
 		</action>
+		<action name="editFaculty" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_EDIT_FACULTY</param>
+			<result name="success">/jsp/edit-faculty.jsp</result>
+		</action>
+		<action name="deleteSelectedFaculty" class="com.ncsu.cms.controller.AdminManagementAction">
+			<param name="actionName">ACTION_DELETE_FACULTY</param>
+			<result name="success">/jsp/edit-faculty.jsp</result>
+		</action>
+		
+		
+		
 	</package>
 	
 
