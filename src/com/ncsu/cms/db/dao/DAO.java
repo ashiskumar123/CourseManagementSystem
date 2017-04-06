@@ -110,7 +110,7 @@ public interface DAO {
 	
 	public List<EnrolledBean> getEnrolledDetails(String userId);
 	
-	public void updateGrade(String grade, String userId);
+	public void updateGrade(String grade, String userId, String offeringId);
 	
 	public List<FacultyMapBean> getFacultyFullNameList();
 	
@@ -121,4 +121,10 @@ public interface DAO {
 	public void enforceDropDeeadline();
 	
 	public List<String> getFacultyForOffering();
+	
+	public void updateBillAmountForSemester(String userId, int payValue);
+	
+	public void updateGPA(String offeringId, String userId);
+	
+	public void deleteFaculty(String offeringId, String facultyId);
 }

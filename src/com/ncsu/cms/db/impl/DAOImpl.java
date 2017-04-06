@@ -204,7 +204,7 @@ public class DAOImpl implements DAO{
 		List<FacultyBean> facultyList = null;
 		try {
 			
-			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_COURSE_FACULTY);
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SELECT_COURSE_FACULTY_2);
 
 			pstmt.setInt(1, offeringId);
 			
@@ -216,7 +216,8 @@ public class DAOImpl implements DAO{
 			{
 				FacultyBean faculty  = new FacultyBean(
 						rs.getString(1),
-						rs.getString(2)
+						rs.getString(2),
+						rs.getString(3)
 						);
 				facultyList.add(faculty);
 			}
@@ -1263,11 +1264,12 @@ public class DAOImpl implements DAO{
 		
 		
 	}
-	public void updateGrade(String grade, String userId){
+	public void updateGrade(String grade, String userId, String offeringId){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.SAVE_GRADES);
 			pstmt.setString(1, grade);
-			pstmt.setString(2, userId); 						
+			pstmt.setString(2, userId); 	
+			pstmt.setString(3, offeringId);
 			int statusCode = pstmt.executeUpdate();
 			
 			
@@ -1327,6 +1329,26 @@ public class DAOImpl implements DAO{
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteFaculty(String offeringId, String facultyId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.DELETE_FACULTY);
+			pstmt.setString(1, facultyId);
+			pstmt.setString(2, offeringId);
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	public void addSchedule(String offeringId, String day, String fromTime, String toTime ){
 		try{
 			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.ADD_SCHEDULE);
@@ -1378,6 +1400,43 @@ public class DAOImpl implements DAO{
 		}
 		return facultyList;
 	}
+	public void updateBillAmountForSemester(String userId, int payValue){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_BILL_AMOUNT2);
+			pstmt.setInt(1, payValue);
+			pstmt.setString(2, userId);
+			
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public void updateGPA(String offeringId, String userId){
+		try{
+			PreparedStatement pstmt = conn.prepareStatement(QueryStrings.UPDATE_GPA);
+			pstmt.setString(1, offeringId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
+			
+
+			int statusCode = pstmt.executeUpdate();
+
+			
+			System.out.println(statusCode);
+			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) {
 		//new DAOImpl().validateLogin(new LoginBean("ashis",HashUtil.generateSHA256Hash("root")));
 		
@@ -1422,7 +1481,8 @@ public class DAOImpl implements DAO{
 		//System.out.println("message=" +errorData.getErrorMessage());
 		//System.out.println("code="+errorData.getErrorCode());
 	    //System.out.println(new DAOImpl().getFacultyForOffering().get(1));
-		System.out.println(new DAOImpl().getCourseOfferingList(null).get(0).getFaculty().get(0).getFirstName());
+		//System.out.println(new DAOImpl().getCourseOfferingList(null).get(0).getFaculty().get(0).getFirstName());
+		System.out.println(new DAOImpl().getCourseFaculty(1).get(1).getFacultyId());
 	}
 	
 }

@@ -69,11 +69,14 @@ public class StudentManagementAction extends ActionSupport{
 			if(payAmount.isEmpty())
 				this.setPayError("Please enter a value for Pay Amount");
 			else if(Integer.parseInt(payAmount)>= 0){
+				int payValue = Integer.parseInt(payAmount);
+				
+				cmsDB.updateBillAmountForSemester(studentId, payValue);
 
-				int currAmt = Integer.parseInt(bill.getBillAmount());
+				/*int currAmt = Integer.parseInt(bill.getBillAmount());
 				int updatedAmount = currAmt - Integer.parseInt(payAmount);
 				cmsDB.updateBillAmount(stId,updatedAmount);
-				this.setPaySuccess("Payment Made successfully");
+				this.setPaySuccess("Payment Made successfully");*/
 			}
 			else{
 					this.setPayError("Please Enter a positive value for pay amount");

@@ -44,6 +44,15 @@ public class QueryStrings {
 														 " WHERE "+
 														 "	O.OFFERING_ID =? AND Flist.OFFERING_ID = O.OFFERING_ID AND Flist.FACULTY_ID = Fac.FACULTY_ID ";
 	
+	public static final String SELECT_COURSE_FACULTY_2 =   "SELECT "+ 
+															 "	Fac.FACULTY_ID, Fac.FIRST_NAME, Fac.LAST_NAME "+
+															 " FROM "+
+															 "	FACULTY Fac, FACULTY_LIST Flist, COURSE_OFFERING O "+
+															 " WHERE "+
+															 "	O.OFFERING_ID =? AND Flist.OFFERING_ID = O.OFFERING_ID AND Flist.FACULTY_ID = Fac.FACULTY_ID ";
+	
+	
+	
 	public static final String UPDATE_STUDENT_DETAILS = "UPDATE STUDENT Stu "+
 														"SET Stu.FIRSTNAME=?, Stu.LASTNAME=?, Stu.EMAIL=?, "+ 
 														" Stu.PHONE_NUMBER=?, Stu.ADDRESS=? "+
@@ -377,21 +386,41 @@ public class QueryStrings {
 												"FROM ENROLLED_IN " + 
 												"WHERE USER_ID=? AND ENROLLMENT_STATUS=1";
 
-		public static String SAVE_GRADES = 
+		public static final String SAVE_GRADES = 
 												"UPDATE ENROLLED_IN" + 
 												" SET  GRADE=?" + 
-												" WHERE USER_ID=?";
+												" WHERE USER_ID=? AND OFFERING_ID=?";
 		
-		public static String LIST_OF_FACULTY = " SELECT FACULTY.FIRST_NAME || ' ' || FACULTY.LAST_NAME, FACULTY.FACULTY_ID "+
+		public static final String UPDATE_GPA=  "UPDATE STUDENT SET GPA = "+ 
+												" (SELECT AVG(GRADE_LOOKUP.GRADE_POINTS) "+
+												" FROM ENROLLED_IN "+
+												" INNER JOIN GRADE_LOOKUP "+
+												" ON GRADE_LOOKUP.GRADE_LETTER = ENROLLED_IN.GRADE "+
+												" INNER JOIN COURSE_OFFERING COURSE_OFFERING1 "+
+												" ON COURSE_OFFERING1.OFFERING_ID = ENROLLED_IN.OFFERING_ID "+
+												" INNER JOIN COURSE_OFFERING "+
+												" ON COURSE_OFFERING1.SEM_ID = COURSE_OFFERING.SEM_ID "+
+												" WHERE "+
+												" COURSE_OFFERING.OFFERING_ID =? AND "+
+												" ENROLLED_IN.USER_ID =?) "+
+												" WHERE "+
+												" USER_ID =? ";
+		
+		public static final String LIST_OF_FACULTY = " SELECT FACULTY.FIRST_NAME || ' ' || FACULTY.LAST_NAME, FACULTY.FACULTY_ID "+
 											   " FROM FACULTY";
 	
 	
-        public static String ADD_FACULTY =  "INSERT "+
+        public static final String ADD_FACULTY =  "INSERT "+
         									" INTO FACULTY_LIST "+
         									"(OFFERING_ID,FACULTY_ID) "+
         									" VALUES (?,?)";
         
-        public static String ADD_SCHEDULE = "INSERT "+
+        public static final String DELETE_FACULTY = " DELETE FROM FACULTY_LIST "+
+        											" WHERE "+
+        											" FACULTY_ID=? AND OFFERING_ID=? ";
+        
+        
+        public static final String ADD_SCHEDULE = "INSERT "+
         									" INTO OFFERING_SCHEDULE "+
         									" (SCHEDULE_ID, OFFERING_ID, DAY, FROM_TIME, TO_TIME) "+
         									" VALUES((SELECT MAX(SCHEDULE_ID)+1 FROM OFFERING_SCHEDULE),"+
@@ -626,4 +655,12 @@ public class QueryStrings {
 	public static final String SELECT_FACULTY_LIST_NAME =  " SELECT FACULTY.LAST_NAME || ' ' || FACULTY.FIRST_NAME "+
 															" FROM FACULTY, FACULTY_LIST"+
 															" WHERE FACULTY.FACULTY_ID = FACULTY_LIST.FACULTY_ID ";
+	
+	public static final String UPDATE_BILL_AMOUNT2 = " UPDATE BILL_PAYS "+
+													 " SET BILL_AMOUNT = BILL_AMOUNT-? "+
+													 " WHERE "+
+													 " USER_ID =? AND "+
+													 " SEM_ID = (SELECT MAX(SEM_ID) FROM SEMESTER) ";
+	
+	
 }

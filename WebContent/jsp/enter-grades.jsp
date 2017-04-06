@@ -18,14 +18,18 @@
 
 	<jsp:include page="common-header.jsp" />
 	<jsp:include page="common-menu.jsp" />
-	<div class="container">
-		<a href="#" onclick="javascript: postNavigate('home')">Go Back</a>
-	</div>
+	
 	<div id ="studentTable" style="margin-top: 20px" class="container">
       <div class="maincontent">
 		 <div>
 		   <h2>Enter Grades</h2>
 		 </div>
+		    
+		<ol class="breadcrumb">
+		  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
+		  <li><a href="#" onclick="postNavigate('showStudentList')">Manage Students</a></li>
+		  <li class="active">Enter Grades</li>
+		</ol>
 		 <div style="margin-top: 20px">
 		   <table class="table" style="width:70%;">
 
@@ -38,16 +42,18 @@
 	              </tr>
               </thead>
               <tbody>
+                <%int i=1; %>
               	<s:iterator value="enrolledList">
               		<tr>
               			<td ><s:property value="offeringId"/></td>
               			<td ><s:property value="creditCount"/></td>
               			<td>
-           					<input type ="text" id="gradeId" value =<s:property value="grade"/> placeholder="Enter Grades"/>
+           					<input type ="text" id='<s:property value="%{userId+offeringId}"/>'  
+           							placeholder="Enter Grades" value ='<s:property value="grade"/>' />
               			</td>
               			<td>
            					<input type ="button" data-user-id='<s:property value="userId"/>' 
-           							data-grade='<s:property value="grade"/>'
+           							data-offering-id = '<s:property value="offeringId"/>'
            							class="btn btn-primary btn-save-grade"
 									value ="Save"/>  
               			</td>
@@ -56,6 +62,8 @@
 			  
            </table>
 		 </div>
+		</div>
+	</div>
 
 
 	<jsp:include page="common-footer.jsp" />
