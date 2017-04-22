@@ -25,18 +25,21 @@
 		  <li><a href="#" onclick="postNavigate('home')">Home</a></li>
 		  <li class="active">Manage Students</li>
 		</ol>
-			 
-	  <form id="frmBillr" method="get" action="addStudent" style = "margin-top:15px">    		
-		  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="Add Student" />   		   		
-	  </form>
-	  <form id="frmBillr" method="POST" action="showStudentList" style = "margin-top:15px">
-		  <input type ="text" class="form-control" style="width: 200px;" name ="studentId" placeholder="Student Id" value ="" />   
-		  <input type ="submit" class="btn btn-primary" value ="Search" />
-	  </form>
-	  <form id="frmBillr" method="POST" action="showStudentList" style = "margin-top:15px"> 
-		  <input type ="submit" class="btn btn-primary" value ="Clear" />
-	  </form>
-		 <div style="margin-top: 20px">
+	  <div class="row">
+		  <form id="frmBillr" method="POST" class="form-inline" action="showStudentList" style = "margin-top:15px">
+			  <input type ="text" class="form-control" style="width: 200px;" id ="studentId" name ="studentId" placeholder="Student Id" value ="" />   
+			  <input type ="submit" class="btn btn-primary" value ="Search" />
+			  <input type ="submit" class="btn btn-primary btn-clear-search" value ="Clear" />
+		  </form> 
+		  <form id="frmBillr" method="get" class="form-inline" action="addStudent" style = "margin-top:15px">    		
+			  <input type ="submit" class="btn btn-primary" id ="btnBill" value ="Add Student" />   		   		
+		  </form>
+	  </div>
+		<div class="panel panel-default" style="margin-top: 20px">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">List of Students</h3>
+		  </div>
+		  <div class="panel-body">
 		   <table class="table">
 
 		      <thead class="thead-default">
@@ -86,6 +89,7 @@
 				</s:iterator>
 			  
            </table>
+           </div>
 		 </div>
 	  </div>
 	</div>

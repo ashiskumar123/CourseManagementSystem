@@ -6,4 +6,7 @@ $(document).ready(function(){
 		postNavigate('enterGrades',{"userId":$(this).data("user-id")});
 	});
 	
+	$(".btn-clear-search").click(function(){
+		$("#studentId").val("");
+	});
 });
